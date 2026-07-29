@@ -1,0 +1,18 @@
+# Eclipse
+.metadata/
+.settings/
+.project
+.classpath
+
+# Java
+*.class
+
+# Build
+/bin/
+/build/
+
+# Tomcat
+Servers/
+
+# Logs
+*.log
