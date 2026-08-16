@@ -18,7 +18,7 @@ import br.com.conectaeventos.utils.ValidadorUtils;
 
 /**
  * Controller responsável pelo processo de cadastro de um novo Contratante.
- * Atua como uma API HTTP/REST, enviando respostas em formato JSON.
+ * Atua como uma API HTTP/REST, enviando respostas em formato JSON (sem depender de páginas JSP).
  */
 @WebServlet(name = "CadastroContratanteController", urlPatterns = { "/cadastroContratante", "/CadastroContratanteController" })
 public class CadastroContratanteController extends HttpServlet {
@@ -214,3 +214,5 @@ public class CadastroContratanteController extends HttpServlet {
 		response.getWriter().flush();
 	}
 }
+
+
