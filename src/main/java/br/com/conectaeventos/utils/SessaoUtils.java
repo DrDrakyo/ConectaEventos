@@ -3,39 +3,36 @@ package br.com.conectaeventos.utils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Helper para leitura de dados de sessão do usuário logado.
+ * Usado pelos Controllers que exigem contratante autenticado
+ * (Avaliar Prestador, Acompanhar Contratação).
+ */
 public class SessaoUtils {
 
-	public static final String CHAVE_CONTRATANTE = "contratanteLogado";
-	public static final String CHAVE_PRESTADOR = "prestadorLogado";
-	public static final String CHAVE_USUARIO = "usuarioLogado";
+    public static final String ATRIBUTO_TIPO_USUARIO = "tipoUsuario";
+    public static final String ATRIBUTO_CPF_CNPJ_CONTRATANTE = "cpfCnpjContratante";
 
-	/**
-	 * Salva o objeto do usuário na sessão HTTP.
-	 */
-	public static void salvarSessao(HttpServletRequest request, String chave, Object usuario) {
-		HttpSession session = request.getSession(true);
-		session.setAttribute(chave, usuario);
-	}
+    private SessaoUtils() {
+        // classe utilitária: não deve ser instanciada
+    }
 
-	/**
-	 * Obtém um atributo da sessão HTTP.
-	 */
-	public static Object obterDaSessao(HttpServletRequest request, String chave) {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			return session.getAttribute(chave);
-		}
-		return null;
-	}
+    /**
+     * Verifica se existe um contratante autenticado na sessão atual.
+     */
+    public static boolean isContratanteLogado(HttpServletRequest request) {
+        HttpSession sessao = request.getSession(false);
+        return sessao != null && "CONTRATANTE".equals(sessao.getAttribute(ATRIBUTO_TIPO_USUARIO));
+    }
 
-	/**
-	 * Encerra e invalida a sessão HTTP atual.
-	 */
-	public static void encerrarSessao(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate();
-		}
-	}
+    /**
+     * Retorna o cpf_cnpj do contratante logado, ou null se não houver sessão válida.
+     */
+    public static String getCpfCnpjContratante(HttpServletRequest request) {
+        HttpSession sessao = request.getSession(false);
+        if (sessao == null) {
+            return null;
+        }
+        return (String) sessao.getAttribute(ATRIBUTO_CPF_CNPJ_CONTRATANTE);
+    }
 }
-

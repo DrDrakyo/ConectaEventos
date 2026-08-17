@@ -1,44 +1,46 @@
 package br.com.conectaeventos.utils;
 
+/**
+ * Validações reutilizadas pelos Controllers deste módulo (Buscar Prestadores,
+ * Avaliar Prestador, Acompanhar Contratação). Contém apenas o que é
+ * efetivamente usado por essas telas.
+ */
 public class ValidadorUtils {
 
-	/**
-	 * Verifica se uma String é nula ou vazia.
-	 */
-	public static boolean isVazio(String str) {
-		return str == null || str.trim().isEmpty();
-	}
+    private ValidadorUtils() {
+        // classe utilitária: não deve ser instanciada
+    }
 
-	/**
-	 * Valida o formato básico de um e-mail.
-	 */
-	public static boolean isEmailValido(String email) {
-		if (isVazio(email)) {
-			return false;
-		}
-		String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-		return email.matches(regex);
-	}
+    /**
+     * Usado em avaliar-prestador.html: a nota é obrigatória e deve estar entre 1 e 5.
+     */
+    public static boolean notaValida(Integer nota) {
+        return nota != null && nota >= 1 && nota <= 5;
+    }
 
-	/**
-	 * Verifica se a string limpa possui a quantidade de dígitos de um CPF (11) ou CNPJ (14).
-	 */
-	public static boolean isCpfOuCnpjValido(String documento) {
-		if (isVazio(documento)) {
-			return false;
-		}
-		String apenasNumeros = apenasNumeros(documento);
-		return apenasNumeros.length() == 11 || apenasNumeros.length() == 14;
-	}
+    /**
+     * Campo de texto obrigatório (ex: comentário, quando exigido) não pode
+     * vir nulo/vazio.
+     */
+    public static boolean textoPreenchido(String texto) {
+        return texto != null && !texto.trim().isEmpty();
+    }
 
-	/**
-	 * Remove todos os caracteres não numéricos de uma string.
-	 */
-	public static String apenasNumeros(String str) {
-		if (str == null) {
-			return "";
-		}
-		return str.replaceAll("[^0-9]", "");
-	}
+    /**
+     * Usado nos filtros numéricos de buscar-prestadores.html (preço máximo,
+     * reputação mínima), que chegam como String via request.getParameter.
+     * Retorna true se o valor for um número válido e não-negativo, ou se
+     * vier vazio (filtro não aplicado é sempre válido).
+     */
+    public static boolean numeroOpcionalValido(String valor) {
+        if (valor == null || valor.trim().isEmpty()) {
+            return true;
+        }
+        try {
+            double numero = Double.parseDouble(valor.trim());
+            return numero >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }
-
