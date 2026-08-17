@@ -1,0 +1,12 @@
+.git
+.gitignore
+.metadata
+.settings
+.project
+.classpath
+bin/
+build/
+Servers/
+*.log
+*.md
+docker/
