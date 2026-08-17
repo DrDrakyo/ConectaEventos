@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configurações do Sistema | Conecta Eventos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <link rel="stylesheet" href="../assets/css/configuracoes-sistema.css" />
+</head>
+<body>
+
+  <header class="cabecalho">
+    <div class="container cabecalho__conteudo">
+      <a href="dashboard-admin.html" class="marca">
+        <svg class="marca__icone" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17.6l-5.8 3-.9-6.5-4.8-4.6 6.6-.9z"/>
+        </svg>
+        Conecta Eventos
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a href="dashboard-admin.html">Dashboard</a>
+        <a href="gerenciar-prestadores.html">Prestadores</a>
+        <a href="gerenciar-contratantes.html">Contratantes</a>
+        <a href="gerenciar-servicos.html">Serviços</a>
+        <a href="relatorios-estatisticas.html">Relatórios</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <div class="cabecalho__usuario">
+          <button class="botao-usuario" aria-haspopup="true" aria-expanded="false">
+            <span class="avatar-usuario">AS</span>
+            <span class="botao-usuario__nome">Admin Sistema</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="menu-usuario">
+            <a href="gerenciar-portfolios.html">Gerenciar Portfólios</a>
+            <a href="gerenciar-contratacoes.html">Gerenciar Contratações</a>
+            <a href="gerenciar-avaliacoes.html">Gerenciar Avaliações</a>
+            <div class="menu-usuario__separador"></div>
+            <a href="configuracoes-sistema.html" aria-current="page">Configurações do Sistema</a>
+            <div class="menu-usuario__separador"></div>
+            <a href="../visitante/home.html" class="menu-usuario__sair">Sair</a>
+          </div>
+        </div>
+        <button class="botao-menu-mobile" aria-label="Abrir menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" width="24" height="24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="miolo-pagina">
+    <div class="container">
+      <div class="cabecalho-pagina">
+        <div>
+          <h1 class="cabecalho-pagina__titulo">Configurações do Sistema</h1>
+          <p class="cabecalho-pagina__legenda">Painel de atalhos administrativos</p>
+        </div>
+      </div>
+
+      <div class="aviso-painel">
+        Este painel apenas organiza o acesso às telas de gestão já existentes — não há parâmetros
+        de sistema para configurar ou salvar aqui.
+      </div>
+
+      <div class="campo-filtro" style="max-width:320px; margin-bottom: var(--espaco-5);">
+        <label for="busca-atalhos">Buscar atalho</label>
+        <input type="text" id="busca-atalhos" placeholder="Ex: serviços" style="padding:10px 12px; border:1px solid var(--cinza-200); border-radius: var(--raio-sm);" />
+      </div>
+
+      <div class="grade-atalhos-sistema">
+        <a href="gerenciar-servicos.html" class="atalho-sistema card">
+          <span class="atalho-sistema__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17.6l-5.8 3-.9-6.5-4.8-4.6 6.6-.9z"/></svg></span>
+          <span class="atalho-sistema__titulo">Gerenciar Serviços</span>
+          <span class="atalho-sistema__legenda">Catálogo global de categorias de serviço</span>
+        </a>
+        <a href="gerenciar-prestadores.html" class="atalho-sistema card">
+          <span class="atalho-sistema__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8M12 18v2"/></svg></span>
+          <span class="atalho-sistema__titulo">Gerenciar Prestadores</span>
+          <span class="atalho-sistema__legenda">Moderar cadastros de prestadores</span>
+        </a>
+        <a href="gerenciar-contratantes.html" class="atalho-sistema card">
+          <span class="atalho-sistema__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></span>
+          <span class="atalho-sistema__titulo">Gerenciar Contratantes</span>
+          <span class="atalho-sistema__legenda">Moderar cadastros de contratantes</span>
+        </a>
+        <a href="gerenciar-portfolios.html" class="atalho-sistema card">
+          <span class="atalho-sistema__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/></svg></span>
+          <span class="atalho-sistema__titulo">Gerenciar Portfólios</span>
+          <span class="atalho-sistema__legenda">Visualizar e remover itens de portfólio</span>
+        </a>
+        <a href="gerenciar-contratacoes.html" class="atalho-sistema card">
+          <span class="atalho-sistema__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/></svg></span>
+          <span class="atalho-sistema__titulo">Gerenciar Contratações</span>
+          <span class="atalho-sistema__legenda">Acompanhar contratações da plataforma</span>
+        </a>
+        <a href="gerenciar-avaliacoes.html" class="atalho-sistema card">
+          <span class="atalho-sistema__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17.6l-5.8 3-.9-6.5-4.8-4.6 6.6-.9z"/></svg></span>
+          <span class="atalho-sistema__titulo">Gerenciar Avaliações</span>
+          <span class="atalho-sistema__legenda">Moderar avaliações registradas</span>
+        </a>
+        <a href="relatorios-estatisticas.html" class="atalho-sistema card">
+          <span class="atalho-sistema__icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 19V9M12 19V5M20 19v-7"/></svg></span>
+          <span class="atalho-sistema__titulo">Relatórios e Estatísticas</span>
+          <span class="atalho-sistema__legenda">Indicadores gerais da plataforma</span>
+        </a>
+      </div>
+    </div>
+  </main>
+  <footer class="rodape">
+    <div class="container rodape__grade">
+      <div>
+        <div class="rodape__marca">Conecta Eventos</div>
+        <p class="rodape__descricao">
+          A plataforma que conecta contratantes e prestadores de serviços para eventos
+          de forma rápida, organizada e segura.
+        </p>
+      </div>
+      <div class="rodape__coluna">
+        <h4>Administração</h4>
+        <a href="dashboard-admin.html">Dashboard</a>
+        <a href="relatorios-estatisticas.html">Relatórios</a>
+        <a href="configuracoes-sistema.html">Configurações do Sistema</a>
+      </div>
+      <div class="rodape__coluna">
+        <h4>Institucional</h4>
+        <a href="../visitante/contato.html">Contato</a>
+        <a href="../visitante/termos-de-uso.html">Termos de Uso</a>
+        <a href="../visitante/politica-de-privacidade.html">Política de Privacidade</a>
+      </div>
+    </div>
+    <div class="container rodape__base">
+      &copy; 2026 Conecta Eventos. Projeto acadêmico — todos os direitos reservados.
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/configuracoes-sistema.js"></script>
+</body>
+</html>

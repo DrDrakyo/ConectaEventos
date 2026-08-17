@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Perfil | Conecta Eventos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <link rel="stylesheet" href="../assets/css/editar-perfil-contratante.css" />
+</head>
+<body>
+
+  <header class="cabecalho">
+    <div class="container cabecalho__conteudo">
+      <a href="dashboard-contratante.html" class="marca">
+        <svg class="marca__icone" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17.6l-5.8 3-.9-6.5-4.8-4.6 6.6-.9z"/>
+        </svg>
+        Conecta Eventos
+      </a>
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a href="dashboard-contratante.html">Dashboard</a>
+        <a href="buscar-prestadores.html">Buscar Prestadores</a>
+        <a href="historico-contratacoes.html">Histórico</a>
+      </nav>
+      <div class="cabecalho__acoes">
+        <div class="cabecalho__usuario">
+          <button class="botao-usuario" aria-haspopup="true" aria-expanded="false">
+            <span class="avatar-usuario">MC</span>
+            <span class="botao-usuario__nome">Maria Costa</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="menu-usuario">
+            <a href="meu-perfil-contratante.html">Meu Perfil</a>
+            <a href="configuracoes-conta-contratante.html">Configurações da Conta</a>
+            <div class="menu-usuario__separador"></div>
+            <a href="../visitante/home.html" class="menu-usuario__sair">Sair</a>
+          </div>
+        </div>
+        <button class="botao-menu-mobile" aria-label="Abrir menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" width="24" height="24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="miolo-pagina">
+    <div class="container">
+      <div class="cabecalho-pagina">
+        <div>
+          <h1 class="cabecalho-pagina__titulo">Editar Perfil</h1>
+          <p class="cabecalho-pagina__legenda">Atualize seus dados cadastrais</p>
+        </div>
+      </div>
+
+      <form class="cartao-formulario card" id="formulario-editar-perfil" novalidate>
+        <h2 class="cartao-formulario__titulo">Dados cadastrais</h2>
+        <p class="cartao-formulario__legenda">Os campos marcados com <span class="obrigatorio">*</span> são obrigatórios</p>
+
+        <div id="mensagem-feedback" class="mensagem-feedback" role="alert"></div>
+
+        <div class="campo">
+          <label for="campo-nome">Nome completo <span class="obrigatorio">*</span></label>
+          <input type="text" id="campo-nome" name="nome_contratante" />
+          <span class="campo__erro">Informe seu nome completo.</span>
+        </div>
+
+        <div class="campo campo--desabilitado">
+          <label for="campo-cpf-cnpj">CPF/CNPJ</label>
+          <input type="text" id="campo-cpf-cnpj" name="cpf_cnpj" disabled />
+        </div>
+
+        <div class="grade-dois-campos">
+          <div class="campo">
+            <label for="campo-email">E-mail <span class="obrigatorio">*</span></label>
+            <input type="email" id="campo-email" name="email_contratante" />
+            <span class="campo__erro">Informe um e-mail válido.</span>
+          </div>
+          <div class="campo">
+            <label for="campo-telefone">Telefone <span class="obrigatorio">*</span></label>
+            <input type="tel" id="campo-telefone" name="telefone" />
+            <span class="campo__erro">Informe um telefone válido.</span>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="campo-endereco">Endereço <span class="obrigatorio">*</span></label>
+          <input type="text" id="campo-endereco" name="endereco" />
+          <span class="campo__erro">Informe seu endereço.</span>
+        </div>
+
+        <div class="campo">
+          <label for="campo-cidade">Cidade <span class="obrigatorio">*</span></label>
+          <input type="text" id="campo-cidade" name="cidade" />
+          <span class="campo__erro">Informe sua cidade.</span>
+        </div>
+
+        <div class="formulario__acoes">
+          <button type="submit" class="botao botao--primario">Salvar Alterações</button>
+          <a href="meu-perfil-contratante.html" class="botao botao--secundario">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <div class="container rodape__grade">
+      <div>
+        <div class="rodape__marca">Conecta Eventos</div>
+        <p class="rodape__descricao">A plataforma que conecta contratantes e prestadores de serviços para eventos de forma rápida, organizada e segura.</p>
+      </div>
+      <div class="rodape__coluna">
+        <h4>Conta</h4>
+        <a href="dashboard-contratante.html">Dashboard</a>
+        <a href="meu-perfil-contratante.html">Meu Perfil</a>
+        <a href="historico-contratacoes.html">Histórico</a>
+      </div>
+      <div class="rodape__coluna">
+        <h4>Institucional</h4>
+        <a href="../visitante/contato.html">Contato</a>
+        <a href="../visitante/termos-de-uso.html">Termos de Uso</a>
+        <a href="../visitante/politica-de-privacidade.html">Política de Privacidade</a>
+      </div>
+    </div>
+    <div class="container rodape__base">&copy; 2026 Conecta Eventos. Projeto acadêmico — todos os direitos reservados.</div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/editar-perfil-contratante.js"></script>
+</body>
+</html>

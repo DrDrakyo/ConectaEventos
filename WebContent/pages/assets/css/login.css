@@ -1,0 +1,17 @@
+/* ==========================================================================
+   TELA: LOGIN (Módulo Visitante)
+   Reutiliza o componente de formulário de autenticação de global.css
+   (.pagina-auth, .cartao-auth, .seletor-cadastro, .campo).
+   ========================================================================== */
+
+.campo-senha-com-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.campo-senha-com-link a {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--azul-600);
+}

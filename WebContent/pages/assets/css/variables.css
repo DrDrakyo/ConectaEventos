@@ -1,0 +1,66 @@
+/* ==========================================================================
+   CONECTA EVENTOS — DESIGN TOKENS
+   Este arquivo define a identidade visual única da plataforma.
+   Ele deve ser importado em TODAS as telas do sistema, sem alterações,
+   para garantir consistência visual entre os módulos
+   (Visitante, Contratante, Prestador, Administrador).
+   ========================================================================== */
+
+:root {
+  /* ---------- Cores principais ---------- */
+  --azul-600: #2563eb;      /* Cor primária: botões, links, destaques */
+  --azul-700: #1d4ed8;      /* Hover / estados ativos */
+  --azul-800: #1e3a8a;      /* Textos sobre fundo claro, títulos de destaque */
+  --azul-100: #dbeafe;      /* Fundos suaves, badges */
+  --azul-50:  #eff6ff;      /* Fundos muito suaves, seções alternadas */
+
+  --roxo-600: #7c3aed;      /* Cor de detalhe/acento */
+  --roxo-100: #ede9fe;      /* Fundos suaves de badges/ícones */
+
+  --branco: #ffffff;
+
+  --cinza-50:  #f9fafb;     /* Fundo geral da página */
+  --cinza-100: #f3f4f6;     /* Fundo de cards alternados */
+  --cinza-200: #e5e7eb;     /* Bordas e divisores */
+  --cinza-400: #9ca3af;     /* Ícones neutros, placeholders */
+  --cinza-500: #6b7280;     /* Texto secundário */
+  --cinza-700: #374151;     /* Texto padrão */
+  --cinza-900: #111827;     /* Títulos */
+
+  /* ---------- Cores de estado (usadas nos status de contratação) ---------- */
+  --status-disponivel: #16a34a;
+  --status-negociacao: #d97706;
+  --status-contratado: #2563eb;
+  --status-iniciado:   #7c3aed;
+  --status-concluido:  #059669;
+  --status-inativo:    #dc2626;
+
+  /* ---------- Tipografia ---------- */
+  --fonte-titulo: 'Poppins', 'Segoe UI', sans-serif;
+  --fonte-texto:  'Inter', 'Segoe UI', sans-serif;
+
+  /* ---------- Espaçamentos (escala compacta) ---------- */
+  --espaco-1: 2px;
+  --espaco-2: 4px;
+  --espaco-3: 8px;
+  --espaco-4: 12px;
+  --espaco-5: 16px;
+  --espaco-6: 24px;
+  --espaco-7: 32px;
+  --espaco-8: 48px;
+
+  /* ---------- Bordas arredondadas ---------- */
+  --raio-sm: 6px;
+  --raio-md: 10px;
+  --raio-lg: 16px;
+  --raio-full: 999px;
+
+  /* ---------- Sombras suaves ---------- */
+  --sombra-sm: 0 1px 3px rgba(17, 24, 39, 0.08);
+  --sombra-md: 0 4px 16px rgba(17, 24, 39, 0.08);
+  --sombra-lg: 0 16px 40px rgba(17, 24, 39, 0.14);
+
+  /* ---------- Layout ---------- */
+  --largura-maxima: 100%;
+  --altura-header: 56px;
+}

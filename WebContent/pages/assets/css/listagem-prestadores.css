@@ -1,0 +1,166 @@
+/* ==========================================================================
+   TELA: BUSCAR PRESTADORES (Módulo Contratante)
+   Reutiliza .cabecalho, .botao, .card, .badge, .avaliacao, .status,
+   global.css e os tokens de variables.css.
+   ========================================================================== */
+
+.pagina-busca {
+  padding: var(--espaco-5) 0 var(--espaco-7);
+}
+
+.pagina-busca__layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--espaco-5);
+  align-items: start;
+}
+
+/* ---------- Painel de filtros ---------- */
+.painel-filtros {
+  padding: var(--espaco-4);
+  position: sticky;
+  top: calc(var(--altura-header) + var(--espaco-3));
+}
+
+.painel-filtros h2 {
+  font-size: 0.98rem;
+  margin-bottom: var(--espaco-3);
+}
+
+.campo-filtro {
+  margin-bottom: var(--espaco-3);
+}
+
+.campo-filtro label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cinza-700);
+  margin-bottom: 4px;
+}
+
+.campo-filtro select,
+.campo-filtro input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--raio-sm);
+  color: var(--cinza-900);
+  background-color: var(--branco);
+}
+
+.campo-filtro select:focus,
+.campo-filtro input:focus {
+  border-color: var(--azul-600);
+  outline: none;
+}
+
+.campo-filtro--faixa {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.campo-filtro--faixa input {
+  text-align: center;
+}
+
+.filtros__acoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin-top: var(--espaco-4);
+}
+
+/* ---------- Resultados ---------- */
+.resultados__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--espaco-4);
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+}
+
+.resultados__contagem {
+  color: var(--cinza-500);
+  font-size: 0.88rem;
+}
+
+.resultados__ordenacao select {
+  padding: 6px 10px;
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--raio-sm);
+  background-color: var(--branco);
+}
+
+.grade-prestadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--espaco-4);
+}
+
+.prestador-card { overflow: hidden; display: flex; flex-direction: column; }
+
+.prestador-card__imagem {
+  height: 140px;
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.prestador-card__imagem svg { width: 36px; height: 36px; stroke: var(--azul-600); opacity: 0.6; }
+.prestador-card__disponibilidade { position: absolute; top: 8px; right: 8px; }
+
+.prestador-card__corpo { padding: var(--espaco-3); display: flex; flex-direction: column; gap: 4px; }
+.prestador-card__categoria { font-size: 0.72rem; font-weight: 600; color: var(--roxo-600); text-transform: uppercase; letter-spacing: 0.03em; }
+.prestador-card__nome { font-size: 0.98rem; }
+.prestador-card__local { display: flex; align-items: center; gap: 4px; font-size: 0.82rem; color: var(--cinza-500); }
+.prestador-card__local svg { width: 12px; height: 12px; stroke: var(--cinza-500); flex-shrink: 0; }
+.prestador-card__rodape { display: flex; align-items: center; justify-content: space-between; margin-top: var(--espaco-2); padding-top: var(--espaco-2); border-top: 1px solid var(--cinza-200); }
+.prestador-card__preco { font-size: 0.82rem; color: var(--cinza-700); }
+.prestador-card__preco strong { color: var(--cinza-900); }
+
+/* ---------- Paginação ---------- */
+.paginacao {
+  display: flex;
+  justify-content: center;
+  gap: var(--espaco-2);
+  margin-top: var(--espaco-6);
+}
+
+.paginacao button {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--raio-sm);
+  border: 1px solid var(--cinza-200);
+  background-color: var(--branco);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--cinza-700);
+}
+
+.paginacao button[aria-current="true"] {
+  background-color: var(--azul-600);
+  border-color: var(--azul-600);
+  color: var(--branco);
+}
+
+/* ---------- Estado vazio ---------- */
+.estado-vazio {
+  text-align: center;
+  padding: var(--espaco-7) var(--espaco-5);
+  color: var(--cinza-500);
+}
+
+.estado-vazio svg { width: 40px; height: 40px; stroke: var(--cinza-400); margin-bottom: var(--espaco-2); }
+.estado-vazio { display: none; }
+.estado-vazio--visivel { display: block; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 900px) {
+  .pagina-busca__layout { grid-template-columns: 1fr; }
+  .painel-filtros { position: static; }
+}

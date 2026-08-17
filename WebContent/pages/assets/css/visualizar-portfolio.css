@@ -1,0 +1,84 @@
+/* ==========================================================================
+   TELA: VISUALIZAR PORTFÓLIO (Módulo Visitante)
+   Reutiliza .cabecalho, .botao, .card, .rodape de global.css.
+   ========================================================================== */
+
+.pagina-portfolio { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.voltar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--azul-600);
+  margin-bottom: var(--espaco-3);
+}
+
+.voltar-link svg { width: 14px; height: 14px; stroke: currentColor; }
+
+.detalhe-portfolio {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--espaco-5);
+}
+
+/* ---------- Galeria principal ---------- */
+.galeria-principal__imagem-atual {
+  height: 320px;
+  border-radius: var(--raio-md);
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--espaco-2);
+}
+
+.galeria-principal__imagem-atual svg { width: 52px; height: 52px; stroke: var(--azul-600); opacity: 0.6; }
+
+.galeria-principal__miniaturas {
+  display: flex;
+  gap: var(--espaco-2);
+}
+
+.miniatura {
+  width: 72px;
+  height: 54px;
+  border-radius: var(--raio-sm);
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.miniatura svg { width: 18px; height: 18px; stroke: var(--azul-600); opacity: 0.6; }
+.miniatura--ativa { border-color: var(--azul-600); }
+
+/* ---------- Informações do item ---------- */
+.info-portfolio { padding: var(--espaco-4); }
+.info-portfolio__categoria { font-size: 0.72rem; font-weight: 600; color: var(--roxo-600); text-transform: uppercase; letter-spacing: 0.03em; }
+.info-portfolio__titulo { font-size: 1.2rem; margin: 4px 0 var(--espaco-2); }
+.info-portfolio__descricao { color: var(--cinza-700); font-size: 0.9rem; margin-bottom: var(--espaco-3); }
+
+.info-portfolio__linha {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  font-size: 0.82rem;
+  color: var(--cinza-500);
+  margin-bottom: var(--espaco-2);
+}
+
+.info-portfolio__linha svg { width: 14px; height: 14px; stroke: var(--cinza-500); flex-shrink: 0; }
+
+.info-portfolio__valor {
+  font-family: var(--fonte-titulo);
+  font-size: 1.15rem;
+  color: var(--azul-800);
+  margin: var(--espaco-3) 0;
+}
+
+@media (max-width: 900px) {
+  .detalhe-portfolio { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,46 @@
+/* ==========================================================================
+   TELA: MEU PERFIL (Módulo Prestador)
+   Reutiliza .cabecalho, .botao, .card, .badge, .cabecalho-pagina de global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.perfil-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--espaco-5);
+  align-items: start;
+}
+
+.cartao-identificacao { padding: var(--espaco-5) var(--espaco-4); text-align: center; }
+
+.cartao-identificacao__avatar {
+  width: 72px; height: 72px; border-radius: var(--raio-md);
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  color: var(--azul-800); font-family: var(--fonte-titulo); font-weight: 700; font-size: 1.4rem;
+  display: flex; align-items: center; justify-content: center; margin: 0 auto var(--espaco-2);
+}
+
+.cartao-identificacao__nome { font-size: 0.98rem; margin-bottom: 2px; }
+.cartao-identificacao__categoria { font-size: 0.78rem; color: var(--roxo-600); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: var(--espaco-3); }
+
+.bloco-dados { padding: var(--espaco-5); }
+.bloco-dados__titulo { font-size: 1rem; margin-bottom: var(--espaco-3); }
+
+.lista-campos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--espaco-3) var(--espaco-4); }
+
+.campo-leitura__rotulo {
+  font-size: 0.72rem; font-weight: 600; color: var(--cinza-500);
+  text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 2px;
+}
+
+.campo-leitura__valor { font-size: 0.92rem; color: var(--cinza-900); }
+.campo-leitura__valor--descricao { grid-column: 1 / -1; line-height: 1.5; }
+
+.bloco-dados__acoes {
+  display: flex; gap: var(--espaco-3); margin-top: var(--espaco-5);
+  padding-top: var(--espaco-4); border-top: 1px solid var(--cinza-200);
+}
+
+@media (max-width: 900px) { .perfil-layout { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .lista-campos { grid-template-columns: 1fr; } .bloco-dados__acoes { flex-direction: column; } }

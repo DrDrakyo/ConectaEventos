@@ -1,0 +1,54 @@
+/* ==========================================================================
+   TELA: CONTATO (Módulo Visitante)
+   Reutiliza .cabecalho, .botao, .card, .rodape e o componente de
+   formulário (.campo) de global.css.
+   ========================================================================== */
+
+.banner-institucional {
+  background: linear-gradient(135deg, var(--azul-800) 0%, var(--azul-600) 55%, var(--roxo-600) 130%);
+  padding: var(--espaco-6) 0;
+  color: var(--branco);
+  text-align: center;
+}
+
+.banner-institucional__titulo { color: var(--branco); font-size: clamp(1.5rem, 3.5vw, 2rem); margin-bottom: var(--espaco-2); }
+.banner-institucional__texto { max-width: 100%; margin: 0 auto; color: #e0e7ff; }
+
+.secao { padding: var(--espaco-6) 0 var(--espaco-7); }
+
+.layout-contato {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco-5);
+}
+
+.formulario-contato { padding: var(--espaco-5); }
+
+.canais-contato { padding: var(--espaco-5); }
+.canais-contato h2 { font-size: 1rem; margin-bottom: var(--espaco-3); }
+
+.canal-contato {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-3);
+}
+
+.canal-contato__icone {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raio-full);
+  background-color: var(--azul-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.canal-contato__icone svg { width: 18px; height: 18px; stroke: var(--azul-600); }
+.canal-contato__titulo { font-weight: 600; font-size: 0.88rem; }
+.canal-contato__valor { font-size: 0.82rem; color: var(--cinza-500); }
+
+@media (max-width: 900px) {
+  .layout-contato { grid-template-columns: 1fr; }
+}

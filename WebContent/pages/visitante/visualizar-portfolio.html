@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizar Portfólio | Conecta Eventos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <link rel="stylesheet" href="../assets/css/visualizar-portfolio.css" />
+</head>
+<body>
+  <!-- ===================== CABEÇALHO (idêntico em todas as telas) ===================== -->
+  <header class="cabecalho">
+    <div class="container cabecalho__conteudo">
+      <a href="home.html" class="marca">
+        <svg class="marca__icone" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17.6l-5.8 3-.9-6.5-4.8-4.6 6.6-.9z"/>
+        </svg>
+        Conecta Eventos
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a href="lista-prestadores.html">Encontrar Prestadores</a>
+        <a href="sobre.html">Sobre a Plataforma</a>
+        <a href="como-funciona.html">Como Funciona</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <a href="login.html" class="botao botao--secundario botao--pequeno">Entrar</a>
+        <a href="cadastro-contratante.html" class="botao botao--primario botao--pequeno">Cadastrar-se</a>
+        <button class="botao-menu-mobile" aria-label="Abrir menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" width="24" height="24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="pagina-portfolio">
+    <div class="container">
+      <a href="perfil-prestador.html" class="voltar-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        Voltar ao perfil do prestador
+      </a>
+
+      <div class="detalhe-portfolio">
+        <div>
+          <div class="galeria-principal__imagem-atual">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+            </svg>
+          </div>
+          <div class="galeria-principal__miniaturas">
+            <button class="miniatura miniatura--ativa" aria-label="Imagem 1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/></svg>
+            </button>
+            <button class="miniatura" aria-label="Imagem 2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/></svg>
+            </button>
+            <button class="miniatura" aria-label="Imagem 3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="info-portfolio card">
+          <span class="info-portfolio__categoria">Fotografia</span>
+          <h1 class="info-portfolio__titulo">Casamento Ana & Rafael</h1>
+          <p class="info-portfolio__descricao">
+            Cobertura completa da cerimônia e da festa, incluindo making of da noiva,
+            making of do noivo, cerimônia e primeiras horas da recepção. Entrega
+            digital com 400 fotos editadas.
+          </p>
+
+          <div class="info-portfolio__linha">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>
+            Certificado em Fotografia de Eventos - SENAC
+          </div>
+          <div class="info-portfolio__linha">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            8 anos de experiência com fotografia de casamentos
+          </div>
+          <div class="info-portfolio__linha">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></svg>
+            Publicado em 12/03/2026
+          </div>
+
+          <p class="info-portfolio__valor">R$ 1.200,00</p>
+
+          <a href="cadastro-contratante.html" class="botao botao--primario botao--bloco">Solicitar Este Serviço</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- ===================== RODAPÉ (idêntico em todas as telas) ===================== -->
+  <footer class="rodape">
+    <div class="container rodape__grade">
+      <div>
+        <div class="rodape__marca">Conecta Eventos</div>
+        <p class="rodape__descricao">
+          A plataforma que conecta contratantes e prestadores de serviços para eventos
+          de forma rápida, organizada e segura.
+        </p>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Plataforma</h4>
+        <a href="sobre.html">Sobre a Plataforma</a>
+        <a href="como-funciona.html">Como Funciona</a>
+        <a href="lista-prestadores.html">Encontrar Prestadores</a>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Conta</h4>
+        <a href="login.html">Entrar</a>
+        <a href="cadastro-contratante.html">Cadastro de Contratante</a>
+        <a href="cadastro-prestador.html">Cadastro de Prestador</a>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Institucional</h4>
+        <a href="contato.html">Contato</a>
+        <a href="termos-de-uso.html">Termos de Uso</a>
+        <a href="politica-de-privacidade.html">Política de Privacidade</a>
+      </div>
+    </div>
+
+    <div class="container rodape__base">
+      &copy; 2026 Conecta Eventos. Projeto acadêmico — todos os direitos reservados.
+    </div>
+  </footer>
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/visualizar-portfolio.js"></script>
+</body>
+</html>

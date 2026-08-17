@@ -1,0 +1,66 @@
+/* ==========================================================================
+   TELA: AGENDA DE SERVIÇOS (Módulo Prestador)
+   Reutiliza .status, .card, .cabecalho-pagina, .estado-vazio de global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+/* ---------- Lista de compromissos agrupados por data ---------- */
+.grupo-data { margin-bottom: var(--espaco-5); }
+.grupo-data:last-child { margin-bottom: 0; }
+
+.grupo-data__titulo {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--cinza-500);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--espaco-2);
+  padding-bottom: var(--espaco-2);
+  border-bottom: 1px solid var(--cinza-200);
+}
+
+.compromisso {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  margin-bottom: var(--espaco-2);
+  position: relative;
+}
+
+.compromisso:last-child { margin-bottom: 0; }
+
+.compromisso__data {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--raio-sm);
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.compromisso__data-dia { font-family: var(--fonte-titulo); font-weight: 700; font-size: 1rem; color: var(--azul-800); line-height: 1; }
+.compromisso__data-mes { font-size: 0.65rem; color: var(--azul-800); text-transform: uppercase; }
+
+.compromisso__info { flex: 1; min-width: 0; }
+.compromisso__titulo { font-size: 0.88rem; font-weight: 600; color: var(--cinza-900); margin-bottom: 2px; }
+.compromisso__detalhe { font-size: 0.78rem; color: var(--cinza-500); }
+
+.compromisso__link {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--azul-600);
+  white-space: nowrap;
+}
+
+.estado-vazio { display: none; }
+.estado-vazio--visivel { display: block; }
+
+@media (max-width: 560px) {
+  .compromisso { flex-wrap: wrap; }
+  .compromisso__link { order: 3; width: 100%; padding-left: 72px; }
+}

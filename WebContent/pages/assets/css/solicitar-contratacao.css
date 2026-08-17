@@ -1,0 +1,100 @@
+/* ==========================================================================
+   TELA: SOLICITAR CONTRATAÇÃO (Módulo Contratante)
+   Reutiliza .campo, .grade-dois-campos, .mensagem-feedback, .botao, .card
+   de global.css. Campos mapeados às tabelas CONTRATACAO e ITEM_CONTRA.
+   ========================================================================== */
+
+.miolo-pagina {
+  padding: var(--espaco-5) 0 var(--espaco-7);
+}
+
+.solicitacao-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--espaco-5);
+  align-items: start;
+}
+
+/* ---------- Itens adicionados à solicitação (ITEM_CONTRA) ---------- */
+.bloco { padding: var(--espaco-4); margin-bottom: var(--espaco-4); }
+.bloco__titulo { font-size: 1rem; margin-bottom: var(--espaco-3); }
+
+.item-solicitacao {
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--raio-sm);
+  padding: var(--espaco-3);
+  margin-bottom: var(--espaco-3);
+}
+
+.item-solicitacao__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--espaco-2);
+}
+
+.item-solicitacao__titulo {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--cinza-900);
+}
+
+.item-solicitacao__remover {
+  color: var(--status-inativo);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.item-solicitacao__grade {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--espaco-2);
+}
+
+.item-solicitacao__subtotal {
+  margin-top: var(--espaco-2);
+  padding-top: var(--espaco-2);
+  border-top: 1px dashed var(--cinza-200);
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--cinza-700);
+}
+
+.item-solicitacao__subtotal strong { color: var(--cinza-900); }
+
+/* ---------- Resumo lateral ---------- */
+.resumo-solicitacao {
+  padding: var(--espaco-4);
+  position: sticky;
+  top: calc(var(--altura-header) + var(--espaco-3));
+}
+
+.resumo-solicitacao h3 { font-size: 0.98rem; margin-bottom: var(--espaco-3); }
+
+.resumo-solicitacao__linha {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--cinza-500);
+  padding: 4px 0;
+}
+
+.resumo-solicitacao__total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--cinza-900);
+  padding-top: var(--espaco-2);
+  margin-top: var(--espaco-2);
+  border-top: 1px solid var(--cinza-200);
+}
+
+@media (max-width: 900px) {
+  .solicitacao-layout { grid-template-columns: 1fr; }
+  .resumo-solicitacao { position: static; }
+}
+
+@media (max-width: 560px) {
+  .item-solicitacao__grade { grid-template-columns: 1fr 1fr; }
+}

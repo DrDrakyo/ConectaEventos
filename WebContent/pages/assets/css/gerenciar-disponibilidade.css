@@ -1,0 +1,35 @@
+/* ==========================================================================
+   TELA: GERENCIAR DISPONIBILIDADE (Módulo Prestador)
+   Reutiliza .campo, .mensagem-feedback, .botao, .card, .badge de global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.cartao-formulario { max-width: 520px; margin: 0 auto; padding: var(--espaco-5); }
+.cartao-formulario__titulo { font-size: 1.05rem; margin-bottom: var(--espaco-1); }
+.cartao-formulario__legenda { color: var(--cinza-500); font-size: 0.85rem; margin-bottom: var(--espaco-4); }
+
+/* ---------- Status atual ---------- */
+.status-atual {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--espaco-3); background-color: var(--cinza-100);
+  border-radius: var(--raio-sm); margin-bottom: var(--espaco-4);
+}
+
+.status-atual__rotulo { font-size: 0.82rem; color: var(--cinza-500); }
+
+/* ---------- Opções (rádio estilizado como cards) ---------- */
+.opcoes-disponibilidade { display: flex; flex-direction: column; gap: var(--espaco-2); margin-bottom: var(--espaco-4); }
+
+.opcao-disponibilidade {
+  display: flex; align-items: center; gap: var(--espaco-3);
+  padding: var(--espaco-3); border: 1.5px solid var(--cinza-200); border-radius: var(--raio-sm);
+  cursor: pointer; transition: border-color 0.2s ease;
+}
+
+.opcao-disponibilidade:has(input:checked) { border-color: var(--azul-600); background-color: var(--azul-50); }
+.opcao-disponibilidade input { width: 16px; height: 16px; accent-color: var(--azul-600); }
+.opcao-disponibilidade__titulo { font-size: 0.88rem; font-weight: 600; color: var(--cinza-900); }
+.opcao-disponibilidade__legenda { font-size: 0.78rem; color: var(--cinza-500); }
+
+.formulario__acoes { display: flex; gap: var(--espaco-3); }

@@ -1,0 +1,70 @@
+/* ==========================================================================
+   TELA: HISTÓRICO DE CONTRATAÇÕES (Módulo Contratante)
+   Reutiliza .status, .card, .botao, .cabecalho-pagina, .estado-vazio de
+   global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+/* ---------- Filtro por situação ---------- */
+.filtro-historico {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-4);
+  flex-wrap: wrap;
+}
+
+.filtro-historico label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cinza-700);
+}
+
+.filtro-historico select {
+  padding: 8px 12px;
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--raio-sm);
+  background-color: var(--branco);
+  color: var(--cinza-900);
+  min-width: 200px;
+}
+
+.filtro-historico select:focus { border-color: var(--azul-600); outline: none; }
+
+/* ---------- Lista de contratações ---------- */
+.lista-historico {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.linha-historico {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  position: relative;
+}
+
+.linha-historico__info { flex: 1; min-width: 0; }
+.linha-historico__titulo { font-size: 0.88rem; font-weight: 600; color: var(--cinza-900); margin-bottom: 2px; }
+.linha-historico__detalhe { font-size: 0.78rem; color: var(--cinza-500); }
+.linha-historico__valor { font-size: 0.85rem; font-weight: 600; color: var(--cinza-900); white-space: nowrap; }
+
+.linha-historico__link-detalhe {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--azul-600);
+  white-space: nowrap;
+}
+
+/* ---------- Estado vazio (padrão de toggle igual às demais telas) ---------- */
+.estado-vazio { display: none; }
+.estado-vazio--visivel { display: block; }
+
+@media (max-width: 640px) {
+  .linha-historico { flex-wrap: wrap; }
+  .linha-historico__valor { order: 3; }
+  .linha-historico__link-detalhe { order: 4; width: 100%; }
+}

@@ -1,0 +1,37 @@
+/* ==========================================================================
+   TELA: GERENCIAR AVALIAÇÕES (Módulo Administrador)
+   Reutiliza .card, .botao, .cabecalho-pagina, .estado-vazio de global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.barra-filtros {
+  display: flex; flex-wrap: wrap; gap: var(--espaco-2); align-items: flex-end;
+  padding: var(--espaco-3); margin-bottom: var(--espaco-4);
+}
+.campo-filtro { display: flex; flex-direction: column; gap: 2px; min-width: 160px; }
+.campo-filtro label { font-size: 0.72rem; font-weight: 600; color: var(--cinza-500); }
+.campo-filtro input, .campo-filtro select {
+  padding: 8px 10px; border: 1px solid var(--cinza-200); border-radius: var(--raio-sm);
+  background-color: var(--branco); color: var(--cinza-900);
+}
+.campo-filtro input:focus, .campo-filtro select:focus { border-color: var(--azul-600); outline: none; }
+
+.lista-avaliacoes-admin { display: flex; flex-direction: column; gap: var(--espaco-3); }
+
+.card-avaliacao-admin { padding: var(--espaco-4); }
+.card-avaliacao-admin__cabecalho { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-2); margin-bottom: var(--espaco-2); flex-wrap: wrap; }
+.card-avaliacao-admin__titulo { font-size: 0.88rem; font-weight: 600; color: var(--cinza-900); }
+.card-avaliacao-admin__legenda { font-size: 0.78rem; color: var(--cinza-500); }
+.card-avaliacao-admin__estrelas svg { width: 14px; height: 14px; fill: #f59e0b; }
+.card-avaliacao-admin__comentario { font-size: 0.85rem; color: var(--cinza-700); line-height: 1.5; margin: var(--espaco-2) 0 var(--espaco-2); }
+
+.card-avaliacao-admin__acoes { padding-top: var(--espaco-2); border-top: 1px solid var(--cinza-200); }
+
+.botao--perigo {
+  background-color: var(--branco); color: var(--status-inativo); border: 1.5px solid var(--status-inativo);
+}
+.botao--perigo:hover { background-color: #fee2e2; }
+
+.estado-vazio { display: none; }
+.estado-vazio--visivel { display: block; }

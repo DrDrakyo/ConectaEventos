@@ -1,0 +1,34 @@
+/* ==========================================================================
+   TELA: GERENCIAR CONTRATAÇÕES (Módulo Administrador)
+   Reutiliza .status, .card, .botao, .cabecalho-pagina, .estado-vazio de
+   global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.barra-filtros {
+  display: flex; flex-wrap: wrap; gap: var(--espaco-2); align-items: flex-end;
+  padding: var(--espaco-3); margin-bottom: var(--espaco-4);
+}
+.campo-filtro { display: flex; flex-direction: column; gap: 2px; min-width: 160px; }
+.campo-filtro label { font-size: 0.72rem; font-weight: 600; color: var(--cinza-500); }
+.campo-filtro input, .campo-filtro select {
+  padding: 8px 10px; border: 1px solid var(--cinza-200); border-radius: var(--raio-sm);
+  background-color: var(--branco); color: var(--cinza-900);
+}
+.campo-filtro input:focus, .campo-filtro select:focus { border-color: var(--azul-600); outline: none; }
+
+.tabela-registros { width: 100%; border-collapse: collapse; }
+.tabela-registros thead th {
+  text-align: left; font-size: 0.7rem; font-weight: 700; color: var(--cinza-500);
+  text-transform: uppercase; letter-spacing: 0.03em; padding: var(--espaco-2); border-bottom: 1px solid var(--cinza-200);
+}
+.tabela-registros tbody td { padding: var(--espaco-2); font-size: 0.85rem; color: var(--cinza-900); border-bottom: 1px solid var(--cinza-100); vertical-align: middle; }
+.tabela-registros tbody tr:last-child td { border-bottom: none; }
+.tabela-registros tbody tr:hover { background-color: var(--cinza-50); }
+.celula-principal { font-weight: 600; }
+.celula-secundaria { color: var(--cinza-500); font-size: 0.78rem; }
+.container-tabela { overflow-x: auto; }
+
+.estado-vazio { display: none; }
+.estado-vazio--visivel { display: block; }

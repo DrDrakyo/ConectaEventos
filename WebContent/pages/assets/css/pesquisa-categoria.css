@@ -1,0 +1,48 @@
+/* ==========================================================================
+   TELA: PESQUISA POR CATEGORIA (Módulo Visitante)
+   Reutiliza .cabecalho, .botao, .card, .rodape de global.css.
+   ========================================================================== */
+
+.banner-institucional {
+  background: linear-gradient(135deg, var(--azul-800) 0%, var(--azul-600) 55%, var(--roxo-600) 130%);
+  padding: var(--espaco-6) 0;
+  color: var(--branco);
+  text-align: center;
+}
+
+.banner-institucional__titulo { color: var(--branco); font-size: clamp(1.5rem, 3.5vw, 2rem); margin-bottom: var(--espaco-2); }
+.banner-institucional__texto { max-width: 100%; margin: 0 auto; color: #e0e7ff; }
+
+.secao { padding: var(--espaco-6) 0 var(--espaco-7); }
+
+.grade-categorias-completa {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--espaco-3);
+}
+
+.categoria-card-grande {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--espaco-2);
+  padding: var(--espaco-5) var(--espaco-3);
+}
+
+.categoria-card-grande__icone {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--raio-full);
+  background-color: var(--azul-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.categoria-card-grande__icone svg { width: 24px; height: 24px; stroke: var(--azul-600); }
+.categoria-card-grande__nome { font-weight: 600; color: var(--cinza-900); font-size: 0.88rem; }
+
+@media (max-width: 480px) {
+  .grade-categorias-completa { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+}

@@ -1,0 +1,127 @@
+/* ==========================================================================
+   TELA: DASHBOARD (Módulo Contratante)
+   Reutiliza .cabecalho, .botao, .card, .status, .cabecalho-pagina e
+   .estado-vazio de global.css. Aqui ficam só os estilos exclusivos desta tela.
+   ========================================================================== */
+
+.miolo-pagina {
+  padding: var(--espaco-5) 0 var(--espaco-7);
+}
+
+/* ---------- Cards de resumo ---------- */
+.grade-resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-5);
+}
+
+.card-resumo {
+  padding: var(--espaco-4);
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+.card-resumo__icone {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raio-sm);
+  background-color: var(--azul-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-resumo__icone svg { width: 20px; height: 20px; stroke: var(--azul-600); }
+
+.card-resumo__numero {
+  font-family: var(--fonte-titulo);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--cinza-900);
+  line-height: 1;
+}
+
+.card-resumo__legenda {
+  font-size: 0.82rem;
+  color: var(--cinza-500);
+  margin-top: 2px;
+}
+
+/* ---------- Bloco "contratações recentes" ---------- */
+.bloco {
+  padding: var(--espaco-4);
+}
+
+.bloco__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--espaco-3);
+}
+
+.bloco__titulo { font-size: 1rem; }
+
+/* ---------- Lista de contratações recentes ---------- */
+.lista-contratacoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.linha-contratacao {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--raio-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.linha-contratacao:hover { box-shadow: var(--sombra-sm); }
+
+.linha-contratacao__icone {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raio-sm);
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.linha-contratacao__icone svg { width: 18px; height: 18px; stroke: var(--azul-600); }
+
+.linha-contratacao__info { flex: 1; min-width: 0; }
+
+.linha-contratacao__titulo {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--cinza-900);
+  margin-bottom: 2px;
+}
+
+.linha-contratacao__detalhe {
+  font-size: 0.78rem;
+  color: var(--cinza-500);
+}
+
+.linha-contratacao__valor {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cinza-900);
+  white-space: nowrap;
+}
+
+/* ---------- Estado vazio (padrão de toggle igual às demais telas) ---------- */
+.estado-vazio { display: none; }
+.estado-vazio--visivel { display: block; }
+
+@media (max-width: 640px) {
+  .linha-contratacao { flex-wrap: wrap; }
+  .linha-contratacao__valor { order: 3; width: 100%; text-align: right; }
+}

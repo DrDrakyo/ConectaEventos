@@ -1,0 +1,82 @@
+/* ==========================================================================
+   TELA: ACOMPANHAR CONTRATAÇÃO (Módulo Contratante)
+   Reutiliza .status, .card, .botao, .cabecalho-pagina de global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.bloco { padding: var(--espaco-4); margin-bottom: var(--espaco-4); }
+.bloco__titulo { font-size: 1rem; margin-bottom: var(--espaco-3); }
+
+/* ---------- Dados gerais ---------- */
+.dados-gerais {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--espaco-3);
+}
+
+.dados-gerais__rotulo {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--cinza-500);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 2px;
+}
+
+.dados-gerais__valor { font-size: 0.92rem; color: var(--cinza-900); }
+
+/* ---------- Itens da contratação (ITEM_CONTRA) ---------- */
+.item-acompanhamento {
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--raio-sm);
+  padding: var(--espaco-3);
+  margin-bottom: var(--espaco-2);
+}
+
+.item-acompanhamento:last-child { margin-bottom: 0; }
+
+.item-acompanhamento__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-2);
+  margin-bottom: var(--espaco-2);
+  flex-wrap: wrap;
+}
+
+.item-acompanhamento__titulo { font-size: 0.88rem; font-weight: 600; color: var(--cinza-900); }
+
+.item-acompanhamento__datas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--espaco-2);
+  font-size: 0.82rem;
+}
+
+.item-acompanhamento__data-rotulo { color: var(--cinza-500); }
+.item-acompanhamento__data-valor { color: var(--cinza-900); font-weight: 600; }
+
+.item-acompanhamento__quantidade-valor {
+  font-size: 0.82rem;
+  color: var(--cinza-500);
+  margin-top: var(--espaco-2);
+}
+
+/* ---------- Bloco de avaliação ---------- */
+.bloco-avaliacao {
+  padding: var(--espaco-4);
+  text-align: center;
+}
+
+.bloco-avaliacao p { color: var(--cinza-500); margin-bottom: var(--espaco-2); font-size: 0.85rem; }
+
+.botao--desabilitado {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (max-width: 560px) {
+  .item-acompanhamento__cabecalho { flex-direction: column; align-items: flex-start; }
+}

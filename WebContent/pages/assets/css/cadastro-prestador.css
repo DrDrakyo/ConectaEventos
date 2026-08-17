@@ -1,0 +1,10 @@
+/* ==========================================================================
+   TELA: CADASTRO DE PRESTADOR (Módulo Visitante)
+   Reutiliza o componente de formulário de autenticação de global.css
+   (.pagina-auth, .cartao-auth, .campo, .grade-dois-campos). Esta tela
+   usa um cartão um pouco mais largo por ter mais campos.
+   ========================================================================== */
+
+.cartao-auth--largo {
+  max-width: 640px;
+}

@@ -1,0 +1,86 @@
+/* ==========================================================================
+   TELA: AVALIAR PRESTADOR (Módulo Contratante)
+   Reutiliza .campo, .mensagem-feedback, .botao, .card de global.css.
+   Campos mapeados aos campos ava_* da tabela CONTRATACAO.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.cartao-formulario { max-width: 580px; margin: 0 auto; padding: var(--espaco-5); }
+
+/* ---------- Resumo do serviço avaliado ---------- */
+.resumo-servico {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  background-color: var(--azul-50);
+  border-radius: var(--raio-sm);
+  margin-bottom: var(--espaco-4);
+}
+
+.resumo-servico__icone {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raio-sm);
+  background-color: var(--branco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.resumo-servico__icone svg { width: 18px; height: 18px; stroke: var(--azul-600); }
+.resumo-servico__titulo { font-size: 0.88rem; font-weight: 600; color: var(--cinza-900); }
+.resumo-servico__detalhe { font-size: 0.78rem; color: var(--cinza-500); }
+
+/* ---------- Seletor de nota (estrelas) ---------- */
+.seletor-nota { display: flex; gap: 4px; margin-bottom: var(--espaco-4); }
+
+.seletor-nota button {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seletor-nota svg { width: 28px; height: 28px; stroke: var(--cinza-300, #d1d5db); stroke-width: 1.6; fill: none; transition: fill 0.15s ease, stroke 0.15s ease; }
+
+.seletor-nota button.selecionada svg,
+.seletor-nota button:hover svg,
+.seletor-nota button.pre-selecionada svg {
+  fill: #f59e0b;
+  stroke: #f59e0b;
+}
+
+/* ---------- Upload de imagens (ava_imagem1 / ava_imagem2) ---------- */
+.grade-upload { display: grid; grid-template-columns: 1fr 1fr; gap: var(--espaco-2); }
+
+.campo-upload {
+  border: 1.5px dashed var(--cinza-200);
+  border-radius: var(--raio-sm);
+  padding: var(--espaco-3);
+  text-align: center;
+  cursor: pointer;
+}
+
+.campo-upload:hover { border-color: var(--azul-600); }
+.campo-upload svg { width: 20px; height: 20px; stroke: var(--cinza-400); margin: 0 auto 4px; }
+.campo-upload span { display: block; font-size: 0.78rem; color: var(--cinza-500); }
+.campo-upload input { display: none; }
+.campo-upload.tem-arquivo span { color: var(--azul-600); font-weight: 600; }
+
+/* ---------- Avaliação já registrada (bloqueada) ---------- */
+.aviso-ja-avaliado {
+  padding: var(--espaco-3);
+  background-color: var(--azul-50);
+  border-radius: var(--raio-sm);
+  font-size: 0.85rem;
+  color: var(--azul-800);
+  margin-bottom: var(--espaco-4);
+}
+
+@media (max-width: 480px) {
+  .grade-upload { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,33 @@
+/* ==========================================================================
+   TELA: CADASTRAR PORTFÓLIO (Módulo Prestador)
+   Reutiliza .campo, .grade-dois-campos, .mensagem-feedback de global.css.
+   Campos mapeados à tabela PORTFOLIO.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.cartao-formulario { max-width: 680px; margin: 0 auto; padding: var(--espaco-5); }
+.cartao-formulario__titulo { font-size: 1.05rem; margin-bottom: var(--espaco-1); }
+.cartao-formulario__legenda { color: var(--cinza-500); font-size: 0.85rem; margin-bottom: var(--espaco-4); }
+
+/* ---------- Upload de imagens (imagem1 / imagem2 / imagem3) ---------- */
+.grade-upload { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--espaco-2); }
+
+.campo-upload {
+  border: 1.5px dashed var(--cinza-200); border-radius: var(--raio-sm);
+  padding: var(--espaco-3); text-align: center; cursor: pointer; display: block;
+}
+
+.campo-upload:hover { border-color: var(--azul-600); }
+.campo-upload svg { width: 20px; height: 20px; stroke: var(--cinza-400); margin: 0 auto 4px; }
+.campo-upload span { display: block; font-size: 0.75rem; color: var(--cinza-500); }
+.campo-upload input { display: none; }
+.campo-upload.tem-arquivo { border-color: var(--azul-600); border-style: solid; }
+.campo-upload.tem-arquivo span { color: var(--azul-600); font-weight: 600; }
+
+.formulario__acoes { display: flex; gap: var(--espaco-3); margin-top: var(--espaco-4); }
+
+@media (max-width: 560px) {
+  .grade-upload { grid-template-columns: 1fr; }
+  .formulario__acoes { flex-direction: column; }
+}

@@ -1,0 +1,75 @@
+/* ==========================================================================
+   TELA: DASHBOARD ADMINISTRATIVO (Módulo Administrador)
+   Reutiliza .cabecalho, .botao, .card, .status, .cabecalho-pagina de
+   global.css. Aqui ficam só os estilos exclusivos desta tela.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+/* ---------- Cards de indicadores ---------- */
+.grade-indicadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-5);
+}
+
+.card-indicador { padding: var(--espaco-4); display: flex; align-items: center; gap: var(--espaco-3); }
+
+.card-indicador__icone {
+  width: 40px; height: 40px; border-radius: var(--raio-sm);
+  background-color: var(--azul-50); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.card-indicador__icone svg { width: 20px; height: 20px; stroke: var(--azul-600); }
+.card-indicador__numero { font-family: var(--fonte-titulo); font-size: 1.4rem; font-weight: 700; color: var(--cinza-900); line-height: 1; }
+.card-indicador__legenda { font-size: 0.82rem; color: var(--cinza-500); margin-top: 2px; }
+
+/* ---------- Atalhos rápidos ---------- */
+.grade-atalhos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-5);
+}
+
+.atalho-card {
+  padding: var(--espaco-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.atalho-card__icone {
+  width: 36px; height: 36px; border-radius: var(--raio-sm);
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  display: flex; align-items: center; justify-content: center;
+}
+
+.atalho-card__icone svg { width: 18px; height: 18px; stroke: var(--azul-600); }
+.atalho-card__titulo { font-size: 0.88rem; font-weight: 600; color: var(--cinza-900); }
+.atalho-card__legenda { font-size: 0.78rem; color: var(--cinza-500); }
+
+/* ---------- Blocos de ranking (categorias mais procuradas / melhores avaliados) ---------- */
+.grade-blocos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--espaco-4); }
+
+.bloco { padding: var(--espaco-4); }
+.bloco__titulo { font-size: 0.98rem; margin-bottom: var(--espaco-3); }
+
+.linha-ranking {
+  display: flex; align-items: center; gap: var(--espaco-3);
+  padding: var(--espaco-2) 0; border-bottom: 1px solid var(--cinza-100);
+}
+
+.linha-ranking:last-child { border-bottom: none; }
+
+.linha-ranking__posicao {
+  width: 22px; height: 22px; border-radius: var(--raio-full);
+  background-color: var(--azul-50); color: var(--azul-800); font-size: 0.72rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.linha-ranking__nome { flex: 1; font-size: 0.85rem; color: var(--cinza-900); }
+.linha-ranking__valor { font-size: 0.82rem; font-weight: 600; color: var(--cinza-500); }
+
+@media (max-width: 900px) { .grade-blocos { grid-template-columns: 1fr; } }

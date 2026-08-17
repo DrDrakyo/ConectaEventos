@@ -1,0 +1,140 @@
+/* ==========================================================================
+   TELA: COMO FUNCIONA (Módulo Visitante)
+   Reutiliza .cabecalho, .botao, .card, .rodape de global.css
+   e os tokens de variables.css.
+   ========================================================================== */
+
+.banner-institucional {
+  background: linear-gradient(135deg, var(--azul-800) 0%, var(--azul-600) 55%, var(--roxo-600) 130%);
+  padding: var(--espaco-7) 0;
+  color: var(--branco);
+  text-align: center;
+}
+
+.banner-institucional__titulo {
+  color: var(--branco);
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  margin-bottom: var(--espaco-2);
+}
+
+.banner-institucional__texto {
+  max-width: 100%;
+  margin: 0 auto;
+  color: #e0e7ff;
+  font-size: 0.98rem;
+}
+
+.secao { padding: var(--espaco-7) 0; }
+.secao--alternada { background-color: var(--branco); }
+
+.secao__titulo-central {
+  text-align: center;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  margin-bottom: var(--espaco-2);
+}
+
+.secao__legenda-central {
+  text-align: center;
+  color: var(--cinza-500);
+  max-width: 100%;
+  margin: 0 auto var(--espaco-5);
+}
+
+/* ---------- Alternador de público (abas Contratante / Prestador) ---------- */
+.alternador-publico {
+  display: flex;
+  justify-content: center;
+  gap: var(--espaco-2);
+  margin-bottom: var(--espaco-6);
+}
+
+.alternador-publico__botao {
+  padding: 8px 22px;
+  border-radius: var(--raio-full);
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--cinza-500);
+  background-color: var(--cinza-100);
+  border: 1px solid var(--cinza-200);
+  transition: all 0.2s ease;
+}
+
+.alternador-publico__botao[aria-selected="true"] {
+  background-color: var(--azul-600);
+  color: var(--branco);
+  border-color: var(--azul-600);
+}
+
+/* ---------- Passos (linha do tempo) ---------- */
+.linha-passos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--espaco-4);
+}
+
+.passo-etapa {
+  padding: var(--espaco-4);
+  text-align: center;
+  position: relative;
+}
+
+.passo-etapa__numero {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto var(--espaco-3);
+  border-radius: var(--raio-full);
+  background-color: var(--azul-600);
+  color: var(--branco);
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.passo-etapa h3 {
+  font-size: 0.92rem;
+  margin-bottom: var(--espaco-2);
+}
+
+.passo-etapa p {
+  font-size: 0.82rem;
+  color: var(--cinza-500);
+}
+
+.painel-publico {
+  display: none;
+}
+
+.painel-publico--ativo {
+  display: block;
+  animation: aparecer 0.25s ease;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.chamada-final {
+  background-color: var(--azul-800);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-6);
+  text-align: center;
+  color: var(--branco);
+  margin: 0 var(--espaco-5);
+}
+
+.chamada-final__titulo { color: var(--branco); font-size: clamp(1.2rem, 2.5vw, 1.5rem); margin-bottom: var(--espaco-2); }
+.chamada-final__texto { color: #dbeafe; margin-bottom: var(--espaco-4); }
+.chamada-final__acoes { display: flex; gap: var(--espaco-3); justify-content: center; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .linha-passos { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  .linha-passos { grid-template-columns: 1fr; }
+  .alternador-publico { flex-direction: column; align-items: stretch; }
+}

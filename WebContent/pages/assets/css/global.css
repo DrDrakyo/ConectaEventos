@@ -1,0 +1,713 @@
+/* ==========================================================================
+   CONECTA EVENTOS — ESTILOS GLOBAIS
+   Reset, tipografia base e componentes reutilizáveis (header, footer,
+   botões, cards, badges). Importar depois de variables.css em toda tela.
+   ========================================================================== */
+
+/* ---------- Reset básico ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--fonte-texto);
+  color: var(--cinza-700);
+  background-color: var(--cinza-50);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--fonte-titulo);
+  color: var(--cinza-900);
+  line-height: 1.25;
+}
+
+/* Acessibilidade: foco visível em todos os elementos navegáveis por teclado */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--azul-600);
+  outline-offset: 2px;
+}
+
+/* ---------- Container padrão ---------- */
+.container {
+  width: 100%;
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  padding: 0 var(--espaco-5);
+}
+
+/* ---------- Cabeçalho (header) padrão de todas as telas ---------- */
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--altura-header);
+  background-color: var(--branco);
+  border-bottom: 1px solid var(--cinza-200);
+  display: flex;
+  align-items: center;
+}
+
+.cabecalho__conteudo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-5);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--azul-800);
+}
+
+.marca__icone {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+.menu-principal {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-6);
+}
+
+.menu-principal a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--cinza-700);
+  transition: color 0.2s ease;
+}
+
+.menu-principal a:hover {
+  color: var(--azul-600);
+}
+
+.cabecalho__acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+/* Botão hambúrguer (mobile) */
+.botao-menu-mobile {
+  display: none;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--raio-sm);
+}
+
+.botao-menu-mobile:hover {
+  background-color: var(--cinza-100);
+}
+
+/* ---------- Botões ---------- */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-2);
+  font-family: var(--fonte-texto);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 18px;
+  border-radius: var(--raio-md);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.botao--primario {
+  background-color: var(--azul-600);
+  color: var(--branco);
+  box-shadow: var(--sombra-sm);
+}
+
+.botao--primario:hover {
+  background-color: var(--azul-700);
+  box-shadow: var(--sombra-md);
+  transform: translateY(-1px);
+}
+
+.botao--secundario {
+  background-color: var(--branco);
+  color: var(--azul-600);
+  border: 1.5px solid var(--azul-600);
+}
+
+.botao--secundario:hover {
+  background-color: var(--azul-50);
+}
+
+.botao--texto {
+  color: var(--azul-600);
+  font-weight: 600;
+  padding: 8px 4px;
+}
+
+.botao--texto:hover {
+  color: var(--azul-700);
+}
+
+.botao--bloco {
+  width: 100%;
+}
+
+.botao--pequeno {
+  padding: 6px 14px;
+  font-size: 0.82rem;
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background-color: var(--branco);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-sm);
+  border: 1px solid var(--cinza-200);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--sombra-md);
+  transform: translateY(-2px);
+}
+
+/* ---------- Badges (categoria, status, etc.) ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--raio-full);
+}
+
+.badge--azul {
+  background-color: var(--azul-100);
+  color: var(--azul-800);
+}
+
+.badge--roxo {
+  background-color: var(--roxo-100);
+  color: var(--roxo-600);
+}
+
+/* ---------- Avaliação (estrela) ---------- */
+.avaliacao {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cinza-900);
+}
+
+.avaliacao svg {
+  width: 16px;
+  height: 16px;
+  fill: #f59e0b;
+}
+
+/* ---------- Rodapé (footer) padrão de todas as telas ---------- */
+.rodape {
+  background-color: var(--cinza-900);
+  color: var(--cinza-200);
+  padding: var(--espaco-7) 0 var(--espaco-5);
+  margin-top: var(--espaco-7);
+}
+
+.rodape__grade {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--espaco-6);
+  padding-bottom: var(--espaco-6);
+  border-bottom: 1px solid #1f2937;
+}
+
+.rodape__marca {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--branco);
+  margin-bottom: var(--espaco-3);
+}
+
+.rodape__descricao {
+  font-size: 0.9rem;
+  color: var(--cinza-400);
+  max-width: 100%;
+}
+
+.rodape__coluna h4 {
+  color: var(--branco);
+  font-size: 0.95rem;
+  margin-bottom: var(--espaco-3);
+}
+
+.rodape__coluna a {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--cinza-400);
+  padding: 6px 0;
+  transition: color 0.2s ease;
+}
+
+.rodape__coluna a:hover {
+  color: var(--branco);
+}
+
+.rodape__base {
+  padding-top: var(--espaco-5);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--cinza-400);
+}
+
+/* ---------- Utilitários ---------- */
+.somente-leitor-tela {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* ---------- Responsivo (regras que se repetem em toda tela) ---------- */
+@media (max-width: 960px) {
+  .rodape__grade {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-principal {
+    display: none;
+  }
+
+  .botao-menu-mobile {
+    display: inline-flex;
+  }
+
+  .rodape__grade {
+    grid-template-columns: 1fr;
+    gap: var(--espaco-5);
+  }
+}
+
+/* Respeita usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   COMPONENTE REUTILIZÁVEL: FORMULÁRIOS DE AUTENTICAÇÃO
+   Usado pelas telas de Cadastro de Contratante, Cadastro de Prestador,
+   Login e Recuperação de Senha. Fica em global.css para não ser
+   duplicado entre os arquivos CSS específicos de cada uma dessas telas.
+   ========================================================================== */
+
+.pagina-auth {
+  padding: var(--espaco-6) 0 var(--espaco-7);
+  background-color: var(--cinza-50);
+}
+
+.cartao-auth {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: var(--espaco-6);
+}
+
+.cartao-auth__cabecalho {
+  text-align: center;
+  margin-bottom: var(--espaco-5);
+}
+
+.cartao-auth__titulo { font-size: 1.4rem; margin-bottom: 4px; }
+.cartao-auth__subtitulo { color: var(--cinza-500); font-size: 0.88rem; }
+
+/* ---------- Seletor de tipo de cadastro (Contratante / Prestador) ---------- */
+.seletor-cadastro {
+  display: flex;
+  background-color: var(--cinza-100);
+  padding: 4px;
+  border-radius: var(--raio-md);
+  gap: 4px;
+  margin-bottom: var(--espaco-5);
+  border: 1px solid var(--cinza-200);
+}
+
+.seletor-cadastro__item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-2);
+  padding: 10px 14px;
+  border-radius: var(--raio-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--cinza-500);
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.seletor-cadastro__item:hover {
+  color: var(--azul-600);
+}
+
+.seletor-cadastro__item--ativo {
+  background-color: var(--branco);
+  color: var(--azul-600);
+  box-shadow: var(--sombra-sm);
+}
+
+.seletor-cadastro__item svg {
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+.campo { margin-bottom: var(--espaco-3); }
+
+.campo label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cinza-700);
+  margin-bottom: 4px;
+}
+
+.obrigatorio {
+  color: var(--status-inativo);
+  margin-left: 2px;
+  font-weight: 700;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--raio-sm);
+  color: var(--cinza-900);
+  background-color: var(--branco);
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  border-color: var(--azul-600);
+  outline: none;
+}
+
+.campo__erro {
+  display: none;
+  color: var(--status-inativo);
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.campo--invalido input,
+.campo--invalido select { border-color: var(--status-inativo); }
+.campo--invalido .campo__erro { display: block; }
+
+.grade-dois-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco-3);
+}
+
+.mensagem-feedback {
+  display: none;
+  padding: 12px 16px;
+  border-radius: var(--raio-sm);
+  font-size: 0.88rem;
+  margin-bottom: var(--espaco-4);
+}
+
+.mensagem-feedback--sucesso { background-color: #dcfce7; color: #166534; }
+.mensagem-feedback--erro { background-color: #fee2e2; color: #991b1b; }
+.mensagem-feedback--visivel { display: block; }
+
+.cartao-auth__rodape {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--cinza-500);
+  margin-top: var(--espaco-4);
+}
+
+.campo__checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--cinza-700);
+}
+
+.campo__checkbox input { width: auto; margin-top: 3px; }
+
+@media (max-width: 480px) {
+  .grade-dois-campos { grid-template-columns: 1fr; }
+  .cartao-auth { padding: var(--espaco-5) var(--espaco-4); }
+}
+
+/* ==========================================================================
+   COMPONENTE REUTILIZÁVEL: PÁGINAS DE TEXTO LEGAL
+   Usado pelas telas de Termos de Uso e Política de Privacidade.
+   ========================================================================== */
+
+.pagina-legal { padding: var(--espaco-7) 0 var(--espaco-8); }
+
+.cabecalho-legal {
+  text-align: center;
+  margin-bottom: var(--espaco-7);
+}
+
+.cabecalho-legal h1 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-bottom: var(--espaco-2); }
+.cabecalho-legal p { color: var(--cinza-500); font-size: 0.9rem; }
+
+.layout-legal {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--espaco-6);
+  align-items: start;
+}
+
+.indice-legal {
+  padding: var(--espaco-5);
+  position: sticky;
+  top: calc(var(--altura-header) + var(--espaco-4));
+}
+
+.indice-legal h2 { font-size: 0.9rem; margin-bottom: var(--espaco-3); }
+
+.indice-legal a {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--cinza-500);
+  padding: 6px 0;
+}
+
+.indice-legal a:hover { color: var(--azul-600); }
+
+.conteudo-legal { padding: var(--espaco-6); }
+
+.conteudo-legal section { margin-bottom: var(--espaco-6); scroll-margin-top: calc(var(--altura-header) + var(--espaco-3)); }
+.conteudo-legal section:last-child { margin-bottom: 0; }
+.conteudo-legal h2 { font-size: 1.1rem; margin-bottom: var(--espaco-2); }
+.conteudo-legal p { color: var(--cinza-700); font-size: 0.92rem; margin-bottom: var(--espaco-2); }
+
+@media (max-width: 900px) {
+  .layout-legal { grid-template-columns: 1fr; }
+  .indice-legal { position: static; }
+}
+
+/* ==========================================================================
+   COMPONENTES REUTILIZÁVEIS: ÁREA LOGADA (Contratante, Prestador, Administrador)
+   Adicionados a partir do módulo do Contratante. Puramente aditivo — nada
+   das regras acima foi alterado, então as telas do módulo Visitante
+   continuam exatamente como estavam.
+   ========================================================================== */
+
+/* ---------- Cabeçalho da área logada (menu do usuário) ---------- */
+.cabecalho__usuario {
+  position: relative;
+}
+
+.botao-usuario {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px 6px 6px;
+  border-radius: var(--raio-full);
+  background-color: var(--cinza-100);
+}
+
+.botao-usuario:hover { background-color: var(--cinza-200); }
+
+.avatar-usuario {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--raio-full);
+  background-color: var(--azul-600);
+  color: var(--branco);
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.botao-usuario__nome {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--cinza-700);
+}
+
+.botao-usuario svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--cinza-500);
+  transition: transform 0.2s ease;
+}
+
+.cabecalho__usuario--aberto .botao-usuario svg { transform: rotate(180deg); }
+
+.menu-usuario {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background-color: var(--branco);
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-lg);
+  padding: var(--espaco-2);
+  z-index: 110;
+}
+
+.cabecalho__usuario--aberto .menu-usuario { display: block; }
+
+.menu-usuario a,
+.menu-usuario button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: var(--raio-sm);
+  font-size: 0.9rem;
+  color: var(--cinza-700);
+}
+
+.menu-usuario a:hover,
+.menu-usuario button:hover { background-color: var(--cinza-100); }
+
+.menu-usuario__separador {
+  height: 1px;
+  background-color: var(--cinza-200);
+  margin: var(--espaco-2) 4px;
+}
+
+.menu-usuario__sair { color: var(--status-inativo); }
+
+/* Menu principal da área logada usa o mesmo .menu-principal do Visitante,
+   apenas com links diferentes (Dashboard, Buscar Prestadores, Histórico). */
+
+/* ---------- Badges de status de contratação (CONTRATACAO.situacao / ITEM_CONTRA.situacao_item) ---------- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--raio-full);
+  white-space: nowrap;
+}
+
+.status::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.status--disponivel { color: var(--status-disponivel); background-color: #dcfce7; }
+.status--negociacao { color: var(--status-negociacao); background-color: #fef3c7; }
+.status--aguardando  { color: var(--status-negociacao); background-color: #fef3c7; } /* ITEM_CONTRA.situacao_item: aguardando início */
+.status--contratado  { color: var(--status-contratado); background-color: var(--azul-100); }
+.status--iniciado    { color: var(--status-iniciado); background-color: var(--roxo-100); }
+.status--concluido   { color: var(--status-concluido); background-color: #d1fae5; }
+.status--inativo     { color: var(--status-inativo); background-color: #fee2e2; }
+
+/* ---------- Cabeçalho de página interna (título + ação principal) ---------- */
+.cabecalho-pagina {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-5);
+  flex-wrap: wrap;
+}
+
+.cabecalho-pagina__titulo { font-size: clamp(1.2rem, 2.5vw, 1.5rem); margin-bottom: 2px; }
+.cabecalho-pagina__legenda { color: var(--cinza-500); font-size: 0.88rem; }
+
+/* ---------- Estado vazio (listas sem registros) ---------- */
+.estado-vazio {
+  text-align: center;
+  padding: var(--espaco-7) var(--espaco-5);
+  color: var(--cinza-500);
+}
+
+.estado-vazio svg {
+  width: 48px;
+  height: 48px;
+  stroke: var(--cinza-400);
+  margin: 0 auto var(--espaco-3);
+}
+
+.estado-vazio p { font-size: 0.95rem; }
+
+@media (max-width: 600px) {
+  .botao-usuario__nome { display: none; }
+}

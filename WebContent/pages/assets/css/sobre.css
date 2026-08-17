@@ -1,0 +1,206 @@
+/* ==========================================================================
+   TELA: SOBRE A PLATAFORMA (Módulo Visitante)
+   Estilos específicos desta tela. Reutiliza os componentes de global.css
+   (.cabecalho, .botao, .card, .rodape) e os tokens de variables.css.
+   ========================================================================== */
+
+/* ---------- Banner institucional ---------- */
+.banner-institucional {
+  background: linear-gradient(135deg, var(--azul-800) 0%, var(--azul-600) 55%, var(--roxo-600) 130%);
+  padding: var(--espaco-7) 0;
+  color: var(--branco);
+  text-align: center;
+}
+
+.banner-institucional__titulo {
+  color: var(--branco);
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  margin-bottom: var(--espaco-2);
+}
+
+.banner-institucional__texto {
+  max-width: 100%;
+  margin: 0 auto;
+  color: #e0e7ff;
+  font-size: 0.98rem;
+}
+
+/* ---------- Seções gerais (reaproveita o padrão .secao já usado na Home) ---------- */
+.secao {
+  padding: var(--espaco-7) 0;
+}
+
+.secao--alternada {
+  background-color: var(--branco);
+}
+
+.secao__titulo-central {
+  text-align: center;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  margin-bottom: var(--espaco-2);
+}
+
+.secao__legenda-central {
+  text-align: center;
+  color: var(--cinza-500);
+  max-width: 100%;
+  margin: 0 auto var(--espaco-5);
+}
+
+/* ---------- Missão (texto + destaque em card) ---------- */
+.missao {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--espaco-6);
+  align-items: center;
+}
+
+.missao__texto h2 {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  margin-bottom: var(--espaco-2);
+}
+
+.missao__texto p {
+  color: var(--cinza-500);
+  margin-bottom: var(--espaco-3);
+}
+
+.missao__destaque {
+  padding: var(--espaco-5);
+  background-color: var(--azul-50);
+  border: 1px solid var(--azul-100);
+}
+
+.missao__destaque .icone-aspas {
+  width: 32px;
+  height: 32px;
+  stroke: var(--azul-600);
+  margin-bottom: var(--espaco-2);
+}
+
+.missao__destaque p {
+  font-family: var(--fonte-titulo);
+  font-size: 1.05rem;
+  color: var(--azul-800);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ---------- Cards "Para Contratantes" / "Para Prestadores" ---------- */
+.grade-publicos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco-4);
+}
+
+.publico-card {
+  padding: var(--espaco-5);
+}
+
+.publico-card__icone {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--raio-full);
+  background-color: var(--roxo-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--espaco-3);
+}
+
+.publico-card__icone svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--roxo-600);
+}
+
+.publico-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: var(--espaco-2);
+}
+
+.publico-card p {
+  color: var(--cinza-500);
+  font-size: 0.9rem;
+  margin-bottom: var(--espaco-3);
+}
+
+/* ---------- Valores da plataforma ---------- */
+.grade-valores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--espaco-4);
+}
+
+.valor-card {
+  padding: var(--espaco-4);
+  text-align: center;
+}
+
+.valor-card__icone {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raio-full);
+  background-color: var(--azul-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--espaco-2);
+}
+
+.valor-card__icone svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--azul-600);
+}
+
+.valor-card h4 {
+  font-size: 0.92rem;
+  margin-bottom: var(--espaco-1);
+}
+
+.valor-card p {
+  font-size: 0.82rem;
+  color: var(--cinza-500);
+}
+
+/* ---------- Chamada final (mesmo padrão da Home) ---------- */
+.chamada-final {
+  background-color: var(--azul-800);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-6);
+  text-align: center;
+  color: var(--branco);
+  margin: 0 var(--espaco-5);
+}
+
+.chamada-final__titulo {
+  color: var(--branco);
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  margin-bottom: var(--espaco-2);
+}
+
+.chamada-final__texto {
+  color: #dbeafe;
+  margin-bottom: var(--espaco-4);
+}
+
+.chamada-final__acoes {
+  display: flex;
+  gap: var(--espaco-3);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 900px) {
+  .missao {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .grade-publicos {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,51 @@
+/* ==========================================================================
+   TELA: GERENCIAR PORTFÓLIOS (Módulo Administrador)
+   Apenas visualização e exclusão — PORTFOLIO não possui campo de
+   situação, então não há inativação nesta tela. Reutiliza .card, .botao,
+   .cabecalho-pagina, .estado-vazio de global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.barra-filtros {
+  display: flex; flex-wrap: wrap; gap: var(--espaco-2); align-items: flex-end;
+  padding: var(--espaco-3); margin-bottom: var(--espaco-4);
+}
+
+.campo-filtro { display: flex; flex-direction: column; gap: 2px; min-width: 160px; }
+.campo-filtro label { font-size: 0.72rem; font-weight: 600; color: var(--cinza-500); }
+.campo-filtro input, .campo-filtro select {
+  padding: 8px 10px; border: 1px solid var(--cinza-200); border-radius: var(--raio-sm);
+  background-color: var(--branco); color: var(--cinza-900);
+}
+.campo-filtro input:focus, .campo-filtro select:focus { border-color: var(--azul-600); outline: none; }
+
+.grade-portfolio-admin { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--espaco-4); }
+
+.item-galeria-admin { overflow: hidden; display: flex; flex-direction: column; }
+
+.item-galeria-admin__imagem {
+  height: 120px; background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  display: flex; align-items: center; justify-content: center;
+}
+
+.item-galeria-admin__imagem svg { width: 26px; height: 26px; stroke: var(--azul-600); opacity: 0.6; }
+
+.item-galeria-admin__corpo { padding: var(--espaco-3); display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.item-galeria-admin__categoria { font-size: 0.68rem; font-weight: 600; color: var(--roxo-600); text-transform: uppercase; letter-spacing: 0.03em; }
+.item-galeria-admin__titulo { font-size: 0.92rem; }
+.item-galeria-admin__prestador { font-size: 0.78rem; color: var(--cinza-500); }
+.item-galeria-admin__valor { font-size: 0.82rem; color: var(--cinza-700); margin-top: 2px; }
+.item-galeria-admin__valor strong { color: var(--cinza-900); }
+
+.item-galeria-admin__acoes {
+  display: flex; gap: var(--espaco-2); margin-top: auto; padding-top: var(--espaco-2); border-top: 1px solid var(--cinza-200);
+}
+
+.botao--perigo {
+  background-color: var(--branco); color: var(--status-inativo); border: 1.5px solid var(--status-inativo);
+}
+.botao--perigo:hover { background-color: #fee2e2; }
+
+.estado-vazio { display: none; }
+.estado-vazio--visivel { display: block; }

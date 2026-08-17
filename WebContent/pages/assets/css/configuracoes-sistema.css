@@ -1,0 +1,40 @@
+/* ==========================================================================
+   TELA: CONFIGURAÇÕES DO SISTEMA (Módulo Administrador)
+   Painel organizacional de atalhos — sem tabela própria de parâmetros no
+   banco, então esta tela não cria, edita nem persiste nenhum dado.
+   Reutiliza .card, .cabecalho-pagina de global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.aviso-painel {
+  padding: var(--espaco-3);
+  background-color: var(--azul-50);
+  border-radius: var(--raio-sm);
+  font-size: 0.82rem;
+  color: var(--azul-800);
+  margin-bottom: var(--espaco-5);
+}
+
+.grade-atalhos-sistema {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--espaco-3);
+}
+
+.atalho-sistema {
+  padding: var(--espaco-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.atalho-sistema__icone {
+  width: 36px; height: 36px; border-radius: var(--raio-sm);
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  display: flex; align-items: center; justify-content: center;
+}
+
+.atalho-sistema__icone svg { width: 18px; height: 18px; stroke: var(--azul-600); }
+.atalho-sistema__titulo { font-size: 0.92rem; font-weight: 600; color: var(--cinza-900); }
+.atalho-sistema__legenda { font-size: 0.82rem; color: var(--cinza-500); }

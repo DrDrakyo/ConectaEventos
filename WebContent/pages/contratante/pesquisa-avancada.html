@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pesquisa Avançada | Conecta Eventos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <link rel="stylesheet" href="../assets/css/listagem-prestadores.css" />
+</head>
+<body>
+  <!-- ===================== CABEÇALHO (idêntico em todas as telas) ===================== -->
+  <header class="cabecalho">
+    <div class="container cabecalho__conteudo">
+      <a href="dashboard-contratante.html" class="marca">
+        <svg class="marca__icone" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17.6l-5.8 3-.9-6.5-4.8-4.6 6.6-.9z"/>
+        </svg>
+        Conecta Eventos
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a href="dashboard-contratante.html">Dashboard</a>
+        <a href="buscar-prestadores.html">Buscar Prestadores</a>
+        <a href="historico-contratacoes.html">Histórico</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <div class="cabecalho__usuario">
+          <button class="botao-usuario" aria-haspopup="true" aria-expanded="false">
+            <span class="avatar-usuario">MC</span>
+            <span class="botao-usuario__nome">Maria Costa</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="menu-usuario">
+            <a href="meu-perfil-contratante.html">Meu Perfil</a>
+            <a href="configuracoes-conta-contratante.html">Configurações da Conta</a>
+            <div class="menu-usuario__separador"></div>
+            <a href="../visitante/home.html" class="menu-usuario__sair">Sair</a>
+          </div>
+        </div>
+        <button class="botao-menu-mobile" aria-label="Abrir menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" width="24" height="24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="pagina-busca">
+    <div class="container pagina-busca__layout">
+
+      <!-- ===================== PAINEL DE FILTROS ===================== -->
+      <aside class="painel-filtros card">
+        <h2>Pesquisa avançada</h2>
+        <form id="formulario-filtros">
+          <div class="campo-filtro">
+            <label for="filtro-categoria">Categoria</label>
+            <select id="filtro-categoria">
+              <option value="">Todas</option>
+              <option value="Fotografia">Fotografia</option>
+              <option value="Filmagem">Filmagem</option>
+              <option value="Decoração">Decoração</option>
+              <option value="Buffet">Buffet</option>
+              <option value="Cerimonial">Cerimonial</option>
+              <option value="Sonorização">Sonorização</option>
+              <option value="Iluminação">Iluminação</option>
+              <option value="Segurança">Segurança</option>
+              <option value="Recepção">Recepção</option>
+              <option value="Produção de eventos">Produção de eventos</option>
+              <option value="Bartender">Bartender</option>
+              <option value="DJ">DJ</option>
+              <option value="Banda">Banda</option>
+              <option value="Mestre de cerimônias">Mestre de cerimônias</option>
+              <option value="Locução">Locução</option>
+              <option value="Assessoria">Assessoria</option>
+              <option value="Atrações artísticas">Atrações artísticas</option>
+            </select>
+          </div>
+
+          <div class="campo-filtro">
+            <label for="filtro-cidade">Cidade</label>
+            <input type="text" id="filtro-cidade" placeholder="Ex: Salvador" />
+          </div>
+
+          <div class="campo-filtro">
+            <label for="filtro-disponibilidade">Disponibilidade</label>
+            <select id="filtro-disponibilidade">
+              <option value="">Todas</option>
+              <option value="Disponível">Disponível</option>
+              <option value="Indisponível">Indisponível</option>
+            </select>
+          </div>
+
+          <div class="campo-filtro">
+            <label>Faixa de preço (R$)</label>
+            <div class="campo-filtro--faixa">
+              <input type="number" id="filtro-preco-min" min="0" step="50" placeholder="Mínimo" />
+              <span>até</span>
+              <input type="number" id="filtro-preco-max" min="0" step="50" placeholder="Máximo" />
+            </div>
+          </div>
+
+          <div class="campo-filtro">
+            <label for="filtro-reputacao">Reputação mínima</label>
+            <select id="filtro-reputacao">
+              <option value="">Qualquer</option>
+              <option value="4.5">4.5 ou mais</option>
+              <option value="4">4.0 ou mais</option>
+              <option value="3">3.0 ou mais</option>
+            </select>
+          </div>
+
+          <div class="filtros__acoes">
+            <button type="submit" class="botao botao--primario botao--bloco">Filtrar</button>
+            <button type="button" id="botao-limpar-filtros" class="botao botao--secundario botao--bloco">Limpar Filtros</button>
+          </div>
+        </form>
+      </aside>
+
+      <!-- ===================== RESULTADOS ===================== -->
+      <section>
+        <div class="resultados__cabecalho">
+          <span class="resultados__contagem" id="resultados-contagem">0 prestadores encontrados</span>
+          <div class="resultados__ordenacao">
+            <label for="ordenacao" class="somente-leitor-tela">Ordenar por</label>
+            <select id="ordenacao">
+              <option value="relevancia">Relevância</option>
+              <option value="melhor-avaliacao">Melhor avaliação</option>
+              <option value="menor-preco">Menor preço</option>
+              <option value="maior-preco">Maior preço</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grade-prestadores" id="grade-prestadores"></div>
+
+        <div class="estado-vazio card" id="estado-vazio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <p>Nenhum prestador encontrado com os filtros selecionados.</p>
+        </div>
+
+        <nav class="paginacao" id="paginacao" aria-label="Paginação de resultados"></nav>
+      </section>
+    </div>
+  </main>
+  <!-- ===================== RODAPÉ (idêntico em todas as telas) ===================== -->
+  <footer class="rodape">
+    <div class="container rodape__grade">
+      <div>
+        <div class="rodape__marca">Conecta Eventos</div>
+        <p class="rodape__descricao">
+          A plataforma que conecta contratantes e prestadores de serviços para eventos
+          de forma rápida, organizada e segura.
+        </p>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Conta</h4>
+        <a href="dashboard-contratante.html">Dashboard</a>
+        <a href="meu-perfil-contratante.html">Meu Perfil</a>
+        <a href="historico-contratacoes.html">Histórico</a>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Institucional</h4>
+        <a href="../visitante/contato.html">Contato</a>
+        <a href="../visitante/termos-de-uso.html">Termos de Uso</a>
+        <a href="../visitante/politica-de-privacidade.html">Política de Privacidade</a>
+      </div>
+    </div>
+
+    <div class="container rodape__base">
+      &copy; 2026 Conecta Eventos. Projeto acadêmico — todos os direitos reservados.
+    </div>
+  </footer>
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/pesquisa-avancada.js"></script>
+</body>
+</html>

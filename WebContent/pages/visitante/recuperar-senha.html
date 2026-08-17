@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recuperar Senha | Conecta Eventos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <link rel="stylesheet" href="../assets/css/recuperar-senha.css" />
+</head>
+<body>
+  <!-- ===================== CABEÇALHO (idêntico em todas as telas) ===================== -->
+  <header class="cabecalho">
+    <div class="container cabecalho__conteudo">
+      <a href="home.html" class="marca">
+        <svg class="marca__icone" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17.6l-5.8 3-.9-6.5-4.8-4.6 6.6-.9z"/>
+        </svg>
+        Conecta Eventos
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a href="lista-prestadores.html">Encontrar Prestadores</a>
+        <a href="sobre.html">Sobre a Plataforma</a>
+        <a href="como-funciona.html">Como Funciona</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <a href="login.html" class="botao botao--secundario botao--pequeno">Entrar</a>
+        <a href="cadastro-contratante.html" class="botao botao--primario botao--pequeno">Cadastrar-se</a>
+        <button class="botao-menu-mobile" aria-label="Abrir menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" width="24" height="24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="pagina-auth">
+    <div class="container">
+      <div class="cartao-auth card">
+        <div class="cartao-auth__cabecalho">
+          <h1 class="cartao-auth__titulo">Recuperar senha</h1>
+          <p class="cartao-auth__subtitulo">Informe o e-mail cadastrado para receber as instruções de redefinição.</p>
+        </div>
+
+        <div id="mensagem-feedback" class="mensagem-feedback" role="status"></div>
+
+        <form id="formulario-recuperar-senha" novalidate>
+          <div class="campo">
+            <label for="campo-email">E-mail cadastrado</label>
+            <input type="email" id="campo-email" placeholder="seuemail@exemplo.com" />
+            <span class="campo__erro">Informe um e-mail válido.</span>
+          </div>
+
+          <button type="submit" class="botao botao--primario botao--bloco">Enviar</button>
+        </form>
+
+        <p class="cartao-auth__rodape">
+          Lembrou sua senha? <a href="login.html" style="color: var(--azul-600); font-weight:600;">Voltar ao Login</a>
+        </p>
+      </div>
+    </div>
+  </main>
+  <!-- ===================== RODAPÉ (idêntico em todas as telas) ===================== -->
+  <footer class="rodape">
+    <div class="container rodape__grade">
+      <div>
+        <div class="rodape__marca">Conecta Eventos</div>
+        <p class="rodape__descricao">
+          A plataforma que conecta contratantes e prestadores de serviços para eventos
+          de forma rápida, organizada e segura.
+        </p>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Plataforma</h4>
+        <a href="sobre.html">Sobre a Plataforma</a>
+        <a href="como-funciona.html">Como Funciona</a>
+        <a href="lista-prestadores.html">Encontrar Prestadores</a>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Conta</h4>
+        <a href="login.html">Entrar</a>
+        <a href="cadastro-contratante.html">Cadastro de Contratante</a>
+        <a href="cadastro-prestador.html">Cadastro de Prestador</a>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Institucional</h4>
+        <a href="contato.html">Contato</a>
+        <a href="termos-de-uso.html">Termos de Uso</a>
+        <a href="politica-de-privacidade.html">Política de Privacidade</a>
+      </div>
+    </div>
+
+    <div class="container rodape__base">
+      &copy; 2026 Conecta Eventos. Projeto acadêmico — todos os direitos reservados.
+    </div>
+  </footer>
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/recuperar-senha.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conecta Eventos | Encontre os melhores prestadores para o seu evento</title>
+
+  <!-- Fontes do Google Fonts (não é um framework de UI, apenas tipografia) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- CSS globais do projeto (usados em TODAS as telas) + CSS desta tela -->
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <link rel="stylesheet" href="../assets/css/home.css" />
+</head>
+<body>
+
+  <!-- ===================== CABEÇALHO ===================== -->
+  <header class="cabecalho">
+    <div class="container cabecalho__conteudo">
+      <a href="home.html" class="marca">
+        <svg class="marca__icone" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17.6l-5.8 3-.9-6.5-4.8-4.6 6.6-.9z"/>
+        </svg>
+        Conecta Eventos
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a href="lista-prestadores.html">Encontrar Prestadores</a>
+        <a href="sobre.html">Sobre a Plataforma</a>
+        <a href="como-funciona.html">Como Funciona</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <a href="login.html" class="botao botao--secundario botao--pequeno">Entrar</a>
+        <a href="cadastro-contratante.html" class="botao botao--primario botao--pequeno">Cadastrar-se</a>
+        <button class="botao-menu-mobile" aria-label="Abrir menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" width="24" height="24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== HERO / BUSCA RÁPIDA ===================== -->
+    <section class="hero">
+      <div class="container hero__conteudo">
+        <h1 class="hero__titulo">Encontre o prestador certo para o seu <span>evento</span></h1>
+        <p class="hero__subtitulo">
+          Pesquise fotógrafos, buffets, decoradores, DJs e outros profissionais avaliados
+          por quem já contratou, tudo em um só lugar.
+        </p>
+
+        <form class="busca-rapida" role="search">
+          <label for="campo-busca" class="somente-leitor-tela">Buscar prestador</label>
+          <div class="busca-rapida__campo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
+            </svg>
+            <input type="text" id="campo-busca" name="busca" placeholder="Buscar por nome ou tipo de serviço" />
+          </div>
+
+          <label for="campo-categoria" class="somente-leitor-tela">Categoria</label>
+          <select id="campo-categoria" name="categoria" class="busca-rapida__categoria">
+            <option value="">Todas as categorias</option>
+            <option value="Fotografia">Fotografia</option>
+            <option value="Filmagem">Filmagem</option>
+            <option value="Decoração">Decoração</option>
+            <option value="Buffet">Buffet</option>
+            <option value="Cerimonial">Cerimonial</option>
+            <option value="Sonorização">Sonorização</option>
+            <option value="Iluminação">Iluminação</option>
+            <option value="Segurança">Segurança</option>
+            <option value="Recepção">Recepção</option>
+            <option value="Produção de eventos">Produção de eventos</option>
+            <option value="Bartender">Bartender</option>
+            <option value="DJ">DJ</option>
+            <option value="Banda">Banda</option>
+            <option value="Mestre de cerimônias">Mestre de cerimônias</option>
+            <option value="Locução">Locução</option>
+            <option value="Assessoria">Assessoria</option>
+            <option value="Atrações artísticas">Atrações artísticas</option>
+          </select>
+
+          <button type="submit" class="botao botao--primario">Buscar</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== CATEGORIAS EM DESTAQUE ===================== -->
+    <section class="secao">
+      <div class="container">
+        <div class="secao__cabecalho">
+          <div>
+            <h2 class="secao__titulo">Categorias mais procuradas</h2>
+            <p class="secao__legenda">Explore os tipos de serviço disponíveis na plataforma</p>
+          </div>
+          <a href="lista-prestadores.html" class="botao botao--texto">Ver todas as categorias →</a>
+        </div>
+
+        <!-- Carrossel de categorias -->
+        <div class="carrossel-categorias">
+          <button class="carrossel-categorias__botao carrossel-categorias__botao--anterior carrossel-categorias__botao--oculto" aria-label="Anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <!-- Preenchido dinamicamente por js/home.js -->
+          <div class="grade-categorias" id="grade-categorias"></div>
+          <button class="carrossel-categorias__botao carrossel-categorias__botao--proximo" aria-label="Próximo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PRESTADORES EM DESTAQUE ===================== -->
+    <section class="secao secao--alternada">
+      <div class="container">
+        <div class="secao__cabecalho">
+          <div>
+            <h2 class="secao__titulo">Prestadores em destaque</h2>
+            <p class="secao__legenda">Profissionais bem avaliados por contratantes na plataforma</p>
+          </div>
+          <a href="lista-prestadores.html" class="botao botao--texto">Ver todos os prestadores →</a>
+        </div>
+
+        <!-- Preenchido dinamicamente por js/home.js -->
+        <div class="grade-prestadores" id="grade-prestadores"></div>
+      </div>
+    </section>
+
+    <!-- ===================== SEÇÃO INSTITUCIONAL RESUMIDA ===================== -->
+    <section class="secao">
+      <div class="container institucional">
+        <div class="institucional__texto">
+          <h2>Organize a contratação do início ao fim</h2>
+          <p>
+            Do primeiro contato até a avaliação final, acompanhe cada etapa da
+            contratação diretamente pela plataforma.
+          </p>
+          <div class="institucional__lista">
+            <div class="institucional__item">
+              <span class="icone-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>
+              </span>
+              <p>Compare perfis completos, com portfólio e experiência de cada prestador.</p>
+            </div>
+            <div class="institucional__item">
+              <span class="icone-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>
+              </span>
+              <p>Acompanhe o andamento da contratação em tempo real, do início à conclusão.</p>
+            </div>
+            <div class="institucional__item">
+              <span class="icone-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>
+              </span>
+              <p>Avalie o serviço prestado e ajude outros contratantes a escolherem melhor.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="institucional__passos">
+          <div class="passo-card card">
+            <span class="passo-card__numero">1</span>
+            <div class="passo-card__texto">
+              <h4>Pesquise e compare</h4>
+              <p>Filtre por categoria, cidade, disponibilidade e faixa de preço.</p>
+            </div>
+          </div>
+          <div class="passo-card card">
+            <span class="passo-card__numero">2</span>
+            <div class="passo-card__texto">
+              <h4>Solicite a contratação</h4>
+              <p>Envie sua solicitação direto pelo perfil do prestador escolhido.</p>
+            </div>
+          </div>
+          <div class="passo-card card">
+            <span class="passo-card__numero">3</span>
+            <div class="passo-card__texto">
+              <h4>Acompanhe e avalie</h4>
+              <p>Veja o status do serviço e avalie ao final da contratação.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CHAMADA FINAL ===================== -->
+    <section class="secao">
+      <div class="chamada-final">
+        <h2 class="chamada-final__titulo">Pronto para organizar o seu evento?</h2>
+        <p class="chamada-final__texto">Cadastre-se gratuitamente como contratante ou prestador de serviços.</p>
+        <div class="chamada-final__acoes">
+          <a href="cadastro-contratante.html" class="botao botao--primario">Sou Contratante</a>
+          <a href="cadastro-prestador.html" class="botao botao--secundario" style="background:transparent;color:#fff;border-color:#fff;">Sou Prestador</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer class="rodape">
+    <div class="container rodape__grade">
+      <div>
+        <div class="rodape__marca">Conecta Eventos</div>
+        <p class="rodape__descricao">
+          A plataforma que conecta contratantes e prestadores de serviços para eventos
+          de forma rápida, organizada e segura.
+        </p>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Plataforma</h4>
+        <a href="sobre.html">Sobre a Plataforma</a>
+        <a href="como-funciona.html">Como Funciona</a>
+        <a href="lista-prestadores.html">Encontrar Prestadores</a>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Conta</h4>
+        <a href="login.html">Entrar</a>
+        <a href="cadastro-contratante.html">Cadastro de Contratante</a>
+        <a href="cadastro-prestador.html">Cadastro de Prestador</a>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Institucional</h4>
+        <a href="contato.html">Contato</a>
+        <a href="termos-de-uso.html">Termos de Uso</a>
+        <a href="politica-de-privacidade.html">Política de Privacidade</a>
+      </div>
+    </div>
+
+    <div class="container rodape__base">
+      &copy; 2026 Conecta Eventos. Projeto acadêmico — todos os direitos reservados.
+    </div>
+  </footer>
+
+  <!-- JavaScript comum a todas as telas + JavaScript específico desta tela -->
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/home.js"></script>
+</body>
+</html>

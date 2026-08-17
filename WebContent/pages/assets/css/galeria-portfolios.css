@@ -1,0 +1,84 @@
+/* ==========================================================================
+   TELA: GALERIA DE PORTFÓLIOS (Módulo Prestador)
+   Reutiliza .cabecalho-pagina, .botao, .card, .estado-vazio de global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.grade-portfolio {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--espaco-5);
+}
+
+.item-galeria {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-galeria:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-md);
+}
+
+.item-galeria__imagem {
+  height: 180px;
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-galeria__imagem svg {
+  width: 40px;
+  height: 40px;
+  stroke: var(--azul-600);
+  opacity: 0.6;
+}
+
+.item-galeria__corpo {
+  padding: var(--espaco-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  flex: 1;
+}
+
+.item-galeria__categoria {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--roxo-600);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.item-galeria__titulo {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--cinza-900);
+}
+
+.item-galeria__valor {
+  font-size: 0.9rem;
+  color: var(--cinza-700);
+  margin-top: 4px;
+}
+
+.item-galeria__valor strong {
+  color: var(--azul-600);
+  font-size: 1.05rem;
+}
+
+.item-galeria__acoes {
+  display: flex;
+  gap: var(--espaco-2);
+  margin-top: auto;
+  padding-top: var(--espaco-3);
+  border-top: 1px solid var(--cinza-100);
+}
+
+/* ---------- Estado vazio ---------- */
+.estado-vazio { display: none; }
+.estado-vazio--visivel { display: block; }

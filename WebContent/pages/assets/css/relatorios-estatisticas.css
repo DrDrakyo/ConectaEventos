@@ -1,0 +1,49 @@
+/* ==========================================================================
+   TELA: RELATÓRIOS E ESTATÍSTICAS (Módulo Administrador)
+   Reutiliza .card, .cabecalho-pagina de global.css. Gráficos construídos
+   em SVG puro, sem bibliotecas externas.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+/* ---------- Filtro de período ---------- */
+.barra-filtros {
+  display: flex; flex-wrap: wrap; gap: var(--espaco-2); align-items: flex-end;
+  padding: var(--espaco-3); margin-bottom: var(--espaco-4);
+}
+.campo-filtro { display: flex; flex-direction: column; gap: 2px; min-width: 160px; }
+.campo-filtro label { font-size: 0.72rem; font-weight: 600; color: var(--cinza-500); }
+.campo-filtro select {
+  padding: 8px 10px; border: 1px solid var(--cinza-200); border-radius: var(--raio-sm);
+  background-color: var(--branco); color: var(--cinza-900);
+}
+
+/* ---------- Cards de destaque ---------- */
+.grade-destaques { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--espaco-3); margin-bottom: var(--espaco-5); }
+.card-destaque { padding: var(--espaco-4); }
+.card-destaque__legenda { font-size: 0.75rem; color: var(--cinza-500); margin-bottom: 4px; }
+.card-destaque__valor { font-family: var(--fonte-titulo); font-size: 1.2rem; font-weight: 700; color: var(--cinza-900); }
+.card-destaque__extra { font-size: 0.75rem; color: var(--roxo-600); font-weight: 600; margin-top: 2px; }
+
+/* ---------- Blocos de gráfico ---------- */
+.grade-graficos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--espaco-4); margin-bottom: var(--espaco-4); }
+
+.bloco-grafico { padding: var(--espaco-4); }
+.bloco-grafico__titulo { font-size: 0.98rem; margin-bottom: var(--espaco-3); }
+
+/* Gráfico de barras horizontais (categorias mais procuradas) */
+.grafico-barras { display: flex; flex-direction: column; gap: var(--espaco-2); }
+.linha-barra__rotulo { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--cinza-700); margin-bottom: 2px; }
+.linha-barra__fundo { height: 8px; border-radius: var(--raio-full); background-color: var(--cinza-100); overflow: hidden; }
+.linha-barra__preenchimento { height: 100%; border-radius: var(--raio-full); background: linear-gradient(90deg, var(--azul-600), var(--roxo-600)); }
+
+/* Gráfico de linha (volume de contratações) via SVG */
+.grafico-linha svg { width: 100%; height: auto; }
+
+.bloco-tabela { padding: var(--espaco-4); }
+.tabela-registros { width: 100%; border-collapse: collapse; }
+.tabela-registros thead th { text-align: left; font-size: 0.7rem; font-weight: 700; color: var(--cinza-500); text-transform: uppercase; letter-spacing: 0.03em; padding: var(--espaco-2); border-bottom: 1px solid var(--cinza-200); }
+.tabela-registros tbody td { padding: var(--espaco-2); font-size: 0.85rem; color: var(--cinza-900); border-bottom: 1px solid var(--cinza-100); }
+.tabela-registros tbody tr:last-child td { border-bottom: none; }
+
+@media (max-width: 900px) { .grade-graficos { grid-template-columns: 1fr; } }

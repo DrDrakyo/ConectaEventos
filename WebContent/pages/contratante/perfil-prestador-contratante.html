@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil do Prestador | Conecta Eventos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <link rel="stylesheet" href="../assets/css/perfil-prestador.css" />
+</head>
+<body>
+  <!-- ===================== CABEÇALHO (idêntico em todas as telas) ===================== -->
+  <header class="cabecalho">
+    <div class="container cabecalho__conteudo">
+      <a href="dashboard-contratante.html" class="marca">
+        <svg class="marca__icone" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17.6l-5.8 3-.9-6.5-4.8-4.6 6.6-.9z"/>
+        </svg>
+        Conecta Eventos
+      </a>
+
+      <nav class="menu-principal" aria-label="Menu principal">
+        <a href="dashboard-contratante.html">Dashboard</a>
+        <a href="buscar-prestadores.html">Buscar Prestadores</a>
+        <a href="historico-contratacoes.html">Histórico</a>
+      </nav>
+
+      <div class="cabecalho__acoes">
+        <div class="cabecalho__usuario">
+          <button class="botao-usuario" aria-haspopup="true" aria-expanded="false">
+            <span class="avatar-usuario">MC</span>
+            <span class="botao-usuario__nome">Maria Costa</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="menu-usuario">
+            <a href="meu-perfil-contratante.html">Meu Perfil</a>
+            <a href="configuracoes-conta-contratante.html">Configurações da Conta</a>
+            <div class="menu-usuario__separador"></div>
+            <a href="../visitante/home.html" class="menu-usuario__sair">Sair</a>
+          </div>
+        </div>
+        <button class="botao-menu-mobile" aria-label="Abrir menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" width="24" height="24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <!-- ===================== CAPA E IDENTIFICAÇÃO ===================== -->
+    <div class="capa-prestador"></div>
+
+    <div class="container identificacao-prestador">
+      <div class="identificacao-prestador__card card">
+        <span class="identificacao-prestador__avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+          </svg>
+        </span>
+
+        <div class="identificacao-prestador__info">
+          <span class="identificacao-prestador__categoria">Fotografia</span>
+          <h1 class="identificacao-prestador__nome">Studio Lente Viva</h1>
+          <div class="identificacao-prestador__meta">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
+              Salvador - BA
+            </span>
+            <span class="badge badge--azul">Disponível</span>
+            <span class="avaliacao">★★★★★ 4.9 (38 avaliações)</span>
+          </div>
+        </div>
+
+        <div class="identificacao-prestador__acoes">
+          <a href="#galeria-portfolio" class="botao botao--secundario">Ver Portfólio</a>
+          <a href="solicitar-contratacao.html" class="botao botao--primario">Solicitar Contratação</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+    <div class="container perfil-layout">
+      <div>
+        <section class="bloco-perfil card">
+          <h2>Sobre o prestador</h2>
+          <p>
+            Fotografia profissional para casamentos, aniversários e formaturas, com
+            mais de 8 anos de experiência no mercado de eventos em Salvador e região.
+            Cobertura completa do evento com entrega digital das fotos editadas.
+          </p>
+        </section>
+
+        <section class="bloco-perfil card" id="galeria-portfolio">
+          <h2>Portfólio</h2>
+          <!-- Preenchido dinamicamente por js/perfil-prestador.js -->
+          <div class="galeria-portfolio" id="galeria-portfolio-grade"></div>
+        </section>
+
+        <section class="bloco-perfil card">
+          <h2>Avaliações recebidas</h2>
+          <!-- Preenchido dinamicamente por js/perfil-prestador.js -->
+          <div id="lista-avaliacoes"></div>
+        </section>
+      </div>
+
+      <aside class="coluna-lateral-perfil">
+        <div class="card-contato card">
+          <h3>Contato</h3>
+          <div class="card-contato__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            contato@studiolenteviva.com.br
+          </div>
+          <div class="card-contato__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2.1z"/></svg>
+            (71) 99999-0000
+          </div>
+          <a href="solicitar-contratacao.html" class="botao botao--primario botao--bloco" style="margin-top: var(--espaco-3);">Solicitar Contratação</a>
+        </div>
+
+        <section class="bloco-perfil card">
+          <h2>Certificações e experiência</h2>
+          <div class="lista-simples">
+            <div class="lista-simples__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>
+              Certificado em Fotografia de Eventos - SENAC
+            </div>
+            <div class="lista-simples__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>
+              Mais de 150 eventos fotografados desde 2018
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <!-- ===================== RODAPÉ (idêntico em todas as telas) ===================== -->
+  <footer class="rodape">
+    <div class="container rodape__grade">
+      <div>
+        <div class="rodape__marca">Conecta Eventos</div>
+        <p class="rodape__descricao">
+          A plataforma que conecta contratantes e prestadores de serviços para eventos
+          de forma rápida, organizada e segura.
+        </p>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Conta</h4>
+        <a href="dashboard-contratante.html">Dashboard</a>
+        <a href="meu-perfil-contratante.html">Meu Perfil</a>
+        <a href="historico-contratacoes.html">Histórico</a>
+      </div>
+
+      <div class="rodape__coluna">
+        <h4>Institucional</h4>
+        <a href="../visitante/contato.html">Contato</a>
+        <a href="../visitante/termos-de-uso.html">Termos de Uso</a>
+        <a href="../visitante/politica-de-privacidade.html">Política de Privacidade</a>
+      </div>
+    </div>
+
+    <div class="container rodape__base">
+      &copy; 2026 Conecta Eventos. Projeto acadêmico — todos os direitos reservados.
+    </div>
+  </footer>
+  <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/perfil-prestador-contratante.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+/* ==========================================================================
+   TELA: DETALHES DA CONTRATAÇÃO (Módulo Prestador)
+   Reutiliza .status, .card, .campo, .mensagem-feedback de global.css.
+   ========================================================================== */
+
+.miolo-pagina { padding: var(--espaco-5) 0 var(--espaco-7); }
+
+.bloco { padding: var(--espaco-4); margin-bottom: var(--espaco-4); }
+.bloco__titulo { font-size: 1rem; margin-bottom: var(--espaco-3); }
+
+/* ---------- Cabeçalho do bloco com ação (título + Aceitar/Recusar) ---------- */
+.bloco__cabecalho { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-3); margin-bottom: var(--espaco-3); flex-wrap: wrap; }
+.bloco__cabecalho .bloco__titulo { margin-bottom: 0; }
+.bloco__acoes { display: flex; align-items: center; gap: var(--espaco-2); }
+
+.botao--perigo {
+  background-color: var(--branco);
+  color: var(--status-inativo);
+  border: 1.5px solid var(--status-inativo);
+}
+
+.botao--perigo:hover { background-color: #fee2e2; }
+
+/* ---------- Dados gerais (somente leitura) ---------- */
+.dados-gerais { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--espaco-3); }
+.dados-gerais__rotulo { font-size: 0.72rem; font-weight: 600; color: var(--cinza-500); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 2px; }
+.dados-gerais__valor { font-size: 0.92rem; color: var(--cinza-900); }
+
+/* ---------- Itens (editáveis) ---------- */
+.item-detalhe { border: 1px solid var(--cinza-200); border-radius: var(--raio-sm); padding: var(--espaco-3); margin-bottom: var(--espaco-2); }
+.item-detalhe:last-child { margin-bottom: 0; }
+
+.item-detalhe__cabecalho { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-2); margin-bottom: var(--espaco-2); flex-wrap: wrap; }
+.item-detalhe__titulo { font-size: 0.88rem; font-weight: 600; color: var(--cinza-900); }
+.item-detalhe__quantidade-valor { font-size: 0.82rem; color: var(--cinza-500); margin-bottom: var(--espaco-2); }
+
+.item-detalhe__grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--espaco-2); }
+
+.item-detalhe__campo-leitura { font-size: 0.82rem; }
+.item-detalhe__campo-leitura .rotulo { color: var(--cinza-500); display: block; margin-bottom: 2px; }
+.item-detalhe__campo-leitura .valor { color: var(--cinza-900); font-weight: 600; }
+
+.item-detalhe__salvar { margin-top: var(--espaco-2); }
+
+@media (max-width: 560px) {
+  .item-detalhe__cabecalho { flex-direction: column; align-items: flex-start; }
+}

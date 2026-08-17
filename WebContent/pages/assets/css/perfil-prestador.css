@@ -1,0 +1,168 @@
+/* ==========================================================================
+   TELA: PERFIL PÚBLICO DO PRESTADOR (Módulo Visitante)
+   Reutiliza .cabecalho, .botao, .card, .badge, .avaliacao, .rodape de
+   global.css e os tokens de variables.css.
+   ========================================================================== */
+
+/* ---------- Capa e identificação ---------- */
+.capa-prestador {
+  height: 180px;
+  background: linear-gradient(135deg, var(--azul-800) 0%, var(--azul-600) 55%, var(--roxo-600) 130%);
+}
+
+.identificacao-prestador {
+  margin-top: -48px;
+  padding-bottom: var(--espaco-5);
+}
+
+.identificacao-prestador__card {
+  padding: var(--espaco-5);
+  display: flex;
+  align-items: flex-end;
+  gap: var(--espaco-4);
+  flex-wrap: wrap;
+}
+
+.identificacao-prestador__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--raio-md);
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  border: 3px solid var(--branco);
+  box-shadow: var(--sombra-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: -40px;
+}
+
+.identificacao-prestador__avatar svg { width: 32px; height: 32px; stroke: var(--azul-600); }
+
+.identificacao-prestador__info { flex: 1; min-width: 240px; }
+.identificacao-prestador__categoria { font-size: 0.75rem; font-weight: 600; color: var(--roxo-600); text-transform: uppercase; letter-spacing: 0.03em; }
+.identificacao-prestador__nome { font-size: 1.3rem; margin: 4px 0 6px; }
+
+.identificacao-prestador__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-3);
+  font-size: 0.82rem;
+  color: var(--cinza-500);
+}
+
+.identificacao-prestador__meta span { display: flex; align-items: center; gap: 4px; }
+.identificacao-prestador__meta svg { width: 14px; height: 14px; stroke: var(--cinza-500); }
+
+.identificacao-prestador__acoes {
+  display: flex;
+  gap: var(--espaco-2);
+  flex-shrink: 0;
+}
+
+/* ---------- Layout em duas colunas ---------- */
+.perfil-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--espaco-5);
+  padding-bottom: var(--espaco-7);
+}
+
+.coluna-lateral-perfil {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  position: sticky;
+  top: calc(var(--altura-header) + var(--espaco-3));
+  align-self: start;
+}
+
+.bloco-perfil {
+  padding: var(--espaco-4);
+  margin-bottom: var(--espaco-4);
+}
+
+.coluna-lateral-perfil .bloco-perfil {
+  margin-bottom: 0;
+}
+
+.bloco-perfil h2 { font-size: 1rem; margin-bottom: var(--espaco-2); }
+.bloco-perfil p { color: var(--cinza-700); font-size: 0.9rem; }
+
+/* ---------- Galeria de portfólio ---------- */
+.galeria-portfolio {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--espaco-2);
+}
+
+.item-portfolio {
+  border-radius: var(--raio-sm);
+  overflow: hidden;
+  position: relative;
+  height: 120px;
+  background: linear-gradient(135deg, var(--azul-100), var(--roxo-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-portfolio svg { width: 24px; height: 24px; stroke: var(--azul-600); opacity: 0.6; }
+
+.item-portfolio__legenda {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(17,24,39,0.75), transparent);
+  color: var(--branco);
+  font-size: 0.72rem;
+  padding: var(--espaco-2) var(--espaco-2) 4px;
+}
+
+/* ---------- Certificações e experiência ---------- */
+.lista-simples { display: flex; flex-direction: column; gap: var(--espaco-2); }
+.lista-simples__item { display: flex; gap: var(--espaco-2); align-items: flex-start; font-size: 0.85rem; color: var(--cinza-700); }
+.lista-simples__item svg { width: 16px; height: 16px; stroke: var(--azul-600); flex-shrink: 0; margin-top: 2px; }
+
+/* ---------- Avaliações ---------- */
+.avaliacao-card {
+  padding: var(--espaco-3);
+  border-bottom: 1px solid var(--cinza-200);
+}
+
+.avaliacao-card:last-child { border-bottom: none; }
+
+.avaliacao-card__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.avaliacao-card__autor { font-weight: 600; font-size: 0.85rem; }
+.avaliacao-card__cabecalho .avaliacao { color: #f59e0b; font-size: 0.88rem; letter-spacing: 1px; }
+.avaliacao-card__comentario { font-size: 0.82rem; color: var(--cinza-500); }
+
+/* ---------- Card lateral de contato ---------- */
+.card-contato {
+  padding: var(--espaco-4);
+}
+
+.card-contato h3 { font-size: 0.95rem; margin-bottom: var(--espaco-2); }
+
+.card-contato__item {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  font-size: 0.82rem;
+  color: var(--cinza-700);
+  margin-bottom: var(--espaco-2);
+}
+
+.card-contato__item svg { width: 14px; height: 14px; stroke: var(--cinza-500); flex-shrink: 0; }
+
+@media (max-width: 900px) {
+  .perfil-layout { grid-template-columns: 1fr; }
+  .coluna-lateral-perfil { position: static; }
+}
