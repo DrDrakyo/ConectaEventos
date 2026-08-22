@@ -53,6 +53,38 @@ public class PrestadorDAO {
 	}
 
 	/**
+	 * Busca um prestador pelo seu ID.
+	 * 
+	 * @param idPrestador ID do prestador.
+	 * @return Prestador encontrado ou null se não existir.
+	 */
+	public Prestador buscarPorId(int idPrestador) {
+		String sql = "SELECT * FROM prestador WHERE id_prestador = ?";
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		Prestador prestador = null;
+
+		try {
+			con = ConnectionFactory.getConnection();
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, idPrestador);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				prestador = mapearResultSet(rs);
+			}
+		} catch (SQLException e) {
+			System.err.println("Erro ao buscar prestador por ID: " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+
+		return prestador;
+	}
+
+	/**
 	 * Busca um prestador pelo seu CPF ou CNPJ.
 	 * 
 	 * @param cpfCnpj CPF ou CNPJ do prestador.
@@ -138,6 +170,96 @@ public class PrestadorDAO {
 			}
 		} catch (SQLException e) {
 			System.err.println("Erro ao listar prestadores: " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+
+		return lista;
+	}
+
+	/**
+	 * Lista todos os prestadores com situação 'ATIVO'.
+	 * 
+	 * @return List<Prestador> lista contendo os prestadores ativos.
+	 */
+	public List<Prestador> listarAtivos() {
+		String sql = "SELECT * FROM prestador WHERE situacao = 'ATIVO' ORDER BY nome_prestador ASC";
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Prestador> lista = new ArrayList<>();
+
+		try {
+			con = ConnectionFactory.getConnection();
+			stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				lista.add(mapearResultSet(rs));
+			}
+		} catch (SQLException e) {
+			System.err.println("Erro ao listar prestadores ativos: " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+
+		return lista;
+	}
+
+	/**
+	 * Realiza busca dinâmica de prestadores com base em termo, categoria e cidade.
+	 * Retorna apenas prestadores com situação 'ATIVO'.
+	 * 
+	 * @param termo Termo para busca em nome ou descrição.
+	 * @param categoria Categoria dos serviços prestados.
+	 * @param cidade Cidade de atendimento.
+	 * @return Lista de prestadores que atendem aos filtros.
+	 */
+	public List<Prestador> buscarPorFiltros(String termo, String categoria, String cidade) {
+		StringBuilder sql = new StringBuilder("SELECT * FROM prestador WHERE situacao = 'ATIVO'");
+		List<Object> parametros = new ArrayList<>();
+
+		if (termo != null && !termo.trim().isEmpty()) {
+			sql.append(" AND (LOWER(nome_prestador) LIKE ? OR LOWER(descricao) LIKE ?)");
+			String likeTermo = "%" + termo.trim().toLowerCase() + "%";
+			parametros.add(likeTermo);
+			parametros.add(likeTermo);
+		}
+
+		if (categoria != null && !categoria.trim().isEmpty()) {
+			sql.append(" AND LOWER(categoria) LIKE ?");
+			parametros.add("%" + categoria.trim().toLowerCase() + "%");
+		}
+
+		if (cidade != null && !cidade.trim().isEmpty()) {
+			sql.append(" AND LOWER(cidade) LIKE ?");
+			parametros.add("%" + cidade.trim().toLowerCase() + "%");
+		}
+
+		sql.append(" ORDER BY nome_prestador ASC");
+
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Prestador> lista = new ArrayList<>();
+
+		try {
+			con = ConnectionFactory.getConnection();
+			stmt = con.prepareStatement(sql.toString());
+
+			for (int i = 0; i < parametros.size(); i++) {
+				stmt.setObject(i + 1, parametros.get(i));
+			}
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				lista.add(mapearResultSet(rs));
+			}
+		} catch (SQLException e) {
+			System.err.println("Erro ao buscar prestadores com filtros: " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
@@ -253,6 +375,7 @@ public class PrestadorDAO {
 	 */
 	private Prestador mapearResultSet(ResultSet rs) throws SQLException {
 		Prestador prestador = new Prestador();
+		prestador.setId_prestador(rs.getInt("id_prestador"));
 		prestador.setCpf_cnpj(rs.getString("cpf_cnpj"));
 		prestador.setNome_prestador(rs.getString("nome_prestador"));
 		prestador.setEmail_prestador(rs.getString("email_prestador"));
@@ -275,4 +398,3 @@ public class PrestadorDAO {
 		return prestador;
 	}
 }
-

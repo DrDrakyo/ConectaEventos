@@ -5,6 +5,24 @@ CREATE DATABASE IF NOT EXISTS conectaeventos
 
 USE conectaeventos;
 
+-- Tabela: categoria
+CREATE TABLE IF NOT EXISTS categoria (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nome_categoria VARCHAR(100) NOT NULL UNIQUE,
+    descricao TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Carga inicial de categorias comuns de eventos
+INSERT IGNORE INTO categoria (nome_categoria, descricao) VALUES
+('Fotografia e Filmagem', 'Profissionais de cobertura fotográfica e gravação de vídeo'),
+('Música e DJ', 'Bandas, cantores, DJs e sonorização'),
+('Buffet e Gastronomia', 'Serviços de alimentação, doces, bolos e bebidas'),
+('Decoração e Cenografia', 'Decoração de ambientes, flores e cenografia temática'),
+('Espaço e Locação', 'Salões de festas, sítios e espaços para eventos'),
+('Cerimonial e Assessoria', 'Planejamento, coordenação e cerimonialistas'),
+('Animação e Recreação', 'Animadores, mágicos e brinquedos para eventos infantis'),
+('Segurança e Apoio', 'Equipes de segurança, recepcionistas e brigadistas');
+
 -- Tabela: contratante
 CREATE TABLE IF NOT EXISTS contratante (
     id_contratante INT AUTO_INCREMENT PRIMARY KEY,
@@ -60,4 +78,41 @@ CREATE TABLE IF NOT EXISTS item_contratacao (
         FOREIGN KEY (id_contratacao)
         REFERENCES contratacao (id_contratacao)
         ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela: avaliacao
+CREATE TABLE IF NOT EXISTS avaliacao (
+    id_avaliacao INT AUTO_INCREMENT PRIMARY KEY,
+    id_contratacao INT NOT NULL,
+    cpf_cnpj_contratante VARCHAR(20) NOT NULL,
+    cpf_cnpj_prestador VARCHAR(20) NOT NULL,
+    nota INT NOT NULL,
+    comentario TEXT,
+    data_avaliacao DATE,
+    CONSTRAINT fk_avaliacao_contratacao
+        FOREIGN KEY (id_contratacao)
+        REFERENCES contratacao (id_contratacao)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela: foto_avaliacao
+CREATE TABLE IF NOT EXISTS foto_avaliacao (
+    id_foto INT AUTO_INCREMENT PRIMARY KEY,
+    id_avaliacao INT NOT NULL,
+    url_foto VARCHAR(500) NOT NULL,
+    descricao_foto VARCHAR(255),
+    CONSTRAINT fk_foto_avaliacao
+        FOREIGN KEY (id_avaliacao)
+        REFERENCES avaliacao (id_avaliacao)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela: portfolio_item
+CREATE TABLE IF NOT EXISTS portfolio_item (
+    id_portfolio INT AUTO_INCREMENT PRIMARY KEY,
+    cpf_cnpj_prestador VARCHAR(20) NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    imagem_url VARCHAR(500),
+    data_publicacao DATE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
