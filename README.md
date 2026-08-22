@@ -46,25 +46,35 @@ docker compose down -v
 
 ---
 
-## 🛠️ Endpoints da API
+## 🛠️ Endpoints da API REST
 
 | Método | Endpoint | Descrição |
 |---|---|---|
 | `POST` | `/cadastroContratante` | Cadastro de novos contratantes |
-| `POST` | `/cadastroPrestador` | Cadastro de novos prestadores |
-| `POST` / `GET` | `/login` | Autenticação (Contratante e Prestador) e consulta de sessão |
-| `GET` / `POST` | `/logout` | Encerramento de sessão |
-| `GET` / `POST` | `/editarPerfilContratante` | Visualização e edição de perfil do contratante |
+| `POST` | `/cadastroPrestador` | Cadastro de novos prestadores de serviços |
+| `POST` / `GET` | `/login` | Autenticação unificada e verificação de status de sessão |
+| `GET` / `POST` | `/logout` | Encerramento de sessão HTTP |
+| `GET` / `POST` | `/buscarPrestadores` | Busca e listagem de prestadores com filtros (termo, categoria, cidade) e média de avaliações |
+| `GET` / `POST` | `/perfilPrestador` | Perfil público de prestadores com avaliações e portfólio; edição de perfil |
+| `GET` / `POST` | `/meuPerfilContratante` | Perfil completo do contratante com histórico e estatísticas |
+| `GET` / `POST` | `/editarPerfilContratante` | Edição de dados cadastrais do contratante |
+| `GET` / `POST` | `/acompanharContratacao` | Consulta detalhada de contratação (itens, participantes) e atualização de status |
+| `GET` / `POST` | `/avaliarPrestador` | Consulta de avaliações recebidas e registro de feedback para serviços concluídos |
+| `GET` / `POST` | `/visualizarPortfolio` | Galeria de portfólio de prestadores; inclusão/edição/remoção de itens |
 | `GET` | `/dashboardContratante` | Métricas e resumo do painel do contratante |
-| `GET` / `POST` | `/configuracoesContaContratante` | Gestão de dados, senha e status da conta |
+| `GET` / `POST` | `/configuracoesContaContratante` | Gestão de dados, alteração de senha e desativação de conta |
 
 ---
 
 ## 🗄️ Estrutura do Banco de Dados
 
-O banco de dados `conectaeventos` é configurado automaticamente com as seguintes tabelas:
+O banco de dados `conectaeventos` conta com as seguintes tabelas integradas:
 
-- `contratante`: Informações de clientes/contratantes de eventos.
-- `prestador`: Informações de profissionais e prestadores de serviços.
+- `categoria`: Categorias de serviços para eventos (com carga inicial).
+- `contratante`: Informações de clientes e contratantes de eventos.
+- `prestador`: Informações profissionais e prestadores de serviços.
 - `contratacao`: Registros de contratações de serviços/eventos.
 - `item_contratacao`: Itens e serviços vinculados a uma contratação.
+- `avaliacao`: Avaliações com nota (1-5) e feedback de contratações concluídas.
+- `foto_avaliacao`: Fotos anexadas a avaliações.
+- `portfolio_item`: Trabalhos, fotos e itens do portfólio de prestadores.
