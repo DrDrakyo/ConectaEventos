@@ -11,15 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.conectaeventos.dao.AdministradorDAO;
 import br.com.conectaeventos.dao.ContratanteDAO;
 import br.com.conectaeventos.dao.PrestadorDAO;
+import br.com.conectaeventos.model.Administrador;
 import br.com.conectaeventos.model.Contratante;
 import br.com.conectaeventos.model.Prestador;
 import br.com.conectaeventos.utils.SessaoUtils;
 import br.com.conectaeventos.utils.ValidadorUtils;
 
 /**
- * Controller responsável pelo login e logout de usuários (Contratantes e Prestadores).
+ * Controller responsável pelo login e logout de usuários (Contratantes, Prestadores e Administradores).
  * Atua como uma API REST, retornando respostas em formato JSON e gerenciando a sessão HTTP.
  */
 @WebServlet(name = "LoginController", urlPatterns = { "/login", "/LoginController", "/logout" })
@@ -29,12 +31,14 @@ public class LoginController extends HttpServlet {
 
 	private ContratanteDAO contratanteDAO;
 	private PrestadorDAO prestadorDAO;
+	private AdministradorDAO administradorDAO;
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		this.contratanteDAO = new ContratanteDAO();
 		this.prestadorDAO = new PrestadorDAO();
+		this.administradorDAO = new AdministradorDAO();
 	}
 
 	/**
@@ -52,6 +56,22 @@ public class LoginController extends HttpServlet {
 		if ((uri != null && uri.endsWith("/logout")) || "logout".equalsIgnoreCase(acao)) {
 			SessaoUtils.encerrarSessao(request);
 			enviarRespostaJson(response, HttpServletResponse.SC_OK, true, "Logout realizado com sucesso!");
+			return;
+		}
+
+		// Verifica administrador na sessão
+		Object objetoAdmin = SessaoUtils.obterDaSessao(request, SessaoUtils.CHAVE_ADMIN);
+		if (objetoAdmin instanceof Administrador) {
+			Administrador a = (Administrador) objetoAdmin;
+			String json = String.format(
+					"{\"sucesso\": true, \"autenticado\": true, \"tipo\": \"administrador\", "
+							+ "\"usuario\": {\"id\": %d, \"nome\": \"%s\", \"email\": \"%s\", \"situacao\": \"%s\"}}",
+					a.getId_administrador(),
+					escaparJson(a.getNome_administrador()),
+					escaparJson(a.getEmail_administrador()),
+					escaparJson(a.getSituacao())
+			);
+			enviarJsonDireto(response, HttpServletResponse.SC_OK, json);
 			return;
 		}
 
@@ -153,8 +173,36 @@ public class LoginController extends HttpServlet {
 		if (prestadorDAO == null) {
 			prestadorDAO = new PrestadorDAO();
 		}
+		if (administradorDAO == null) {
+			administradorDAO = new AdministradorDAO();
+		}
 
-		// 3. Tenta autenticar primeiro como Contratante
+		// 3. Tenta autenticar primeiro como Administrador
+		Administrador admin = administradorDAO.autenticar(email, senha);
+		if (admin != null) {
+			if ("INATIVO".equalsIgnoreCase(admin.getSituacao())) {
+				enviarRespostaJson(response, HttpServletResponse.SC_FORBIDDEN, false,
+						"Sua conta de administrador está inativa.");
+				return;
+			}
+
+			// Salva administrador na sessão
+			SessaoUtils.salvarSessao(request, SessaoUtils.CHAVE_ADMIN, admin);
+			SessaoUtils.salvarSessao(request, SessaoUtils.CHAVE_USUARIO, admin);
+
+			String jsonSucesso = String.format(
+					"{\"sucesso\": true, \"mensagem\": \"Login de administrador realizado com sucesso!\", \"tipo\": \"administrador\", "
+							+ "\"usuario\": {\"id\": %d, \"nome\": \"%s\", \"email\": \"%s\", \"situacao\": \"%s\"}}",
+					admin.getId_administrador(),
+					escaparJson(admin.getNome_administrador()),
+					escaparJson(admin.getEmail_administrador()),
+					escaparJson(admin.getSituacao())
+			);
+			enviarJsonDireto(response, HttpServletResponse.SC_OK, jsonSucesso);
+			return;
+		}
+
+		// 4. Tenta autenticar como Contratante
 		Contratante contratante = contratanteDAO.autenticar(email, senha);
 		if (contratante != null) {
 			if ("INATIVO".equalsIgnoreCase(contratante.getSituacao())) {
@@ -181,7 +229,7 @@ public class LoginController extends HttpServlet {
 			return;
 		}
 
-		// 4. Tenta autenticar como Prestador de Serviços
+		// 5. Tenta autenticar como Prestador de Serviços
 		Prestador prestador = prestadorDAO.autenticar(email, senha);
 		if (prestador != null) {
 			if ("INATIVO".equalsIgnoreCase(prestador.getSituacao())) {
@@ -209,7 +257,7 @@ public class LoginController extends HttpServlet {
 			return;
 		}
 
-		// 5. Credenciais inválidas
+		// 6. Credenciais inválidas
 		enviarRespostaJson(response, HttpServletResponse.SC_UNAUTHORIZED, false, "E-mail ou senha inválidos.");
 	}
 

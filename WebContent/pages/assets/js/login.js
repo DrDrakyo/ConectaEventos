@@ -67,6 +67,8 @@ async function tratarEnvioDoFormulario(evento) {
       setTimeout(() => {
         if (data.tipo === 'prestador') {
           window.location.href = '../prestador/dashboard-prestador.html';
+        } else if (data.tipo === 'administrador') {
+          window.location.href = '../administrador/dashboard-admin.html';
         } else {
           window.location.href = '../contratante/dashboard-contratante.html';
         }

@@ -116,3 +116,18 @@ CREATE TABLE IF NOT EXISTS portfolio_item (
     imagem_url VARCHAR(500),
     data_publicacao DATE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela: administrador
+CREATE TABLE IF NOT EXISTS administrador (
+    id_administrador INT AUTO_INCREMENT PRIMARY KEY,
+    nome_administrador VARCHAR(255) NOT NULL,
+    email_administrador VARCHAR(255) NOT NULL UNIQUE,
+    senha_administrador VARCHAR(255) NOT NULL,
+    data_cadastro DATE,
+    situacao VARCHAR(20) DEFAULT 'ATIVO'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Carga inicial do administrador padrão
+INSERT IGNORE INTO administrador (id_administrador, nome_administrador, email_administrador, senha_administrador, data_cadastro, situacao) VALUES
+(1, 'Administrador do Sistema', 'admin@conectaeventos.com', 'admin123', CURDATE(), 'ATIVO');
+

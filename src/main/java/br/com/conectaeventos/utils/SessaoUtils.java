@@ -7,6 +7,7 @@ public class SessaoUtils {
 
 	public static final String CHAVE_CONTRATANTE = "contratanteLogado";
 	public static final String CHAVE_PRESTADOR = "prestadorLogado";
+	public static final String CHAVE_ADMIN = "adminLogado";
 	public static final String CHAVE_USUARIO = "usuarioLogado";
 
 	/**
