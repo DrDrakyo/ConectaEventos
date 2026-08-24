@@ -9,13 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderizarContratacoesRecebidas();
 });
 
-/* Dados de exemplo — simulam registros de CONTRATACAO/ITEM_CONTRA
-   vinculados a itens de PORTFOLIO deste prestador. */
-const CONTRATACOES_RECEBIDAS = [
-  { id_contratacao: 1041, contratante: 'Maria Costa', servico: 'Cobertura fotográfica completa', data_contratacao: '2026-06-02', valor_total: 1850, situacao: 'iniciado' },
-  { id_contratacao: 1030, contratante: 'João Almeida', servico: 'Ensaio pré-wedding', data_contratacao: '2026-05-28', valor_total: 650, situacao: 'negociacao' },
-  { id_contratacao: 1019, contratante: 'Fernanda Lopes', servico: 'Cobertura de aniversário', data_contratacao: '2026-04-15', valor_total: 950, situacao: 'concluido' },
-];
+/* Dados zerados — contratações serão lidas do banco conforme cadastradas */
+const CONTRATACOES_RECEBIDAS = [];
 
 const ROTULO_STATUS = {
   disponivel: 'Disponível', negociacao: 'Em negociação', contratado: 'Contratado',
@@ -25,7 +20,7 @@ const ROTULO_STATUS = {
 function renderizarResumo() {
   const emAndamento = CONTRATACOES_RECEBIDAS.filter((c) => ['negociacao', 'contratado', 'iniciado'].includes(c.situacao)).length;
   const concluidas = CONTRATACOES_RECEBIDAS.filter((c) => c.situacao === 'concluido').length;
-  const notaMedia = 4.8; // simula a média de CONTRATACAO.ava_nota vinculada a este prestador
+  const notaMedia = 0.0;
 
   document.querySelector('#numero-em-andamento').textContent = emAndamento;
   document.querySelector('#numero-concluidas').textContent = concluidas;

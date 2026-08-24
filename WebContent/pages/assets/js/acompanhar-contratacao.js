@@ -5,107 +5,111 @@
    apenas quando a contratação está com situacao = concluído.
    ========================================================================== */
 
-/* Dados de exemplo — simulam um registro de CONTRATACAO + seus ITEM_CONTRA. */
-const CONTRATACAO = {
-  id_contratacao: 1041,
-  prestador: 'Studio Lente Viva',
-  data_contratacao: '2026-06-02',
-  situacao: 'iniciado', // disponivel | negociacao | contratado | iniciado | concluido | inativo
-  valor_total: 1850,
-  forma_pagamento: 'Pix',
-  local_contratacao: 'Salvador - BA, Espaço Villa Jardim',
-  itens: [
-    {
-      item_contratacao: 'Cobertura fotográfica completa',
-      quantidade: 1,
-      valor_unitario: 1200,
-      situacao_item: 'iniciado',
-      data_inicio_prevista: '2026-08-15',
-      data_inicio: '2026-08-15',
-      data_real: null,
-      data_conclusao: null,
-    },
-    {
-      item_contratacao: 'Ensaio pré-wedding',
-      quantidade: 1,
-      valor_unitario: 650,
-      situacao_item: 'concluido',
-      data_inicio_prevista: '2026-07-10',
-      data_inicio: '2026-07-10',
-      data_real: '2026-07-10',
-      data_conclusao: '2026-07-10',
-    },
-  ],
-};
+document.addEventListener('DOMContentLoaded', async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const idContratacao = urlParams.get('id');
 
-const ROTULO_STATUS = {
-  disponivel: 'Disponível',
-  negociacao: 'Em negociação',
-  contratado: 'Contratado',
-  iniciado: 'Serviço iniciado',
-  concluido: 'Serviço concluído',
-  inativo: 'Inativo',
-};
+  if (!idContratacao) {
+    exibirErro('Nenhuma contratação selecionada.');
+    return;
+  }
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderizarDadosGerais();
-  renderizarItens();
-  configurarBotaoAvaliar();
+  try {
+    const response = await fetch(`/acompanharContratacao?id=${idContratacao}`);
+    if (!response.ok) {
+      exibirErro('Contratação não encontrada no sistema.');
+      return;
+    }
+
+    const data = await response.json();
+    if (data && data.sucesso && data.contratacao) {
+      renderizarDadosGerais(data);
+      renderizarItens(data.itens || []);
+      configurarBotaoAvaliar(data.contratacao.status);
+    } else {
+      exibirErro(data.mensagem || 'Não foi possível carregar os detalhes da contratação.');
+    }
+  } catch (e) {
+    console.error('Erro ao carregar contratação:', e);
+    exibirErro('Erro de conexão ao buscar detalhes da contratação.');
+  }
 });
 
-function renderizarDadosGerais() {
-  document.querySelector('#valor-prestador').textContent = CONTRATACAO.prestador;
-  document.querySelector('#valor-local').textContent = CONTRATACAO.local_contratacao;
-  document.querySelector('#valor-forma-pagamento').textContent = CONTRATACAO.forma_pagamento;
-  document.querySelector('#valor-data-contratacao').textContent = formatarData(CONTRATACAO.data_contratacao);
-  document.querySelector('#valor-total').textContent = `R$ ${CONTRATACAO.valor_total.toLocaleString('pt-BR')}`;
+const ROTULO_STATUS = {
+  PENDENTE: 'Pendente',
+  CONFIRMADO: 'Contratado / Confirmado',
+  CONCLUIDO: 'Serviço concluído',
+  CANCELADO: 'Cancelado',
+};
+
+function renderizarDadosGerais(data) {
+  const c = data.contratacao;
+  const p = data.prestador || {};
+
+  document.querySelector('#valor-prestador').textContent = p.nome || 'Prestador não informado';
+  document.querySelector('#valor-local').textContent = c.titulo_evento || 'Local/Evento não informado';
+  document.querySelector('#valor-forma-pagamento').textContent = 'Pix / Cartão';
+  document.querySelector('#valor-data-contratacao').textContent = formatarData(c.data_contratacao);
+  document.querySelector('#valor-total').textContent = `R$ ${(c.valor_total || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
   const statusEl = document.querySelector('#valor-situacao');
-  statusEl.textContent = ROTULO_STATUS[CONTRATACAO.situacao];
-  statusEl.className = `status status--${CONTRATACAO.situacao}`;
+  const statusStr = c.status || 'PENDENTE';
+  statusEl.textContent = ROTULO_STATUS[statusStr] || statusStr;
+  statusEl.className = `status status--${statusStr.toLowerCase()}`;
 }
 
-function renderizarItens() {
+function renderizarItens(itens) {
   const lista = document.querySelector('#lista-itens-acompanhamento');
+  if (!lista) return;
 
-  lista.innerHTML = CONTRATACAO.itens.map((item) => `
+  if (itens.length === 0) {
+    lista.innerHTML = '<p class="texto-suave">Nenhum item cadastrado para esta contratação.</p>';
+    return;
+  }
+
+  lista.innerHTML = itens.map((item) => `
     <div class="item-acompanhamento">
       <div class="item-acompanhamento__cabecalho">
-        <span class="item-acompanhamento__titulo">${item.item_contratacao}</span>
-        <span class="status status--${item.situacao_item}">${ROTULO_STATUS[item.situacao_item]}</span>
+        <span class="item-acompanhamento__titulo">${item.descricao_item}</span>
+        <span class="status status--concluido">Qtd: ${item.quantidade}</span>
       </div>
       <div class="item-acompanhamento__quantidade-valor">
-        Quantidade: ${item.quantidade} · Valor unitário: R$ ${item.valor_unitario.toLocaleString('pt-BR')}
-      </div>
-      <div class="item-acompanhamento__datas">
-        <div><div class="item-acompanhamento__data-rotulo">Início previsto</div><div class="item-acompanhamento__data-valor">${formatarData(item.data_inicio_prevista)}</div></div>
-        <div><div class="item-acompanhamento__data-rotulo">Início</div><div class="item-acompanhamento__data-valor">${formatarData(item.data_inicio)}</div></div>
-        <div><div class="item-acompanhamento__data-rotulo">Conclusão real</div><div class="item-acompanhamento__data-valor">${formatarData(item.data_real)}</div></div>
-        <div><div class="item-acompanhamento__data-rotulo">Concluído em</div><div class="item-acompanhamento__data-valor">${formatarData(item.data_conclusao)}</div></div>
+        Quantidade: ${item.quantidade} · Valor unitário: R$ ${(item.valor_unitario || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
       </div>
     </div>
   `).join('');
 }
 
-function configurarBotaoAvaliar() {
-  const bloco = document.querySelector('#bloco-avaliacao');
+function configurarBotaoAvaliar(statusStr) {
   const botao = document.querySelector('#botao-avaliar');
   const mensagemStatus = document.querySelector('#mensagem-status-avaliacao');
 
-  if (CONTRATACAO.situacao === 'concluido') {
-    botao.removeAttribute('aria-disabled');
-    botao.classList.remove('botao--desabilitado');
-    mensagemStatus.textContent = 'O serviço foi concluído. Conte como foi sua experiência.';
+  if (statusStr === 'CONCLUIDO') {
+    if (botao) {
+      botao.removeAttribute('aria-disabled');
+      botao.classList.remove('botao--desabilitado');
+    }
+    if (mensagemStatus) mensagemStatus.textContent = 'O serviço foi concluído. Conte como foi sua experiência.';
   } else {
-    botao.setAttribute('aria-disabled', 'true');
-    botao.classList.add('botao--desabilitado');
-    botao.addEventListener('click', (evento) => evento.preventDefault());
-    mensagemStatus.textContent = 'A avaliação ficará disponível quando o serviço for concluído.';
+    if (botao) {
+      botao.setAttribute('aria-disabled', 'true');
+      botao.classList.add('botao--desabilitado');
+      botao.addEventListener('click', (evento) => evento.preventDefault());
+    }
+    if (mensagemStatus) mensagemStatus.textContent = 'A avaliação ficará disponível quando o serviço for concluído.';
+  }
+}
+
+function exibirErro(msg) {
+  const container = document.querySelector('.miolo-pagina .container');
+  if (container) {
+    container.innerHTML = `<div class="estado-vazio estado-vazio--visivel"><p>${msg}</p><a href="dashboard-contratante.html" class="botao botao--primario" style="margin-top: 1rem;">Voltar ao Dashboard</a></div>`;
   }
 }
 
 function formatarData(dataIso) {
   if (!dataIso) return '—';
-  const [ano, mes, dia] = dataIso.split('-');
-  return `${dia}/${mes}/${ano}`;
+  const partes = dataIso.split('-');
+  if (partes.length < 3) return dataIso;
+  return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }

@@ -38,7 +38,34 @@ public class PortfolioDAO {
 			stmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			System.err.println("Erro ao cadastrar item de portfólio: " + e.getMessage());
+			System.err.println("Tentando tabela alternativa 'portfolio': " + e.getMessage());
+			return cadastrarTabelaPortfolio(item);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
+
+	private boolean cadastrarTabelaPortfolio(PortfolioItem item) {
+		String sql = "INSERT INTO portfolio (cpf_cnpj_prestador, titulo, descricao, url_midia, data_cadastro) "
+				+ "VALUES (?, ?, ?, ?, ?)";
+
+		Connection con = null;
+		PreparedStatement stmt = null;
+
+		try {
+			con = ConnectionFactory.getConnection();
+			stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, item.getCpf_cnpj_prestador());
+			stmt.setString(2, item.getTitulo());
+			stmt.setString(3, item.getDescricao());
+			stmt.setString(4, item.getImagem_url());
+			stmt.setDate(5, item.getData_publicacao());
+
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.err.println("Erro ao cadastrar em portfolio: " + e.getMessage());
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -69,8 +96,32 @@ public class PortfolioDAO {
 				item = mapearResultSet(rs);
 			}
 		} catch (SQLException e) {
-			System.err.println("Erro ao buscar item de portfólio por ID: " + e.getMessage());
-			e.printStackTrace();
+			return buscarPorIdPortfolioAlt(idPortfolio);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+
+		return item;
+	}
+
+	private PortfolioItem buscarPorIdPortfolioAlt(int idPortfolio) {
+		String sql = "SELECT * FROM portfolio WHERE id_portfolio = ?";
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		PortfolioItem item = null;
+
+		try {
+			con = ConnectionFactory.getConnection();
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, idPortfolio);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				item = mapearResultSet(rs);
+			}
+		} catch (SQLException e) {
+			System.err.println("Erro ao buscar item em portfolio: " + e.getMessage());
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
 		}
@@ -85,7 +136,7 @@ public class PortfolioDAO {
 	 * @return Lista de itens de portfólio do prestador.
 	 */
 	public List<PortfolioItem> listarPorPrestador(String cpfCnpjPrestador) {
-		String sql = "SELECT * FROM portfolio_item WHERE cpf_cnpj_prestador = ? ORDER BY data_publicacao DESC, id_portfolio DESC";
+		String sql = "SELECT * FROM portfolio_item WHERE cpf_cnpj_prestador = ? ORDER BY id_portfolio DESC";
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -101,8 +152,32 @@ public class PortfolioDAO {
 				lista.add(mapearResultSet(rs));
 			}
 		} catch (SQLException e) {
-			System.err.println("Erro ao listar itens de portfólio: " + e.getMessage());
-			e.printStackTrace();
+			return listarPorPrestadorPortfolioAlt(cpfCnpjPrestador);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+
+		return lista;
+	}
+
+	private List<PortfolioItem> listarPorPrestadorPortfolioAlt(String cpfCnpjPrestador) {
+		String sql = "SELECT * FROM portfolio WHERE cpf_cnpj_prestador = ? ORDER BY id_portfolio DESC";
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<PortfolioItem> lista = new ArrayList<>();
+
+		try {
+			con = ConnectionFactory.getConnection();
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, cpfCnpjPrestador);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				lista.add(mapearResultSet(rs));
+			}
+		} catch (SQLException e) {
+			System.err.println("Erro ao listar portfolio: " + e.getMessage());
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt, rs);
 		}
@@ -137,8 +212,34 @@ public class PortfolioDAO {
 			int linhas = stmt.executeUpdate();
 			return linhas > 0;
 		} catch (SQLException e) {
-			System.err.println("Erro ao atualizar item de portfólio: " + e.getMessage());
-			e.printStackTrace();
+			return atualizarTabelaPortfolioAlt(item);
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}
+
+	private boolean atualizarTabelaPortfolioAlt(PortfolioItem item) {
+		String sql = "UPDATE portfolio SET titulo = ?, descricao = ?, url_midia = ?, data_cadastro = ? "
+				+ "WHERE id_portfolio = ? AND cpf_cnpj_prestador = ?";
+
+		Connection con = null;
+		PreparedStatement stmt = null;
+
+		try {
+			con = ConnectionFactory.getConnection();
+			stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, item.getTitulo());
+			stmt.setString(2, item.getDescricao());
+			stmt.setString(3, item.getImagem_url());
+			stmt.setDate(4, item.getData_publicacao());
+			stmt.setInt(5, item.getId_portfolio());
+			stmt.setString(6, item.getCpf_cnpj_prestador());
+
+			int linhas = stmt.executeUpdate();
+			return linhas > 0;
+		} catch (SQLException e) {
+			System.err.println("Erro ao atualizar portfolio: " + e.getMessage());
 			return false;
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
@@ -162,10 +263,23 @@ public class PortfolioDAO {
 			stmt.setInt(1, idPortfolio);
 
 			int linhas = stmt.executeUpdate();
+			if (linhas > 0) return true;
+		} catch (SQLException e) {
+			// ignora e tenta portfolio
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+
+		String sqlAlt = "DELETE FROM portfolio WHERE id_portfolio = ?";
+		try {
+			con = ConnectionFactory.getConnection();
+			stmt = con.prepareStatement(sqlAlt);
+			stmt.setInt(1, idPortfolio);
+
+			int linhas = stmt.executeUpdate();
 			return linhas > 0;
 		} catch (SQLException e) {
 			System.err.println("Erro ao deletar item de portfólio: " + e.getMessage());
-			e.printStackTrace();
 			return false;
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
@@ -189,10 +303,20 @@ public class PortfolioDAO {
 			stmt.setString(1, cpfCnpjPrestador);
 
 			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// ignora
+		} finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+
+		String sqlAlt = "DELETE FROM portfolio WHERE cpf_cnpj_prestador = ?";
+		try {
+			con = ConnectionFactory.getConnection();
+			stmt = con.prepareStatement(sqlAlt);
+			stmt.setString(1, cpfCnpjPrestador);
+			stmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			System.err.println("Erro ao deletar itens de portfólio do prestador: " + e.getMessage());
-			e.printStackTrace();
 			return false;
 		} finally {
 			ConnectionFactory.closeConnection(con, stmt);
@@ -208,8 +332,19 @@ public class PortfolioDAO {
 		item.setCpf_cnpj_prestador(rs.getString("cpf_cnpj_prestador"));
 		item.setTitulo(rs.getString("titulo"));
 		item.setDescricao(rs.getString("descricao"));
-		item.setImagem_url(rs.getString("imagem_url"));
-		item.setData_publicacao(rs.getDate("data_publicacao"));
+
+		try {
+			item.setImagem_url(rs.getString("imagem_url"));
+		} catch (SQLException e) {
+			item.setImagem_url(rs.getString("url_midia"));
+		}
+
+		try {
+			item.setData_publicacao(rs.getDate("data_publicacao"));
+		} catch (SQLException e) {
+			item.setData_publicacao(rs.getDate("data_cadastro"));
+		}
+
 		return item;
 	}
 }

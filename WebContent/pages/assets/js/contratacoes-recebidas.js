@@ -5,26 +5,48 @@
    CONTRATANTE), com filtro por situação.
    ========================================================================== */
 
-const CONTRATACOES_RECEBIDAS = [
-  { id_contratacao: 1041, contratante: 'Maria Costa', servico: 'Cobertura fotográfica completa', data_contratacao: '2026-06-02', valor_total: 1850, situacao: 'iniciado' },
-  { id_contratacao: 1030, contratante: 'João Almeida', servico: 'Ensaio pré-wedding', data_contratacao: '2026-05-28', valor_total: 650, situacao: 'negociacao' },
-  { id_contratacao: 1019, contratante: 'Fernanda Lopes', servico: 'Cobertura de aniversário', data_contratacao: '2026-04-15', valor_total: 950, situacao: 'concluido' },
-  { id_contratacao: 1005, contratante: 'Rodrigo Nascimento', servico: 'Formatura Direito UFBA', data_contratacao: '2026-02-20', valor_total: 1500, situacao: 'concluido' },
-];
+let contratacoesGlobal = [];
 
 const ROTULO_STATUS = {
-  disponivel: 'Disponível', negociacao: 'Em negociação', contratado: 'Contratado',
-  iniciado: 'Serviço iniciado', concluido: 'Serviço concluído', inativo: 'Inativo',
+  PENDENTE: 'Pendente',
+  CONFIRMADO: 'Contratado / Confirmado',
+  CONCLUIDO: 'Serviço concluído',
+  CANCELADO: 'Cancelado',
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('#filtro-situacao').addEventListener('change', aplicarFiltro);
-  aplicarFiltro();
+document.addEventListener('DOMContentLoaded', async () => {
+  const selectFiltro = document.querySelector('#filtro-situacao');
+  if (selectFiltro) {
+    selectFiltro.addEventListener('change', aplicarFiltro);
+  }
+  await carregarContratacoes();
 });
 
+async function carregarContratacoes() {
+  try {
+    const response = await fetch('/acompanharContratacao');
+    if (!response.ok) {
+      renderizarLista([]);
+      return;
+    }
+
+    const data = await response.json();
+    if (data && data.sucesso && Array.isArray(data.contratacoes)) {
+      contratacoesGlobal = data.contratacoes;
+    } else {
+      contratacoesGlobal = [];
+    }
+    aplicarFiltro();
+  } catch (e) {
+    console.error('Erro ao carregar contratações recebidas:', e);
+    renderizarLista([]);
+  }
+}
+
 function aplicarFiltro() {
-  const situacao = document.querySelector('#filtro-situacao').value;
-  const filtradas = situacao ? CONTRATACOES_RECEBIDAS.filter((c) => c.situacao === situacao) : CONTRATACOES_RECEBIDAS;
+  const filtroEl = document.querySelector('#filtro-situacao');
+  const situacao = filtroEl ? filtroEl.value : '';
+  const filtradas = situacao ? contratacoesGlobal.filter((c) => (c.status || '').toLowerCase() === situacao.toLowerCase()) : contratacoesGlobal;
   renderizarLista(filtradas);
 }
 
@@ -32,49 +54,73 @@ function renderizarLista(lista) {
   const container = document.querySelector('#lista-recebidas');
   const vazio = document.querySelector('#estado-vazio');
 
-  if (lista.length === 0) {
-    container.innerHTML = '';
-    vazio.classList.add('estado-vazio--visivel');
+  if (!lista || lista.length === 0) {
+    if (container) container.innerHTML = '';
+    if (vazio) vazio.classList.add('estado-vazio--visivel');
     return;
   }
 
-  vazio.classList.remove('estado-vazio--visivel');
+  if (vazio) vazio.classList.remove('estado-vazio--visivel');
 
-  container.innerHTML = lista.map((c) => `
-    <div class="linha-recebida card">
-      <span class="linha-recebida__info">
-        <span class="linha-recebida__titulo">${c.servico}</span>
-        <span class="linha-recebida__detalhe">${c.contratante} · Contratação #${c.id_contratacao} · ${formatarData(c.data_contratacao)}</span>
-      </span>
-      <span class="status status--${c.situacao}">${ROTULO_STATUS[c.situacao]}</span>
-      <span class="linha-recebida__valor">R$ ${c.valor_total.toLocaleString('pt-BR')}</span>
-      ${c.situacao === 'negociacao' ? `
-        <span class="linha-recebida__acoes">
-          <button type="button" class="botao botao--primario botao--pequeno" data-acao="aceitar" data-id="${c.id_contratacao}">Aceitar</button>
-          <button type="button" class="botao botao--perigo botao--pequeno" data-acao="recusar" data-id="${c.id_contratacao}">Recusar</button>
-        </span>
-      ` : ''}
-      <a class="linha-recebida__link" href="detalhes-contratacao.html?id=${c.id_contratacao}">Ver detalhes →</a>
-    </div>
-  `).join('');
+  if (container) {
+    container.innerHTML = lista.map((c) => {
+      const st = c.status || 'PENDENTE';
+      const rotulo = ROTULO_STATUS[st] || st;
+      const valorStr = (c.valor_total || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+      return `
+        <div class="linha-recebida card">
+          <span class="linha-recebida__info">
+            <span class="linha-recebida__titulo">${c.titulo_evento || 'Serviço Contratado'}</span>
+            <span class="linha-recebida__detalhe">Contratação #${c.id_contratacao} · Data: ${formatarData(c.data_contratacao || c.data_evento)}</span>
+          </span>
+          <span class="status status--${st.toLowerCase()}">${rotulo}</span>
+          <span class="linha-recebida__valor">R$ ${valorStr}</span>
+          ${st === 'PENDENTE' ? `
+            <span class="linha-recebida__acoes">
+              <button type="button" class="botao botao--primario botao--pequeno" data-acao="aceitar" data-id="${c.id_contratacao}">Aceitar</button>
+              <button type="button" class="botao botao--perigo botao--pequeno" data-acao="recusar" data-id="${c.id_contratacao}">Recusar</button>
+            </span>
+          ` : ''}
+          <a class="linha-recebida__link" href="detalhes-contratacao.html?id=${c.id_contratacao}">Ver detalhes →</a>
+        </div>
+      `;
+    }).join('');
 
-  container.querySelectorAll('[data-acao="aceitar"]').forEach((botao) => {
-    botao.addEventListener('click', () => alterarSituacao(botao.dataset.id, 'contratado'));
-  });
-  container.querySelectorAll('[data-acao="recusar"]').forEach((botao) => {
-    botao.addEventListener('click', () => alterarSituacao(botao.dataset.id, 'inativo'));
-  });
+    container.querySelectorAll('[data-acao="aceitar"]').forEach((botao) => {
+      botao.addEventListener('click', () => alterarSituacao(botao.dataset.id, 'confirmar'));
+    });
+    container.querySelectorAll('[data-acao="recusar"]').forEach((botao) => {
+      botao.addEventListener('click', () => alterarSituacao(botao.dataset.id, 'cancelar'));
+    });
+  }
 }
 
-function alterarSituacao(idContratacao, novaSituacao) {
-  const contratacao = CONTRATACOES_RECEBIDAS.find((c) => c.id_contratacao === Number(idContratacao));
-  if (!contratacao) return;
-  contratacao.situacao = novaSituacao;
-  // Em produção: enviar requisição ao servlet para persistir CONTRATACAO.situacao no banco.
-  aplicarFiltro();
+async function alterarSituacao(idContratacao, acaoBackend) {
+  try {
+    const formData = new URLSearchParams();
+    formData.append('id', idContratacao);
+    formData.append('acao', acaoBackend);
+
+    const response = await fetch('/acompanharContratacao', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+      body: formData.toString()
+    });
+
+    const data = await response.json();
+    if (response.ok && data && data.sucesso) {
+      await carregarContratacoes();
+    } else {
+      alert(data.mensagem || 'Erro ao atualizar situação da contratação.');
+    }
+  } catch (e) {
+    console.error('Erro ao atualizar contratação:', e);
+  }
 }
 
 function formatarData(dataIso) {
-  const [ano, mes, dia] = dataIso.split('-');
-  return `${dia}/${mes}/${ano}`;
+  if (!dataIso) return '—';
+  const partes = dataIso.split('-');
+  if (partes.length < 3) return dataIso;
+  return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }

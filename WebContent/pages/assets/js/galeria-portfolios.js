@@ -4,41 +4,47 @@
    cadastrados pelo prestador autenticado.
    ========================================================================== */
 
-const ITENS_PORTFOLIO = [
-  { id_portfolio: 101, titulo: 'Casamento Ana & Rafael', categoria: 'Fotografia', valor: 1200 },
-  { id_portfolio: 102, titulo: 'Aniversário 15 anos - Beatriz', categoria: 'Fotografia', valor: 950 },
-  { id_portfolio: 103, titulo: 'Formatura Direito UFBA', categoria: 'Fotografia', valor: 1500 },
-  { id_portfolio: 104, titulo: 'Casamento na Praia', categoria: 'Fotografia', valor: 1800 },
-];
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderizarGaleria();
-});
-
-function renderizarGaleria() {
+document.addEventListener('DOMContentLoaded', async () => {
   const grade = document.querySelector('#grade-portfolio');
   const vazio = document.querySelector('#estado-vazio');
 
-  if (ITENS_PORTFOLIO.length === 0) {
-    vazio.classList.add('estado-vazio--visivel');
-    return;
-  }
+  try {
+    const response = await fetch('/visualizarPortfolio');
+    if (!response.ok) {
+      if (vazio) vazio.classList.add('estado-vazio--visivel');
+      return;
+    }
 
-  grade.innerHTML = ITENS_PORTFOLIO.map((item) => `
-    <article class="item-galeria card">
-      <div class="item-galeria__imagem">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
-        </svg>
-      </div>
-      <div class="item-galeria__corpo">
-        <span class="item-galeria__categoria">${item.categoria}</span>
-        <h3 class="item-galeria__titulo">${item.titulo}</h3>
-        <span class="item-galeria__valor">Valor: <strong>R$ ${item.valor.toLocaleString('pt-BR')}</strong></span>
-        <div class="item-galeria__acoes">
-          <a href="editar-portfolio.html?id=${item.id_portfolio}" class="botao botao--secundario botao--pequeno botao--bloco">Editar</a>
-        </div>
-      </div>
-    </article>
-  `).join('');
-}
+    const data = await response.json();
+    const itens = (data && data.sucesso && data.itens) ? data.itens : [];
+
+    if (itens.length === 0) {
+      if (vazio) vazio.classList.add('estado-vazio--visivel');
+      if (grade) grade.innerHTML = '';
+      return;
+    }
+
+    if (grade) {
+      grade.innerHTML = itens.map((item) => `
+        <article class="item-galeria card">
+          <div class="item-galeria__imagem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+            </svg>
+          </div>
+          <div class="item-galeria__corpo">
+            <span class="item-galeria__categoria">Portfólio</span>
+            <h3 class="item-galeria__titulo">${item.titulo}</h3>
+            <p style="color: var(--cor-texto-suave, #6b7280); font-size: 0.875rem; margin-bottom: 0.5rem;">${item.descricao || ''}</p>
+            <div class="item-galeria__acoes">
+              <a href="editar-portfolio.html?id=${item.id_portfolio}" class="botao botao--secundario botao--pequeno botao--bloco">Editar</a>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+  } catch (e) {
+    console.error('Erro ao carregar portfólio:', e);
+    if (vazio) vazio.classList.add('estado-vazio--visivel');
+  }
+});

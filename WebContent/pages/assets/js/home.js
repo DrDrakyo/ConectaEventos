@@ -64,41 +64,6 @@ const CATEGORIAS_DESTAQUE = [
   { nome: 'Atrações artísticas', icone: 'atracoes' },
 ];
 
-const PRESTADORES_DESTAQUE = [
-  {
-    nome_fantasia: 'Studio Lente Viva',
-    categoria: 'Fotografia',
-    localizacao: 'Salvador - BA',
-    disponibilidade: 'Disponível',
-    valor_a_partir: 850,
-    nota_media: 4.9,
-  },
-  {
-    nome_fantasia: 'Casa Encantada Decorações',
-    categoria: 'Decoração',
-    localizacao: 'Salvador - BA',
-    disponibilidade: 'Disponível',
-    valor_a_partir: 1200,
-    nota_media: 4.8,
-  },
-  {
-    nome_fantasia: 'Sabor & Arte Buffet',
-    categoria: 'Buffet',
-    localizacao: 'Lauro de Freitas - BA',
-    disponibilidade: 'Indisponível',
-    valor_a_partir: 3500,
-    nota_media: 4.7,
-  },
-  {
-    nome_fantasia: 'DJ Marcos Ferreira',
-    categoria: 'DJ',
-    localizacao: 'Salvador - BA',
-    disponibilidade: 'Disponível',
-    valor_a_partir: 900,
-    nota_media: 5.0,
-  },
-];
-
 /* ---------- Ícones em SVG (linha simples, sem biblioteca externa) ---------- */
 const ICONES = {
   camera: '<circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>',
@@ -202,29 +167,46 @@ function inicializarCarrosselCategorias() {
   atualizarBotoes();
 }
 
-/* ---------- Renderização dos prestadores em destaque ---------- */
-function renderizarPrestadoresDestaque() {
+async function renderizarPrestadoresDestaque() {
   const grade = document.querySelector('#grade-prestadores');
   if (!grade) return;
 
-  grade.innerHTML = PRESTADORES_DESTAQUE.map((prestador) => `
+  let prestadores = [];
+  try {
+    const response = await fetch('/buscarPrestadores');
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.sucesso && Array.isArray(data.prestadores) && data.prestadores.length > 0) {
+        prestadores = data.prestadores;
+      }
+    }
+  } catch (e) {
+    console.warn('Erro ao carregar do BD:', e);
+  }
+
+  if (prestadores.length === 0) {
+    grade.innerHTML = '<p class="secao__legenda" style="grid-column: 1/-1; text-align: center;">Nenhum prestador encontrado no banco de dados.</p>';
+    return;
+  }
+
+  grade.innerHTML = prestadores.slice(0, 4).map((prestador) => `
     <article class="prestador-card card">
       <div class="prestador-card__imagem">
         ${criarIconeSvg('camera')}
-        <span class="prestador-card__disponibilidade badge ${prestador.disponibilidade === 'Disponível' ? 'badge--azul' : 'badge--roxo'}">
-          ${prestador.disponibilidade}
+        <span class="prestador-card__disponibilidade badge ${(prestador.situacao === 'ATIVO' || prestador.disponibilidade === 'Disponível') ? 'badge--azul' : 'badge--roxo'}">
+          ${(prestador.situacao === 'ATIVO' || prestador.disponibilidade === 'Disponível') ? 'Disponível' : 'Indisponível'}
         </span>
       </div>
       <div class="prestador-card__corpo">
-        <span class="prestador-card__categoria">${prestador.categoria}</span>
-        <h3 class="prestador-card__nome">${prestador.nome_fantasia}</h3>
+        <span class="prestador-card__categoria">${prestador.categoria || 'Serviços'}</span>
+        <h3 class="prestador-card__nome">${prestador.nome_prestador || prestador.nome_fantasia}</h3>
         <span class="prestador-card__local">
           ${criarIconeSvg('pin')}
-          ${prestador.localizacao}
+          ${prestador.cidade || prestador.localizacao || 'Brasil'}
         </span>
         <div class="prestador-card__rodape">
-          <span class="prestador-card__preco">a partir de <strong>R$ ${prestador.valor_a_partir.toLocaleString('pt-BR')}</strong></span>
-          <span class="avaliacao">${criarIconeSvg('estrela')} ${prestador.nota_media.toFixed(1)}</span>
+          <span class="prestador-card__preco">Contato: <strong>${prestador.telefone || prestador.email_prestador || 'Disponível'}</strong></span>
+          <span class="avaliacao">${criarIconeSvg('estrela')} ${(prestador.media_avaliacoes ?? prestador.nota_media ?? 0).toFixed(1)}</span>
         </div>
       </div>
     </article>
