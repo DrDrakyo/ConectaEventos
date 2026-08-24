@@ -24,6 +24,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   inicializarMenuMobile();
   inicializarMenuUsuario();
+  verificarSessaoUsuario();
 });
 
 /* Abre/fecha o menu principal em telas pequenas (mesmo comportamento em
@@ -71,4 +72,48 @@ function inicializarMenuUsuario() {
       botao.setAttribute('aria-expanded', 'false');
     }
   });
+}
+
+async function verificarSessaoUsuario() {
+  try {
+    const response = await fetch('/login');
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.autenticado && data.usuario) {
+        atualizarCabecalhoUsuario(data.usuario);
+      }
+    }
+  } catch (e) {
+    // Ignora erro
+  }
+
+  document.querySelectorAll('.menu-usuario__sair').forEach((link) => {
+    link.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await fetch('/logout');
+      } catch (err) {}
+      window.location.href = '../visitante/home.html';
+    });
+  });
+}
+
+function atualizarCabecalhoUsuario(usuario) {
+  const nome = usuario.nome || usuario.email || 'Usuário';
+
+  const elNomeBotao = document.querySelector('.botao-usuario__nome');
+  if (elNomeBotao) elNomeBotao.textContent = nome;
+
+  const elAvatar = document.querySelector('.avatar-usuario');
+  if (elAvatar) elAvatar.textContent = obterIniciais(nome);
+
+  const elTituloBoasVindas = document.querySelector('.cabecalho-pagina__titulo');
+  if (elTituloBoasVindas && elTituloBoasVindas.textContent.includes('Olá,')) {
+    elTituloBoasVindas.textContent = `Olá, ${nome} 👋`;
+  }
+}
+
+function obterIniciais(nome) {
+  if (!nome) return 'US';
+  return nome.split(' ').filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join('');
 }

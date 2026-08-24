@@ -4,49 +4,67 @@
    autenticado da tabela PRESTADOR.
    ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderizarDadosPrestador();
+document.addEventListener('DOMContentLoaded', async () => {
+  let prestador = null;
+  try {
+    const response = await fetch('/perfilPrestador');
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.sucesso && data.prestador) {
+        prestador = data.prestador;
+      }
+    }
+  } catch (e) {
+    console.warn('Erro ao carregar perfil do backend:', e);
+  }
+
+  renderizarDadosPrestador(prestador);
 });
 
-/* Dados de exemplo — simulam o registro autenticado da tabela PRESTADOR. */
-const PRESTADOR_LOGADO = {
-  nome_prestador: 'Carla Menezes',
-  email_prestador: 'contato@studiolenteviva.com.br',
-  telefone: '(71) 99999-0000',
-  nome_fantasia: 'Studio Lente Viva',
-  categoria: 'Fotografia',
-  descricao: 'Fotografia profissional para casamentos, aniversários e formaturas, com mais de 8 anos de experiência no mercado de eventos em Salvador e região.',
-  localizacao: 'Salvador - BA',
-  contatos: 'WhatsApp: (71) 99999-0000',
-  disponibilidade: 'Disponível',
-  situacao: 'ativo',
-};
+function renderizarDadosPrestador(p) {
+  const nomeResponsavel = p ? p.nome_prestador || '—' : '—';
+  const nomeFantasia = p ? p.nome_prestador || '—' : '—';
+  const email = p ? p.email_prestador || '—' : '—';
+  const telefone = p ? p.telefone || '—' : '—';
+  const categoria = p ? p.categoria || '—' : '—';
+  const localizacao = p ? (p.cidade ? `${p.cidade} - BA` : '—') : '—';
+  const contatos = p ? p.telefone || '—' : '—';
+  const descricao = p ? p.descricao || 'Nenhuma descrição informada.' : 'Nenhuma descrição informada.';
+  const disponibilidade = p ? (p.situacao === 'ATIVO' ? 'Disponível' : 'Indisponível') : '—';
+  const situacao = p ? (p.situacao === 'ATIVO' ? 'Ativo' : 'Inativo') : '—';
 
-function renderizarDadosPrestador() {
-  document.querySelector('#valor-nome').textContent = PRESTADOR_LOGADO.nome_prestador;
-  document.querySelector('#valor-nome-fantasia').textContent = PRESTADOR_LOGADO.nome_fantasia;
-  document.querySelector('#valor-email').textContent = PRESTADOR_LOGADO.email_prestador;
-  document.querySelector('#valor-telefone').textContent = PRESTADOR_LOGADO.telefone;
-  document.querySelector('#valor-categoria').textContent = PRESTADOR_LOGADO.categoria;
-  document.querySelector('#valor-localizacao').textContent = PRESTADOR_LOGADO.localizacao;
-  document.querySelector('#valor-contatos').textContent = PRESTADOR_LOGADO.contatos;
-  document.querySelector('#valor-descricao').textContent = PRESTADOR_LOGADO.descricao;
+  document.querySelector('#valor-nome').textContent = nomeResponsavel;
+  document.querySelector('#valor-nome-fantasia').textContent = nomeFantasia;
+  document.querySelector('#valor-email').textContent = email;
+  document.querySelector('#valor-telefone').textContent = telefone;
+  document.querySelector('#valor-categoria').textContent = categoria;
+  document.querySelector('#valor-localizacao').textContent = localizacao;
+  document.querySelector('#valor-contatos').textContent = contatos;
+  document.querySelector('#valor-descricao').textContent = descricao;
 
   const disponibilidadeEl = document.querySelector('#valor-disponibilidade');
-  const disponivel = PRESTADOR_LOGADO.disponibilidade === 'Disponível';
-  disponibilidadeEl.textContent = PRESTADOR_LOGADO.disponibilidade;
-  disponibilidadeEl.className = `badge ${disponivel ? 'badge--azul' : 'badge--roxo'}`;
+  if (disponibilidadeEl) {
+    disponibilidadeEl.textContent = disponibilidade;
+    disponibilidadeEl.className = `badge ${disponibilidade === 'Disponível' ? 'badge--azul' : 'badge--roxo'}`;
+  }
 
   const situacaoEl = document.querySelector('#valor-situacao');
-  const ativo = PRESTADOR_LOGADO.situacao === 'ativo';
-  situacaoEl.textContent = ativo ? 'Ativo' : 'Inativo';
-  situacaoEl.className = `badge ${ativo ? 'badge--azul' : 'badge--roxo'}`;
+  if (situacaoEl) {
+    situacaoEl.textContent = situacao;
+    situacaoEl.className = `badge ${situacao === 'Ativo' ? 'badge--azul' : 'badge--roxo'}`;
+  }
 
-  document.querySelector('#cartao-nome-fantasia').textContent = PRESTADOR_LOGADO.nome_fantasia;
-  document.querySelector('#cartao-categoria').textContent = PRESTADOR_LOGADO.categoria;
-  document.querySelector('#avatar-iniciais').textContent = obterIniciais(PRESTADOR_LOGADO.nome_fantasia);
+  const cartaoNome = document.querySelector('#cartao-nome-fantasia');
+  if (cartaoNome) cartaoNome.textContent = p ? (p.nome_prestador || 'Sem Perfil') : 'Sem Perfil';
+
+  const cartaoCat = document.querySelector('#cartao-categoria');
+  if (cartaoCat) cartaoCat.textContent = categoria;
+
+  const avatar = document.querySelector('#avatar-iniciais');
+  if (avatar) avatar.textContent = p ? obterIniciais(p.nome_prestador) : '--';
 }
 
 function obterIniciais(nome) {
+  if (!nome) return '--';
   return nome.split(' ').filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join('');
 }

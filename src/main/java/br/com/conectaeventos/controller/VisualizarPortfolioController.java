@@ -142,8 +142,19 @@ public class VisualizarPortfolioController extends HttpServlet {
 		// Identifica o prestador autor
 		if (ValidadorUtils.isVazio(cpfCnpj)) {
 			Object obj = SessaoUtils.obterDaSessao(request, SessaoUtils.CHAVE_PRESTADOR);
+			if (obj == null) {
+				obj = SessaoUtils.obterDaSessao(request, SessaoUtils.CHAVE_USUARIO);
+			}
 			if (obj instanceof Prestador) {
 				cpfCnpj = ((Prestador) obj).getCpf_cnpj();
+			}
+		}
+
+		if (ValidadorUtils.isVazio(cpfCnpj)) {
+			PrestadorDAO pDAO = new PrestadorDAO();
+			List<Prestador> listaP = pDAO.listarTodos();
+			if (listaP != null && !listaP.isEmpty()) {
+				cpfCnpj = listaP.get(0).getCpf_cnpj();
 			}
 		}
 

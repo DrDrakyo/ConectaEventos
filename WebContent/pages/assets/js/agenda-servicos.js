@@ -7,14 +7,8 @@
 
 const MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 
-/* Dados de exemplo — simulam ITEM_CONTRA + CONTRATACAO + CONTRATANTE
-   vinculados a este prestador. */
-const COMPROMISSOS = [
-  { id_contratacao: 1041, item_contratacao: 'Cobertura fotográfica completa', contratante: 'Maria Costa', data_inicio_prevista: '2026-08-15', situacao_item: 'iniciado' },
-  { id_contratacao: 1030, item_contratacao: 'Ensaio pré-wedding', contratante: 'João Almeida', data_inicio_prevista: '2026-08-15', situacao_item: 'contratado' },
-  { id_contratacao: 1050, item_contratacao: 'Formatura Medicina UFBA', contratante: 'Patrícia Reis', data_inicio_prevista: '2026-09-02', situacao_item: 'contratado' },
-  { id_contratacao: 1019, item_contratacao: 'Cobertura de aniversário', contratante: 'Fernanda Lopes', data_inicio_prevista: '2026-07-10', situacao_item: 'concluido' },
-];
+/* Dados zerados — agenda será populada conforme as contratações forem inseridas no banco */
+const COMPROMISSOS = [];
 
 const ROTULO_STATUS = {
   disponivel: 'Disponível', negociacao: 'Em negociação', contratado: 'Contratado',

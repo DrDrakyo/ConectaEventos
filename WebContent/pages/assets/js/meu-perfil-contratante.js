@@ -3,43 +3,69 @@
    JavaScript puro, específico desta tela.
    ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderizarDadosContratante();
+document.addEventListener('DOMContentLoaded', async () => {
+  let contratante = null;
+  try {
+    const response = await fetch('/meuPerfilContratante');
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.sucesso && data.perfil) {
+        contratante = data.perfil;
+      }
+    }
+  } catch (e) {
+    console.warn('Erro ao carregar perfil do contratante:', e);
+  }
+
+  renderizarDadosContratante(contratante);
 });
 
-/* Dados de exemplo — simulam o registro autenticado da tabela CONTRATANTE. */
-const CONTRATANTE_LOGADO = {
-  nome_contratante: 'Maria Costa',
-  email_contratante: 'maria.costa@email.com',
-  telefone: '(71) 99876-5432',
-  endereco: 'Rua das Flores, 120',
-  cidade: 'Salvador - BA',
-  cpf_cnpj: '123.456.789-00',
-  data_cadastro: '2026-02-14',
-  situacao: 'ativo',
-};
+function renderizarDadosContratante(c) {
+  const nome = c ? c.nome_contratante || '—' : '—';
+  const email = c ? c.email_contratante || '—' : '—';
+  const telefone = c ? c.telefone || '—' : '—';
+  const endereco = c ? c.endereco || '—' : '—';
+  const cidade = c ? c.cidade || '—' : '—';
+  const cpfCnpj = c ? c.cpf_cnpj || '—' : '—';
+  const dataCad = c ? (c.data_cadastro || '—') : '—';
+  const situacao = c ? (c.situacao === 'ATIVO' ? 'Ativo' : 'Inativo') : '—';
 
-function renderizarDadosContratante() {
-  document.querySelector('#valor-nome').textContent = CONTRATANTE_LOGADO.nome_contratante;
-  document.querySelector('#valor-email').textContent = CONTRATANTE_LOGADO.email_contratante;
-  document.querySelector('#valor-telefone').textContent = CONTRATANTE_LOGADO.telefone;
-  document.querySelector('#valor-endereco').textContent = CONTRATANTE_LOGADO.endereco;
-  document.querySelector('#valor-cidade').textContent = CONTRATANTE_LOGADO.cidade;
-  document.querySelector('#valor-cpf-cnpj').textContent = CONTRATANTE_LOGADO.cpf_cnpj;
+  const elNome = document.querySelector('#valor-nome');
+  if (elNome) elNome.textContent = nome;
 
-  const [ano, mes, dia] = CONTRATANTE_LOGADO.data_cadastro.split('-');
-  document.querySelector('#valor-data-cadastro').textContent = `${dia}/${mes}/${ano}`;
+  const elEmail = document.querySelector('#valor-email');
+  if (elEmail) elEmail.textContent = email;
+
+  const elTel = document.querySelector('#valor-telefone');
+  if (elTel) elTel.textContent = telefone;
+
+  const elEnd = document.querySelector('#valor-endereco');
+  if (elEnd) elEnd.textContent = endereco;
+
+  const elCid = document.querySelector('#valor-cidade');
+  if (elCid) elCid.textContent = cidade;
+
+  const elCpf = document.querySelector('#valor-cpf-cnpj');
+  if (elCpf) elCpf.textContent = cpfCnpj;
+
+  const elData = document.querySelector('#valor-data-cadastro');
+  if (elData) elData.textContent = dataCad;
 
   const situacaoEl = document.querySelector('#valor-situacao');
-  const ativo = CONTRATANTE_LOGADO.situacao === 'ativo';
-  situacaoEl.textContent = ativo ? 'Ativo' : 'Inativo';
-  situacaoEl.className = `badge ${ativo ? 'badge--azul' : 'badge--roxo'}`;
+  if (situacaoEl) {
+    situacaoEl.textContent = situacao;
+    situacaoEl.className = `badge ${situacao === 'Ativo' ? 'badge--azul' : 'badge--roxo'}`;
+  }
 
-  document.querySelector('#nome-cartao').textContent = CONTRATANTE_LOGADO.nome_contratante;
-  document.querySelector('#avatar-iniciais').textContent = obterIniciais(CONTRATANTE_LOGADO.nome_contratante);
+  const elCartao = document.querySelector('#nome-cartao');
+  if (elCartao) elCartao.textContent = nome;
+
+  const elAvatar = document.querySelector('#avatar-iniciais');
+  if (elAvatar) elAvatar.textContent = c ? obterIniciais(nome) : '--';
 }
 
 function obterIniciais(nomeCompleto) {
+  if (!nomeCompleto) return '--';
   return nomeCompleto
     .split(' ')
     .filter(Boolean)

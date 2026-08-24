@@ -5,11 +5,8 @@
    PORTFOLIO, a este prestador — somente leitura.
    ========================================================================== */
 
-const AVALIACOES = [
-  { contratante: 'Fernanda Lopes', servico: 'Cobertura de aniversário', data: '2026-04-20', nota: 5, comentario: 'Trabalho impecável! As fotos ficaram lindas e a entrega foi rápida.' },
-  { contratante: 'Rodrigo Nascimento', servico: 'Formatura Direito UFBA', data: '2026-03-05', nota: 5, comentario: 'Super pontual e profissional, recomendo muito.' },
-  { contratante: 'Juliana Prado', servico: 'Ensaio de gestante', data: '2026-01-18', nota: 4, comentario: 'Ótimas fotos, só demorou um pouco mais que o combinado para entregar.' },
-];
+/* Dados zerados — avaliações serão populadas a partir do banco de dados */
+const AVALIACOES = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   renderizarResumo();

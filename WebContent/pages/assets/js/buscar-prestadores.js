@@ -12,19 +12,6 @@
 const ITENS_POR_PAGINA = 6;
 let paginaAtual = 1;
 
-const PRESTADORES = [
-  { nome_fantasia: 'Studio Lente Viva', categoria: 'Fotografia', localizacao: 'Salvador - BA', disponibilidade: 'Disponível', valor_a_partir: 850, nota_media: 4.9 },
-  { nome_fantasia: 'Casa Encantada Decorações', categoria: 'Decoração', localizacao: 'Salvador - BA', disponibilidade: 'Disponível', valor_a_partir: 1200, nota_media: 4.8 },
-  { nome_fantasia: 'Sabor & Arte Buffet', categoria: 'Buffet', localizacao: 'Lauro de Freitas - BA', disponibilidade: 'Indisponível', valor_a_partir: 3500, nota_media: 4.7 },
-  { nome_fantasia: 'DJ Marcos Ferreira', categoria: 'DJ', localizacao: 'Salvador - BA', disponibilidade: 'Disponível', valor_a_partir: 900, nota_media: 5.0 },
-  { nome_fantasia: 'Cerimonial Elo Perfeito', categoria: 'Cerimonial', localizacao: 'Camaçari - BA', disponibilidade: 'Disponível', valor_a_partir: 1800, nota_media: 4.6 },
-  { nome_fantasia: 'Prisma Filmes', categoria: 'Filmagem', localizacao: 'Salvador - BA', disponibilidade: 'Disponível', valor_a_partir: 1500, nota_media: 4.9 },
-  { nome_fantasia: 'Som Total Eventos', categoria: 'Sonorização', localizacao: 'Feira de Santana - BA', disponibilidade: 'Indisponível', valor_a_partir: 1100, nota_media: 4.5 },
-  { nome_fantasia: 'Luz & Cena Iluminação', categoria: 'Iluminação', localizacao: 'Salvador - BA', disponibilidade: 'Disponível', valor_a_partir: 980, nota_media: 4.4 },
-  { nome_fantasia: 'Bartenders Blend', categoria: 'Bartender', localizacao: 'Salvador - BA', disponibilidade: 'Disponível', valor_a_partir: 700, nota_media: 4.8 },
-  { nome_fantasia: 'Banda Vibe Real', categoria: 'Banda', localizacao: 'Lauro de Freitas - BA', disponibilidade: 'Disponível', valor_a_partir: 2500, nota_media: 4.9 },
-];
-
 document.addEventListener('DOMContentLoaded', () => {
   preencherFiltrosComParametrosDaUrl();
   inicializarEventosDeFiltro();
@@ -58,22 +45,48 @@ function inicializarEventosDeFiltro() {
   document.querySelector('#ordenacao').addEventListener('change', () => aplicarFiltros());
 }
 
-function aplicarFiltros() {
-  const busca = document.querySelector('#filtro-busca').value.trim().toLowerCase();
+async function aplicarFiltros() {
+  const busca = document.querySelector('#filtro-busca').value.trim();
   const categoria = document.querySelector('#filtro-categoria').value;
-  const cidade = document.querySelector('#filtro-cidade').value.trim().toLowerCase();
+  const cidade = document.querySelector('#filtro-cidade').value.trim();
   const disponibilidade = document.querySelector('#filtro-disponibilidade').value;
   const precoMax = Number(document.querySelector('#filtro-preco-max').value) || Infinity;
   const notaMinima = Number(document.querySelector('#filtro-reputacao').value) || 0;
   const ordenacao = document.querySelector('#ordenacao').value;
 
-  let filtrados = PRESTADORES.filter((prestador) => {
-    const combinaBusca = !busca || prestador.nome_fantasia.toLowerCase().includes(busca);
+  let listaPrestadores = [];
+
+  try {
+    const params = new URLSearchParams();
+    if (busca) params.set('termo', busca);
+    if (categoria) params.set('categoria', categoria);
+    if (cidade) params.set('cidade', cidade);
+
+    const response = await fetch(`/buscarPrestadores?${params.toString()}`);
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.sucesso && Array.isArray(data.prestadores)) {
+        listaPrestadores = data.prestadores.map((p) => ({
+          ...p,
+          nome_fantasia: p.nome_prestador,
+          localizacao: p.cidade ? `${p.cidade} - BA` : 'Brasil',
+          disponibilidade: p.situacao === 'ATIVO' ? 'Disponível' : 'Indisponível',
+          valor_a_partir: 0,
+          nota_media: p.media_avaliacoes || 0,
+        }));
+      }
+    }
+  } catch (e) {
+    console.warn('Erro ao carregar prestadores do BD:', e);
+  }
+
+  let filtrados = listaPrestadores.filter((prestador) => {
+    const combinaBusca = !busca || (prestador.nome_fantasia || prestador.nome_prestador || '').toLowerCase().includes(busca.toLowerCase());
     const combinaCategoria = !categoria || prestador.categoria === categoria;
-    const combinaCidade = !cidade || prestador.localizacao.toLowerCase().includes(cidade);
+    const combinaCidade = !cidade || (prestador.localizacao || prestador.cidade || '').toLowerCase().includes(cidade.toLowerCase());
     const combinaDisponibilidade = !disponibilidade || prestador.disponibilidade === disponibilidade;
-    const combinaPreco = prestador.valor_a_partir <= precoMax;
-    const combinaReputacao = prestador.nota_media >= notaMinima;
+    const combinaPreco = (prestador.valor_a_partir || 0) <= precoMax;
+    const combinaReputacao = (prestador.nota_media || 0) >= notaMinima;
 
     return combinaBusca && combinaCategoria && combinaCidade && combinaDisponibilidade && combinaPreco && combinaReputacao;
   });

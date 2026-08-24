@@ -9,24 +9,24 @@ document.addEventListener('DOMContentLoaded', () => {
   inicializarValidacao();
 });
 
-/* Dados de exemplo — simulam o registro autenticado da tabela CONTRATANTE. */
-const CONTRATANTE_LOGADO = {
-  nome_contratante: 'Maria Costa',
-  email_contratante: 'maria.costa@email.com',
-  telefone: '(71) 99876-5432',
-  endereco: 'Rua das Flores, 120',
-  cidade: 'Salvador - BA',
-  cpf_cnpj: '123.456.789-00',
-};
-
-function preencherFormulario() {
-  document.querySelector('#campo-nome').value = CONTRATANTE_LOGADO.nome_contratante;
-  document.querySelector('#campo-email').value = CONTRATANTE_LOGADO.email_contratante;
-  document.querySelector('#campo-telefone').value = CONTRATANTE_LOGADO.telefone;
-  document.querySelector('#campo-endereco').value = CONTRATANTE_LOGADO.endereco;
-  document.querySelector('#campo-cidade').value = CONTRATANTE_LOGADO.cidade;
-  // cpf_cnpj é somente leitura: identifica o cadastro e não é editável.
-  document.querySelector('#campo-cpf-cnpj').value = CONTRATANTE_LOGADO.cpf_cnpj;
+async function preencherFormulario() {
+  try {
+    const response = await fetch('/editarPerfilContratante');
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.sucesso && data.perfil) {
+        const p = data.perfil;
+        if (p.nome_contratante) document.querySelector('#campo-nome').value = p.nome_contratante;
+        if (p.email_contratante) document.querySelector('#campo-email').value = p.email_contratante;
+        if (p.telefone) document.querySelector('#campo-telefone').value = p.telefone;
+        if (p.endereco) document.querySelector('#campo-endereco').value = p.endereco;
+        if (p.cidade) document.querySelector('#campo-cidade').value = p.cidade;
+        if (p.cpf_cnpj) document.querySelector('#campo-cpf-cnpj').value = p.cpf_cnpj;
+      }
+    }
+  } catch (e) {
+    console.warn('Erro ao carregar dados do perfil:', e);
+  }
 }
 
 function inicializarValidacao() {
@@ -34,7 +34,7 @@ function inicializarValidacao() {
   const mensagem = document.querySelector('#mensagem-feedback');
   if (!formulario) return;
 
-  formulario.addEventListener('submit', (evento) => {
+  formulario.addEventListener('submit', async (evento) => {
     evento.preventDefault();
 
     const campos = ['nome', 'email', 'telefone', 'endereco', 'cidade'];
@@ -64,13 +64,36 @@ function inicializarValidacao() {
       return;
     }
 
-    // Em produção: enviar os campos alterados para atualizar o registro
-    // correspondente na tabela CONTRATANTE.
-    mensagem.textContent = 'Dados atualizados com sucesso! Redirecionando para seu perfil...';
-    mensagem.classList.add('mensagem-feedback--sucesso', 'mensagem-feedback--visivel');
+    try {
+      const formData = new URLSearchParams();
+      formData.append('nome', document.querySelector('#campo-nome').value.trim());
+      formData.append('email', document.querySelector('#campo-email').value.trim());
+      formData.append('telefone', document.querySelector('#campo-telefone').value.trim());
+      formData.append('endereco', document.querySelector('#campo-endereco').value.trim());
+      formData.append('cidade', document.querySelector('#campo-cidade').value.trim());
 
-    setTimeout(() => {
-      window.location.href = 'meu-perfil-contratante.html';
-    }, 1800);
+      const response = await fetch('/editarPerfilContratante', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        body: formData.toString()
+      });
+
+      const data = await response.json();
+      if (response.ok && data && data.sucesso) {
+        mensagem.textContent = 'Dados atualizados com sucesso no banco de dados! Redirecionando...';
+        mensagem.classList.add('mensagem-feedback--sucesso', 'mensagem-feedback--visivel');
+
+        setTimeout(() => {
+          window.location.href = 'meu-perfil-contratante.html';
+        }, 1500);
+      } else {
+        mensagem.textContent = data.mensagem || 'Erro ao atualizar dados.';
+        mensagem.classList.add('mensagem-feedback--erro', 'mensagem-feedback--visivel');
+      }
+    } catch (e) {
+      console.error('Erro na atualização:', e);
+      mensagem.textContent = 'Erro de comunicação ao atualizar perfil.';
+      mensagem.classList.add('mensagem-feedback--erro', 'mensagem-feedback--visivel');
+    }
   });
 }

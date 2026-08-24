@@ -1,34 +1,59 @@
-/* ==========================================================================
-   TELA: PERFIL PÚBLICO DO PRESTADOR (Módulo Visitante)
-   JavaScript específico desta tela: renderiza os itens de portfólio
-   (tabela PORTFOLIO) e as avaliações recebidas (campos ava_* da tabela
-   CONTRATACAO). Menu mobile tratado em common.js.
-   ========================================================================== */
+document.addEventListener('DOMContentLoaded', async () => {
+  const parametros = new URLSearchParams(window.location.search);
+  const id = parametros.get('id');
+  const cpf = parametros.get('cpf');
 
-const ITENS_PORTFOLIO = [
-  { titulo: 'Casamento Ana & Rafael', valor: 1200 },
-  { titulo: 'Aniversário 15 anos - Beatriz', valor: 950 },
-  { titulo: 'Formatura Direito UFBA', valor: 1500 },
-  { titulo: 'Casamento na Praia', valor: 1800 },
-];
+  let portfolio = [];
+  let avaliacoes = [];
 
-const AVALIACOES = [
-  { autor: 'Contratante verificado', nota: 5, comentario: 'Profissional pontual e muito atencioso, entregou tudo antes do prazo combinado.' },
-  { autor: 'Contratante verificado', nota: 5, comentario: 'Superou as expectativas, recomendo para qualquer tipo de evento.' },
-  { autor: 'Contratante verificado', nota: 4, comentario: 'Ótimo trabalho, apenas a entrega demorou um pouco mais que o previsto.' },
-];
+  if (id || cpf) {
+    try {
+      const url = id ? `/perfilPrestador?id=${id}` : `/perfilPrestador?cpf_cnpj=${cpf}`;
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.sucesso) {
+          portfolio = data.portfolio || [];
+          avaliacoes = data.avaliacoes || [];
+          if (data.prestador) {
+            preencherDadosPrestador(data.prestador);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Erro ao carregar dados do prestador do BD:', e);
+    }
+  }
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderizarPortfolio();
-  renderizarAvaliacoes();
+  renderizarPortfolio(portfolio);
+  renderizarAvaliacoes(avaliacoes);
 });
 
-function renderizarPortfolio() {
+function preencherDadosPrestador(prestador) {
+  const nomeEl = document.querySelector('.prestador-perfil__nome');
+  if (nomeEl && prestador.nome_prestador) nomeEl.textContent = prestador.nome_prestador;
+
+  const catEl = document.querySelector('.prestador-perfil__categoria');
+  if (catEl && prestador.categoria) catEl.textContent = prestador.categoria;
+
+  const locEl = document.querySelector('.prestador-perfil__local');
+  if (locEl && prestador.cidade) locEl.textContent = prestador.cidade;
+
+  const descEl = document.querySelector('.prestador-perfil__descricao');
+  if (descEl && prestador.descricao) descEl.textContent = prestador.descricao;
+}
+
+function renderizarPortfolio(itens) {
   const galeria = document.querySelector('#galeria-portfolio-grade');
   if (!galeria) return;
 
-  galeria.innerHTML = ITENS_PORTFOLIO.map((item) => `
-    <a class="item-portfolio" href="visualizar-portfolio.html">
+  if (!itens || itens.length === 0) {
+    galeria.innerHTML = '<p class="secao__legenda" style="grid-column: 1/-1;">Nenhum item de portfólio cadastrado.</p>';
+    return;
+  }
+
+  galeria.innerHTML = itens.map((item) => `
+    <a class="item-portfolio" href="visualizar-portfolio.html?id=${item.id_portfolio}">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="13" r="3.2"/><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
       </svg>
@@ -37,17 +62,22 @@ function renderizarPortfolio() {
   `).join('');
 }
 
-function renderizarAvaliacoes() {
+function renderizarAvaliacoes(listaAvaliacoes) {
   const lista = document.querySelector('#lista-avaliacoes');
   if (!lista) return;
 
-  lista.innerHTML = AVALIACOES.map((avaliacao) => `
+  if (!listaAvaliacoes || listaAvaliacoes.length === 0) {
+    lista.innerHTML = '<p class="secao__legenda">Nenhuma avaliação recebida até o momento.</p>';
+    return;
+  }
+
+  lista.innerHTML = listaAvaliacoes.map((avaliacao) => `
     <div class="avaliacao-card">
       <div class="avaliacao-card__cabecalho">
-        <span class="avaliacao-card__autor">${avaliacao.autor}</span>
-        <span class="avaliacao">${'★'.repeat(avaliacao.nota)}${'☆'.repeat(5 - avaliacao.nota)}</span>
+        <span class="avaliacao-card__autor">${avaliacao.cpf_cnpj_contratante || 'Contratante'}</span>
+        <span class="avaliacao">${'★'.repeat(avaliacao.nota || 5)}${'☆'.repeat(5 - (avaliacao.nota || 5))}</span>
       </div>
-      <p class="avaliacao-card__comentario">${avaliacao.comentario}</p>
+      <p class="avaliacao-card__comentario">${avaliacao.comentario || ''}</p>
     </div>
   `).join('');
 }

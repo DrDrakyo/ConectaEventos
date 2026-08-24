@@ -7,16 +7,8 @@
 
 let proximoIdItem = 2;
 
-/* Item pré-selecionado ao vir do Perfil/Visualizar Portfólio do prestador
-   (simula PORTFOLIO.id_portfolio + valor já escolhidos). */
-const ITEM_INICIAL = {
-  id_portfolio: 101,
-  item_contratacao: 'Cobertura fotográfica completa',
-  valor_unitario: 1200,
-};
-
 document.addEventListener('DOMContentLoaded', () => {
-  adicionarLinhaItem(ITEM_INICIAL);
+  adicionarLinhaItem();
   document.querySelector('#data-contratacao').textContent = formatarDataAtual();
   document.querySelector('#botao-adicionar-item').addEventListener('click', () => adicionarLinhaItem());
   document.querySelector('#formulario-solicitacao').addEventListener('submit', tratarEnvio);
@@ -46,7 +38,7 @@ function adicionarLinhaItem(itemPredefinido) {
       </div>
       <div class="campo">
         <label>Valor unitário (R$) *</label>
-        <input type="number" class="campo-item-valor" min="0" step="0.01" required value="${itemPredefinido ? itemPredefinido.valor_unitario : ''}" />
+        <input type="number" class="campo-item-valor" min="0" step="0.01" required value="${itemPredefinido ? itemPredefinido.valor_unitario : ''}" placeholder="0.00" />
       </div>
       <div class="campo">
         <label>Início previsto *</label>
@@ -94,13 +86,19 @@ function recalcularTotal() {
   document.querySelector('#resumo-valor-total').textContent = formatarMoeda(total);
 }
 
-function tratarEnvio(evento) {
+async function tratarEnvio(evento) {
   evento.preventDefault();
   const mensagem = document.querySelector('#mensagem-feedback');
 
   const local = document.querySelector('#campo-local').value.trim();
   const formaPagamento = document.querySelector('#campo-forma-pagamento').value;
+  const urlParams = new URLSearchParams(window.location.search);
+  const cpfPrestador = urlParams.get('cpf_prestador') || urlParams.get('cpf') || '00000000000';
+
   let valido = Boolean(local) && Boolean(formaPagamento);
+
+  const emData = document.querySelector('.campo-item-data') ? document.querySelector('.campo-item-data').value : '';
+  const tituloEvento = local || 'Evento de Festa';
 
   document.querySelectorAll('#lista-itens .item-solicitacao').forEach((itemEl) => {
     const descricao = itemEl.querySelector('.campo-item-descricao').value.trim();
@@ -118,14 +116,41 @@ function tratarEnvio(evento) {
     return;
   }
 
-  // Em produção: gravar um registro em CONTRATACAO (situacao inicial
-  // "Em negociação") e um registro em ITEM_CONTRA para cada item da lista.
-  mensagem.textContent = 'Solicitação enviada com sucesso! Redirecionando para o histórico de contratações...';
-  mensagem.classList.add('mensagem-feedback--sucesso', 'mensagem-feedback--visivel');
+  mensagem.textContent = 'Gravando contratação no banco de dados...';
+  mensagem.classList.add('mensagem-feedback--visivel');
 
-  setTimeout(() => {
-    window.location.href = 'historico-contratacoes.html';
-  }, 1800);
+  try {
+    const formData = new URLSearchParams();
+    formData.append('acao', 'cadastrar');
+    formData.append('cpf_cnpj_prestador', cpfPrestador);
+    formData.append('titulo_evento', tituloEvento);
+    formData.append('descricao_evento', `Forma de pagamento: ${formaPagamento}. Local: ${local}`);
+    formData.append('data_evento', emData || new Date().toISOString().split('T')[0]);
+
+    const response = await fetch('/acompanharContratacao', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+      body: formData.toString()
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data && data.sucesso) {
+      mensagem.textContent = 'Solicitação gravada no banco de dados com sucesso! Redirecionando...';
+      mensagem.classList.add('mensagem-feedback--sucesso', 'mensagem-feedback--visivel');
+
+      setTimeout(() => {
+        window.location.href = `acompanhar-contratacao.html?id=${data.id_contratacao}`;
+      }, 1500);
+    } else {
+      mensagem.textContent = data.mensagem || 'Erro ao gravar solicitação de contratação.';
+      mensagem.classList.add('mensagem-feedback--erro', 'mensagem-feedback--visivel');
+    }
+  } catch (e) {
+    console.error('Erro na solicitação:', e);
+    mensagem.textContent = 'Erro de comunicação ao enviar solicitação.';
+    mensagem.classList.add('mensagem-feedback--erro', 'mensagem-feedback--visivel');
+  }
 }
 
 function formatarMoeda(valor) {

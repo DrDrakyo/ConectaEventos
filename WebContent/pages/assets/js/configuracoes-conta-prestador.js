@@ -4,8 +4,6 @@
    permite desativar a conta (situacao) da tabela PRESTADOR.
    ========================================================================== */
 
-const SENHA_ATUAL_SIMULADA = 'senha123';
-
 document.addEventListener('DOMContentLoaded', () => {
   inicializarAlterarSenha();
   inicializarDesativarConta();
@@ -14,8 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function inicializarAlterarSenha() {
   const formulario = document.querySelector('#formulario-senha');
   const mensagem = document.querySelector('#mensagem-feedback-senha');
+  if (!formulario) return;
 
-  formulario.addEventListener('submit', (evento) => {
+  formulario.addEventListener('submit', async (evento) => {
     evento.preventDefault();
 
     const senhaAtual = document.querySelector('#campo-senha-atual').value;
@@ -23,12 +22,6 @@ function inicializarAlterarSenha() {
     const confirmacao = document.querySelector('#campo-senha-confirmacao').value;
 
     mensagem.classList.remove('mensagem-feedback--sucesso', 'mensagem-feedback--erro');
-
-    if (senhaAtual !== SENHA_ATUAL_SIMULADA) {
-      mensagem.textContent = 'Senha atual incorreta.';
-      mensagem.classList.add('mensagem-feedback--erro', 'mensagem-feedback--visivel');
-      return;
-    }
 
     if (novaSenha.length < 6) {
       mensagem.textContent = 'A nova senha deve ter pelo menos 6 caracteres.';
@@ -42,27 +35,68 @@ function inicializarAlterarSenha() {
       return;
     }
 
-    // Em produção: atualizar o campo senha_prestador do registro
-    // autenticado na tabela PRESTADOR (com o devido hash de senha).
-    mensagem.textContent = 'Senha alterada com sucesso!';
-    mensagem.classList.add('mensagem-feedback--sucesso', 'mensagem-feedback--visivel');
-    formulario.reset();
+    try {
+      const formData = new URLSearchParams();
+      formData.append('acao', 'alterar_senha');
+      formData.append('senhaAtual', senhaAtual);
+      formData.append('novaSenha', novaSenha);
+      formData.append('confirmarNovaSenha', confirmacao);
+
+      const response = await fetch('/configuracoesContaContratante', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        body: formData.toString()
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data && data.sucesso) {
+        mensagem.textContent = 'Senha alterada com sucesso no banco de dados!';
+        mensagem.classList.add('mensagem-feedback--sucesso', 'mensagem-feedback--visivel');
+        formulario.reset();
+      } else {
+        mensagem.textContent = data.mensagem || 'Erro ao alterar senha.';
+        mensagem.classList.add('mensagem-feedback--erro', 'mensagem-feedback--visivel');
+      }
+    } catch (e) {
+      console.error('Erro ao alterar senha:', e);
+      mensagem.textContent = 'Erro de comunicação ao alterar senha.';
+      mensagem.classList.add('mensagem-feedback--erro', 'mensagem-feedback--visivel');
+    }
   });
 }
 
 function inicializarDesativarConta() {
   const botao = document.querySelector('#botao-desativar-conta');
   const mensagem = document.querySelector('#mensagem-feedback-conta');
+  if (!botao) return;
 
-  botao.addEventListener('click', () => {
-    const confirmar = window.confirm('Tem certeza que deseja desativar sua conta? Seu perfil deixará de ficar visível para novos contratantes.');
+  botao.addEventListener('click', async () => {
+    const confirmar = window.confirm('Tem certeza que deseja desativar sua conta? Seu perfil deixará de ficar visível.');
     if (!confirmar) return;
 
-    // Em produção: atualizar o campo situacao do registro autenticado
-    // na tabela PRESTADOR para "inativo".
-    mensagem.textContent = 'Sua conta foi desativada com sucesso.';
-    mensagem.classList.remove('mensagem-feedback--erro');
-    mensagem.classList.add('mensagem-feedback--sucesso', 'mensagem-feedback--visivel');
-    botao.setAttribute('disabled', 'true');
+    try {
+      const formData = new URLSearchParams();
+      formData.append('acao', 'desativar');
+
+      const response = await fetch('/configuracoesContaContratante', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        body: formData.toString()
+      });
+
+      const data = await response.json();
+      if (response.ok && data && data.sucesso) {
+        mensagem.textContent = 'Sua conta foi desativada com sucesso no banco de dados.';
+        mensagem.classList.remove('mensagem-feedback--erro');
+        mensagem.classList.add('mensagem-feedback--sucesso', 'mensagem-feedback--visivel');
+        botao.setAttribute('disabled', 'true');
+      } else {
+        mensagem.textContent = data.mensagem || 'Erro ao desativar conta.';
+        mensagem.classList.add('mensagem-feedback--erro', 'mensagem-feedback--visivel');
+      }
+    } catch (e) {
+      console.error('Erro ao desativar conta:', e);
+    }
   });
 }

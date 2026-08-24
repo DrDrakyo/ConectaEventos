@@ -11,44 +11,44 @@ document.addEventListener('DOMContentLoaded', () => {
   inicializarValidacao();
 });
 
-const PRESTADOR_LOGADO = {
-  nome_prestador: 'Carla Menezes',
-  telefone: '(71) 99999-0000',
-  nome_fantasia: 'Studio Lente Viva',
-  categoria: 'Fotografia',
-  descricao: 'Fotografia profissional para casamentos, aniversários e formaturas, com mais de 8 anos de experiência no mercado de eventos em Salvador e região.',
-  localizacao: 'Salvador - BA',
-  contatos: 'WhatsApp: (71) 99999-0000',
-};
-
-/* Simula a leitura do catálogo global da tabela SERVICO (mantido
-   exclusivamente pelo Administrador) para popular o select de categoria. */
 const CATEGORIAS_SERVICO = [
-  'Fotografia', 'Filmagem', 'Decoração', 'Buffet', 'Cerimonial', 'Sonorização',
-  'Iluminação', 'Segurança', 'Recepção', 'Produção de eventos', 'Bartender',
-  'DJ', 'Banda', 'Mestre de cerimônias', 'Locução', 'Assessoria', 'Atrações artísticas',
+  'Fotografia e Filmagem', 'Música e DJ', 'Buffet e Gastronomia', 'Decoração e Cenografia',
+  'Espaço e Locação', 'Cerimonial e Assessoria', 'Animação e Recreação', 'Segurança e Apoio'
 ];
 
 function preencherCategorias() {
   const select = document.querySelector('#campo-categoria');
+  if (!select) return;
   select.innerHTML = CATEGORIAS_SERVICO.map((categoria) => `<option value="${categoria}">${categoria}</option>`).join('');
 }
 
-function preencherFormulario() {
-  document.querySelector('#campo-nome').value = PRESTADOR_LOGADO.nome_prestador;
-  document.querySelector('#campo-telefone').value = PRESTADOR_LOGADO.telefone;
-  document.querySelector('#campo-nome-fantasia').value = PRESTADOR_LOGADO.nome_fantasia;
-  document.querySelector('#campo-categoria').value = PRESTADOR_LOGADO.categoria;
-  document.querySelector('#campo-descricao').value = PRESTADOR_LOGADO.descricao;
-  document.querySelector('#campo-localizacao').value = PRESTADOR_LOGADO.localizacao;
-  document.querySelector('#campo-contatos').value = PRESTADOR_LOGADO.contatos;
+async function preencherFormulario() {
+  try {
+    const response = await fetch('/perfilPrestador');
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.sucesso && data.prestador) {
+        const p = data.prestador;
+        if (p.nome_prestador) document.querySelector('#campo-nome').value = p.nome_prestador;
+        if (p.telefone) document.querySelector('#campo-telefone').value = p.telefone;
+        if (p.nome_prestador) document.querySelector('#campo-nome-fantasia').value = p.nome_prestador;
+        if (p.categoria) document.querySelector('#campo-categoria').value = p.categoria;
+        if (p.descricao) document.querySelector('#campo-descricao').value = p.descricao;
+        if (p.cidade) document.querySelector('#campo-localizacao').value = p.cidade;
+        if (p.telefone) document.querySelector('#campo-contatos').value = p.telefone;
+      }
+    }
+  } catch (e) {
+    console.warn('Erro ao carregar dados do prestador:', e);
+  }
 }
 
 function inicializarValidacao() {
   const formulario = document.querySelector('#formulario-editar-perfil');
   const mensagem = document.querySelector('#mensagem-feedback');
+  if (!formulario) return;
 
-  formulario.addEventListener('submit', (evento) => {
+  formulario.addEventListener('submit', async (evento) => {
     evento.preventDefault();
 
     const camposObrigatorios = ['nome', 'telefone', 'nome-fantasia', 'categoria', 'descricao', 'localizacao'];
@@ -73,12 +73,36 @@ function inicializarValidacao() {
       return;
     }
 
-    // Em produção: atualizar o registro correspondente na tabela PRESTADOR.
-    mensagem.textContent = 'Dados atualizados com sucesso! Redirecionando para seu perfil...';
-    mensagem.classList.add('mensagem-feedback--sucesso', 'mensagem-feedback--visivel');
+    try {
+      const formData = new URLSearchParams();
+      formData.append('nome_prestador', document.querySelector('#campo-nome-fantasia').value.trim() || document.querySelector('#campo-nome').value.trim());
+      formData.append('telefone', document.querySelector('#campo-telefone').value.trim());
+      formData.append('categoria', document.querySelector('#campo-categoria').value);
+      formData.append('descricao', document.querySelector('#campo-descricao').value.trim());
+      formData.append('cidade', document.querySelector('#campo-localizacao').value.trim());
 
-    setTimeout(() => {
-      window.location.href = 'meu-perfil-prestador.html';
-    }, 1800);
+      const response = await fetch('/perfilPrestador', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        body: formData.toString()
+      });
+
+      const data = await response.json();
+      if (response.ok && data && data.sucesso) {
+        mensagem.textContent = 'Dados do prestador atualizados com sucesso no MySQL! Redirecionando...';
+        mensagem.classList.add('mensagem-feedback--sucesso', 'mensagem-feedback--visivel');
+
+        setTimeout(() => {
+          window.location.href = 'meu-perfil-prestador.html';
+        }, 1500);
+      } else {
+        mensagem.textContent = data.mensagem || 'Erro ao atualizar dados.';
+        mensagem.classList.add('mensagem-feedback--erro', 'mensagem-feedback--visivel');
+      }
+    } catch (e) {
+      console.error('Erro ao atualizar prestador:', e);
+      mensagem.textContent = 'Erro de comunicação ao atualizar perfil.';
+      mensagem.classList.add('mensagem-feedback--erro', 'mensagem-feedback--visivel');
+    }
   });
 }

@@ -28,7 +28,7 @@ function inicializarAlternadorTipoUsuario() {
   });
 }
 
-function tratarEnvioDoFormulario(evento) {
+async function tratarEnvioDoFormulario(evento) {
   evento.preventDefault();
   const mensagem = document.querySelector('#mensagem-feedback');
 
@@ -41,19 +41,45 @@ function tratarEnvioDoFormulario(evento) {
     return;
   }
 
-  // Protótipo sem autenticação real — apenas confirma visualmente o envio.
-  // Em produção, consultaria email_contratante/senha_contratante (CONTRATANTE)
-  // ou email_prestador/senha_prestador (PRESTADOR), conforme tipoUsuarioSelecionado.
-  mensagem.textContent = `Login efetuado como ${tipoUsuarioSelecionado}. Redirecionando...`;
-  mensagem.className = 'mensagem-feedback mensagem-feedback--sucesso mensagem-feedback--visivel';
+  const email = document.querySelector('#campo-email').value.trim();
+  const senha = document.querySelector('#campo-senha').value.trim();
 
-  setTimeout(() => {
-    if (tipoUsuarioSelecionado === 'prestador') {
-      window.location.href = '../prestador/dashboard-prestador.html';
+  mensagem.textContent = 'Autenticando no servidor...';
+  mensagem.className = 'mensagem-feedback mensagem-feedback--visivel';
+
+  try {
+    const formData = new URLSearchParams();
+    formData.append('email', email);
+    formData.append('senha', senha);
+
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+      body: formData.toString()
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data && data.sucesso) {
+      mensagem.textContent = `Login efetuado com sucesso! Redirecionando...`;
+      mensagem.className = 'mensagem-feedback mensagem-feedback--sucesso mensagem-feedback--visivel';
+
+      setTimeout(() => {
+        if (data.tipo === 'prestador') {
+          window.location.href = '../prestador/dashboard-prestador.html';
+        } else {
+          window.location.href = '../contratante/dashboard-contratante.html';
+        }
+      }, 1000);
     } else {
-      window.location.href = '../contratante/dashboard-contratante.html';
+      mensagem.textContent = data.mensagem || 'E-mail ou senha inválidos no banco de dados.';
+      mensagem.className = 'mensagem-feedback mensagem-feedback--erro mensagem-feedback--visivel';
     }
-  }, 1200);
+  } catch (erro) {
+    console.error('Erro na autenticação:', erro);
+    mensagem.textContent = 'Erro de conexão com o servidor de autenticação.';
+    mensagem.className = 'mensagem-feedback mensagem-feedback--erro mensagem-feedback--visivel';
+  }
 }
 
 function validarCampo(id, tipo) {

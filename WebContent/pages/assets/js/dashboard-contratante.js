@@ -9,35 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderizarContratacoesRecentes();
 });
 
-/* ---------- Dados de exemplo (simulam registros de CONTRATACAO/ITEM_CONTRA) ----------
-   Em produção viriam de CONTRATACAO + ITEM_CONTRA + PORTFOLIO + PRESTADOR
-   filtrados pelo contratante autenticado. */
-const CONTRATACOES_CONTRATANTE = [
-  {
-    id_contratacao: 1041,
-    prestador: 'Studio Lente Viva',
-    servico: 'Cobertura fotográfica completa',
-    data_contratacao: '2026-06-02',
-    valor_total: 1850,
-    situacao: 'iniciado',
-  },
-  {
-    id_contratacao: 1038,
-    prestador: 'Sabor & Arte Buffet',
-    servico: 'Buffet completo para 150 convidados',
-    data_contratacao: '2026-05-20',
-    valor_total: 7200,
-    situacao: 'negociacao',
-  },
-  {
-    id_contratacao: 1022,
-    prestador: 'DJ Marcos Ferreira',
-    servico: 'Som e DJ para festa de 6h',
-    data_contratacao: '2026-04-11',
-    valor_total: 1200,
-    situacao: 'concluido',
-  },
-];
+/* Dados zerados — contratações serão lidas do banco conforme cadastradas */
+const CONTRATACOES_CONTRATANTE = [];
 
 const ROTULO_STATUS = {
   disponivel: 'Disponível',
